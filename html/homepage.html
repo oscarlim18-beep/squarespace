@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Square Space Solution</title>
+<link rel="stylesheet" href="../css/catalogue.css">
+</head>
+<body>
+<!-- Navbar -->
+<header>
+  <a href="homepage.html" class="logo">
+    <img src="../image/SS logo.png" alt="Square Space Logo">
+    Square Space Solution
+  </a>
+
+  <nav id="nav-menu">
+    <a href="homepage.html">Home</a>
+    <a href="basic.html">Basic</a>
+    <a href="premium.html">Premium</a>
+    <a href="luxury.html">Luxury</a>
+    <a href="addon.html">A LA CARTE</a>
+    <a href="contactus.html">Contact Us</a>
+  </nav>
+
+  <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+</header>
+
+
+<!-- Hero Section -->
+<section class="hero">
+  <h1>Choose Your Dream Interior Package</h1>
+  <p>Flexible pricing to suit your lifestyle, space, and budget.</p>
+</section>
+
+
+<!-- Package Section (using same collection-card style) -->
+<section class="collections">
+  <div class="collection-card">
+    <img src="../image/basic.png" alt="Basic Package">
+    <div class="overlay">
+      <h2>Basic Package</h2>
+      <p>Starting from RM 9,880</p>
+      <a href="basic.html" class="btn">View Details</a>
+    </div>
+  </div>
+
+  <div class="collection-card">
+    <img src="../image/rustic.png" alt="Premium Package">
+    <div class="overlay">
+      <h2>Premium Package</h2>
+      <p>Starting from RM 38,880</p>
+      <a href="premium.html" class="btn">View Details</a>
+    </div>
+  </div>
+
+  <div class="collection-card">
+    <img src="../image/luxury.jpg" alt="Luxury Package">
+    <div class="overlay">
+      <h2>Luxury Package</h2>
+      <p>Starting from RM 75,000</p>
+      <a href="luxury.html" class="btn">View Details</a>
+    </div>
+  </div>
+
+  <div class="collection-card">
+    <img src="../image/addon.jpg" alt="addon">
+    <div class="overlay">
+      <h2>Add Ons</h2>
+      <p>View all available furniture and others that can be add on.</p>
+      <a href="addon.html" class="btn">View List</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- Footer -->
+<footer>
+  <div class="footer-left">
+    <p>© <span id="yr"></span> Square Space Solution. All rights reserved.</p>
+  </div>
+  <div class="footer-center">
+    <a href="https://www.facebook.com/squarespacesolutions"><img src="../image/facebook.png" alt="Facebook" class="social-icon"></a>
+    <a href="https://www.instagram.com/squarespacesolutions/"><img src="../image/instagram.png" alt="Instagram" class="social-icon"></a>
+  </div>
+</footer>
+
+
+<script src="../js/catalogue.js"></script>
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

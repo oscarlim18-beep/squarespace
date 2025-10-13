@@ -1,0 +1,368 @@
+/* =====================
+   RESET & BASE SETTINGS
+===================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Poppins", Arial, sans-serif;
+  line-height: 1.5;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  background-color: #fafafa;
+}
+
+main {
+  flex: 1;
+  padding: 0 5%;
+}
+
+/* =====================
+   HEADER
+===================== */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #018749;
+  color: #fff;
+  padding: 15px 25px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+header .logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.4rem;
+}
+
+header .logo img {
+  height: 42px;
+  width: auto;
+}
+
+header nav {
+  display: flex;
+  gap: 22px;
+}
+
+header nav a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  transition: opacity 0.2s;
+}
+
+header nav a:hover,
+header nav a.active {
+  text-decoration: underline;
+}
+
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.6em;
+}
+
+/* =====================
+   HERO SECTION
+===================== */
+/* Hero Section */
+.hero {
+  background: linear-gradient(to right, #f6faf7, #f1f8f3);
+  padding: 70px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.hero-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  width: 100%;
+  gap: 60px;
+}
+
+.hero-content1 {
+  display: flex;
+  justify-content: center;  /* center horizontally */
+  align-items: center;
+  flex-wrap: wrap;          /* let cards wrap nicely */
+  gap: 60px;
+  max-width: 1200px;
+  margin: 0 auto;           /* center the whole container */
+}
+
+.hero-text {
+  flex: 1;
+}
+
+.hero-text h1 {
+  color: #0a4d2d;
+  font-size: 2.8rem; /* Increased size */
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.hero-text p {
+  color: #333;
+  font-size: 1.2rem;
+  line-height: 1.6;
+}
+
+.hero-qr {
+  text-align: center;
+}
+
+.hero-qr h3 {
+  color: #0a4d2d;
+  font-size: 1rem;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.hero-qr img {
+  width: 150px;
+  height: 150px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* =====================
+   SECTION TITLES
+===================== */
+section > h2 {
+  text-align: center;
+  margin: 60px 0 20px;
+  color: #015d34;
+  font-size: 35px;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}
+
+/* =====================
+   FURNITURE GRID
+===================== */
+/* Furniture Grid - uniform height & centered layout */
+.furniture-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 35px;
+  justify-content: center;   /* center grid horizontally */
+  align-items: stretch;      /* make all cards same height */
+  padding: 0 15px;
+  margin-bottom: 60px;
+}
+
+/* Furniture Card - equal height, centered grid placement */
+.furniture-card {
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: 100%;       /* equal card height */
+  max-width: 400px;
+  margin: auto;
+}
+
+.furniture-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+/* Consistent image height */
+.furniture-card img {
+  width: 100%;
+  height: 220px;
+  object-fit: contain;
+  padding: 15px;
+  background-color: #fff;
+}
+
+/* Info - left aligned, normal layout */
+.furniture-info {
+  padding: 18px 20px 22px;
+  display: flex;
+  flex-direction: column;
+}
+
+.furniture-info h2 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  color: #018749;
+  font-weight: 600;
+}
+
+.furniture-info p {
+  font-size: 0.95rem;
+  color: #333;
+  line-height: 1.45;
+}
+
+/* =====================
+   IMAGES
+===================== */
+.furniture-card img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: contain;
+  background-color: #fff;
+  display: block;
+  max-height: 260px;
+  padding: 15px;
+}
+
+/* =====================
+   INFO SECTION
+===================== */
+.furniture-info {
+  padding: 18px 20px 22px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.furniture-info h2 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  color: #018749;
+  font-weight: 600;
+}
+
+.furniture-info p {
+  font-size: 0.95rem;
+  color: #333;
+  line-height: 1.45;
+}
+
+/* =====================
+   FOOTER
+===================== */
+footer {
+  margin-top: auto;
+  padding: 20px 30px;
+  background-color: #018749;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.footer-left {
+  font-size: 0.9rem;
+}
+
+.footer-center {
+  display: flex;
+  gap: 18px;
+}
+
+.footer-center a img {
+  width: 28px;
+  height: 28px;
+  transition: transform 0.25s ease, filter 0.25s ease;
+}
+
+.footer-center a img:hover {
+  transform: scale(1.2);
+  filter: brightness(1.2);
+}
+
+/* =====================
+   RESPONSIVE
+===================== */
+@media (max-width: 1024px) {
+  main {
+    padding: 0 25px;
+  }
+
+  .hero h1 {
+    font-size: 2.2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  header nav {
+    display: none;
+    flex-direction: column;
+    background: #018749;
+    padding: 10px;
+  }
+
+  header nav.show {
+    display: flex;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .furniture-card {
+    max-width: 100%;
+  }
+
+  .hero {
+    padding: 60px 15px;
+  }
+
+  .hero-content {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .hero-text h1 {
+    font-size: 2rem;
+  }
+
+  .hero-text p {
+    font-size: 1rem;
+  }
+
+  .hero-qr img {
+    margin-top: 20px;
+    width: 120px;
+    height: 120px;
+  }
+}
+@media (max-width: 600px) {
+  footer {
+    flex-direction: column;
+    text-align: center;
+    gap: 12px;
+  }
+
+  .furniture-card img {
+    aspect-ratio: 1 / 1;
+    max-height: 220px;
+  }
+
+  .hero h1 {
+    font-size: 1.9rem;
+  }
+}

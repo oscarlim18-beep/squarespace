@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Square Space Solution - Contact Us</title>
+  <link rel="stylesheet" href="../css/contactus.css">
+  <style>
+    /* Toast Notification */
+    #toast {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #4caf50;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 6px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      display: none;
+      z-index: 9999;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Toast -->
+  <div id="toast">✅ Thank you! Your message has been sent.</div>
+
+  <!-- Navbar -->
+  <header>
+    <a href="homepage.html" class="logo">
+      <img src="../image/SS logo.png" alt="Square Space Logo">
+      Square Space Solution
+    </a>
+    
+    <nav id="nav-menu">
+      <a href="homepage.html">Home</a>
+      <a href="basic.html">Basic</a>
+      <a href="premium.html">Premium</a>
+      <a href="luxury.html">Luxury</a>
+      <a href="contactus.html" class="active">Contact Us</a>
+    </nav>
+
+    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+  </header>
+
+  <!-- Contact Section -->
+  <main class="container">
+    <section class="contact-info">
+      <h1>Contact Us</h1>
+      <p class="lead">We’d love to hear from you. Reach us through the details below or fill in the form.</p>
+
+      <!-- Info Cards -->
+      <div class="info-cards">
+        <div class="card">
+          <h2>Address</h2>
+          <p>199, Jalan Kajang Jaya 7,<br>Taman Kajang Jaya,<br>43000 Kajang, Selangor</p>
+        </div>
+
+        <div class="card">
+          <h2>Email</h2>
+          <p><a href="mailto:Liefong@squarespacemy.com">Liefong@squarespacemy.com</a></p>
+        </div>
+
+        <div class="card">
+          <h2>Phone</h2>
+          <p><a href="tel:+60126894121">+60 12-689 4121</a></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Form -->
+    <section class="contact-form-section">
+      <h2>Send Us a Message</h2>
+      <p class="lead">Fill out the form below and our team will get back to you soon.</p>
+
+      <form id="contact-form" name="contact" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" class="contact-form">
+        <input type="hidden" name="form-name" value="contact">
+        <p hidden>
+          <label>Don’t fill this out: <input name="bot-field"></label>
+        </p>
+
+        <div class="form-group">
+          <label for="name">Your Name</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Your Email</label>
+          <input type="email" id="email" name="email" required placeholder="example@email.com">
+        </div>
+
+        <!-- Type Selection -->
+        <div class="form-group">
+          <label>Type:</label>
+          <div class="radio-group">
+            <label><input type="radio" name="type" value="A" required> A</label>
+            <label><input type="radio" name="type" value="B"> B</label>
+            <label><input type="radio" name="type" value="C1"> C1</label>
+            <label><input type="radio" name="type" value="D1"> D1</label>
+            <label><input type="radio" name="type" value="E"> E</label>
+            <label><input type="radio" name="type" value="F"> F</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="message">Your Message</label>
+          <textarea id="message" name="message" rows="4" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Preferred Package:</label>
+          <div class="radio-group">
+            <label><input type="radio" name="package" value="Basic" required> Basic</label>
+            <label><input type="radio" name="package" value="Premium"> Premium</label>
+            <label><input type="radio" name="package" value="Luxury"> Luxury</label>
+          </div>
+        </div>
+
+        <button type="submit" class="submit-btn">Send Message</button>
+      </form>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-left">
+      <p>© <span id="yr"></span> Square Space Solution. All rights reserved.</p>
+    </div>
+    <div class="footer-center">
+      <a href="https://www.facebook.com/squarespacesolutions"><img src="../image/facebook.png" alt="Facebook" class="social-icon"></a>
+      <a href="https://www.instagram.com/squarespacesolutions/"><img src="../image/instagram.png" alt="Instagram" class="social-icon"></a>
+    </div>
+  </footer>
+
+  <script src="../js/catalogue.js"></script>
+</body>
+</html>

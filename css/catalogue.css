@@ -1,0 +1,286 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.5;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+/* Header */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #018749;
+  color: #fff;
+  padding: 15px 20px;
+}
+
+header .logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #fff;
+  text-decoration: none;   /* remove link underline */
+}
+
+header .logo img {
+  height: 40px;
+  width: auto;
+}
+
+header .logo:hover {
+  opacity: 0.8;  /* subtle hover effect */
+}
+
+header nav {
+  display: flex;
+  gap: 20px;
+}
+
+header nav a {
+  color: #fff;
+  text-decoration: none;
+}
+
+header nav a:hover {
+  text-decoration: underline;
+}
+
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.5em;
+}
+
+/* Hero section */
+.hero {
+  text-align: center;
+  padding: 50px 20px;
+  background: #f4f4f4;
+}
+
+.hero h1 {
+  color: #0a4d2d;
+  font-size: 2.8rem; /* Increased size */
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.hero p {
+  color: #333;
+  font-size: 1.2rem;
+  line-height: 1.6;
+}
+
+/* Collections Section */
+.collections {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  padding: 20px;
+}
+
+.collection-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.collection-card img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.collection-card:hover img {
+  transform: scale(1.1);
+}
+
+.collection-card .overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.collection-card:hover .overlay {
+  opacity: 1;
+}
+
+.collection-card .overlay h2 {
+  font-size: 2rem;
+  margin-bottom: 15px;
+}
+
+.collection-card .overlay p {
+  font-size: 1rem;
+  margin-bottom: 15px;
+}
+
+.collection-card .overlay .btn {
+  background: #fff;
+  color: #333;
+  padding: 10px 20px;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background 0.3s ease, color 0.3s ease;
+  pointer-events: none; /* disable by default */
+}
+
+.collection-card .overlay .btn:hover {
+  background: #333;
+  color: #fff;
+}
+
+.collection-card:hover .overlay .btn,
+.collection-card.tapped .overlay .btn {
+  pointer-events: auto; /* enable on hover/tap */
+}
+
+/* Footer */
+footer {
+  margin-top: auto;
+  padding: 1rem;
+  background-color: #018749;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.footer-left {
+  font-size: 0.9rem;
+}
+
+.footer-center {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer-center a img {
+  width: 35px;
+  height: 35px;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.footer-center a img:hover {
+  transform: scale(1.2);
+  filter: brightness(1.2);
+}
+
+/* Responsive Layouts */
+@media (max-width: 1024px) {
+  .collections {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .collection-card img {
+    aspect-ratio: 3 / 2;
+  }
+
+    main {
+    padding: 0 25px;
+  }
+
+  .hero h1 {
+    font-size: 2.2rem;
+  }
+
+}
+
+@media (max-width: 768px) {
+  .collections {
+    grid-template-columns: 1fr;
+  }
+
+  .collection-card img {
+    aspect-ratio: 4 / 3;
+  }
+
+  header nav {
+    display: none;
+    flex-direction: column;
+    background: #018749;
+    padding: 10px;
+  }
+
+  header nav.show {
+    display: flex;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .collection-card .overlay h2 {
+    font-size: 1.5rem;
+  }
+
+  .collection-card.tapped .overlay {
+    opacity: 1 !important;
+  }
+
+  .hero {
+    padding: 60px 15px;
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+  }
+
+  .hero p {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  footer {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+  }
+
+    .furniture-card img {
+    aspect-ratio: 1 / 1;
+    max-height: 220px;
+  }
+
+  .hero h1 {
+    font-size: 1.9rem;
+  }
+}
