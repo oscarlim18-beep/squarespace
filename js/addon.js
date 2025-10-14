@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
     pdfContainer.style.fontSize = "12px";
     pdfContainer.style.color = "#333";
 
-    // ✅ Add header with logo + address
+    // ✅ Add header + content
     pdfContainer.innerHTML = `
       <div style="display:flex; align-items:flex-start; margin-bottom:20px;">
         <img src="../image/SS logo.png" style="width:80px; height:auto; margin-right:15px;">
@@ -100,6 +100,22 @@ document.addEventListener("DOMContentLoaded", () => {
       <h2 style="text-align:right; margin-top:10px; font-size:16px;">
         Total: RM${total.toFixed(2)}
       </h2>
+
+      <!-- ✅ SIGNATURE SECTION -->
+      <div style="margin-top: 40px; display:flex; justify-content:space-between;">
+        <div style="text-align:left;">
+          <div>_________________________</div>
+          <div>Client Signature</div>
+          <div>Name: ___________________</div>
+          <div>Date: ___________________</div>
+        </div>
+        <div style="text-align:left;">
+          <div>_________________________</div>
+          <div>Company Representative</div>
+          <div>Name: ___________________</div>
+          <div>Date: ___________________</div>
+        </div>
+      </div>
     `;
 
     // Add to DOM
