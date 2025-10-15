@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Premium Package Add-Ons</title>
+  <link rel="stylesheet" href="../css/addon.css" />
+</head>
+<body>
+
+<!-- ✅ Navbar -->
+<header>
+  <a href="homepage.html" class="logo">
+    <img src="../image/SS logo.png" alt="Square Space Logo">
+  </a>
+
+  <nav id="nav-menu">
+    <a href="homepage.html">Home</a>
+    <a href="basic.html">Basic</a>
+    <a href="premium.html" class="active">Premium</a>
+    <a href="luxury.html">Luxury</a>
+    <a href="addon.html">A LA CARTE</a>
+    <a href="contactus.html">Contact Us</a>
+  </nav>
+
+  <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+</header>
+
+<!-- ✅ Main Content -->
+<main class="container">
+  <section class="addon-section">
+
+    <!-- Title & Subtitle -->
+    <div class="card">
+      <h1>Premium Package – <span id="themeName"></span></h1>
+      <p>Select room type and additional upgrades below.</p>
+    </div>
+
+    <form id="addonForm">
+
+      <!-- Customer Details -->
+      <div class="card consumer-details">
+        <h2>Customer Details</h2>
+        <label>Name: <input type="text" name="name" required></label>
+        <label>Email: <input type="email" name="email" required></label>
+        <label>Phone Number: <input type="text" name="phone" required></label>
+        <label>Unit: <input type="text" name="unit" required></label>
+        <label>Unit Type: <input type="text" name="type" required></label>
+      </div>
+
+      <!-- Room Selection -->
+      <div class="card addon-list">
+        <h2>Select Room Type</h2>
+        <div id="roomContainer"></div>
+      </div>
+
+      <!-- Add-On Items -->
+      <div class="card addon-list">
+        <h2>Add-On Items</h2>
+        <div id="addonItemsContainer"></div>
+      </div>
+
+      <!-- Summary -->
+      <div class="card summary">
+        <h2>Total: RM<span id="totalAmount">0</span></h2>
+        <button type="button" id="generatePDF" class="btn">Download Summary (PDF)</button>
+      </div>
+
+    </form>
+  </section>
+</main>
+
+<!-- ✅ Footer -->
+<footer>
+  <div class="footer-left">
+    <p>© <span id="yr"></span> Sspace Equity Sdn. Bhd. All rights reserved.</p>
+  </div>
+  <div class="footer-center">
+    <a href="https://www.facebook.com/squarespacesolutions">
+      <img src="../image/facebook.png" alt="Facebook" class="social-icon">
+    </a>
+    <a href="https://www.instagram.com/squarespacesolutions/">
+      <img src="../image/instagram.png" alt="Instagram" class="social-icon">
+    </a>
+  </div>
+</footer>
+
+<!-- ✅ Scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+<script src="../js/catalogue.js"></script>
+<script src="../js/addonp.js"></script>
+</body>
+</html>

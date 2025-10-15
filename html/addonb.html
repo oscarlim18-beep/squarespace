@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Helix 2 Add-Ons</title>
+  <title>Basic Package Add-Ons</title>
   <link rel="stylesheet" href="../css/addon.css" />
 </head>
 <body>
 
-<!-- ✅ Navbar -->
+<!-- Navbar -->
 <header>
   <a href="homepage.html" class="logo">
     <img src="../image/SS logo.png" alt="Square Space Logo">
@@ -26,46 +26,40 @@
   <button class="menu-toggle" onclick="toggleMenu()">☰</button>
 </header>
 
-<!-- ✅ Main Content -->
 <main class="container">
   <section class="addon-section">
 
     <!-- Title & Subtitle -->
     <div class="card">
-      <h1>Optional Add-Ons</h1>
-      <p>Select additional upgrades for your Helix 2 package below.</p>
+      <h1>Basic Package – <span id="themeName"></span></h1>
+      <p>Select room type and additional upgrades below.</p>
     </div>
 
     <form id="addonForm">
 
-      <!-- ✅ Customer Details -->
+      <!-- Customer Details -->
       <div class="card consumer-details">
         <h2>Customer Details</h2>
         <label>Name: <input type="text" name="name" required></label>
         <label>Email: <input type="email" name="email" required></label>
+        <label>Phone Number: <input type="tel" name="phone" required></label>
         <label>Unit: <input type="text" name="unit" required></label>
-        <label>Type: <input type="text" name="type" required></label>
+        <label>Unit Type: <input type="text" name="type" required></label>
+      </div>
+      
+      <!-- Room Selection -->
+      <div class="card addon-list">
+        <h2>Select Room Type</h2>
+        <div id="roomContainer"></div>
       </div>
 
-      <!-- ✅ Main Package Selection -->
-      <div class="card main-package">
-        <h2>Main Package</h2>
-        <label><input type="radio" name="mainPackage" value="Basic" required> Basic</label>
-        <label><input type="radio" name="mainPackage" value="Premium"> Premium</label>
-        <label><input type="radio" name="mainPackage" value="Luxury"> Luxury</label>
-      </div>
-
-      <!-- ✅ Add-On Items -->
+      <!-- Add-On Items -->
       <div class="card addon-list">
         <h2>Add-On Items</h2>
-        <label>Smart Switch (RM180)<input type="checkbox" class="addon-item" data-name="Smart Switch" data-price="180"> </label>
-        <label>Premium Curtains (RM320)<input type="checkbox" class="addon-item" data-name="Premium Curtains" data-price="320"> </label>
-        <label>Feature Wall (RM650)<input type="checkbox" class="addon-item" data-name="Feature Wall" data-price="650"> </label>
-        <label>Lighting Package (RM400)<input type="checkbox" class="addon-item" data-name="Lighting Package" data-price="400"> </label>
-        <label>TV Console (RM550)<input type="checkbox" class="addon-item" data-name="TV Console" data-price="550"> </label>
+        <div id="addonItemsContainer"></div>
       </div>
 
-      <!-- ✅ Summary -->
+      <!-- Summary -->
       <div class="card summary">
         <h2>Total: RM<span id="totalAmount">0</span></h2>
         <button type="button" id="generatePDF" class="btn">Download Summary (PDF)</button>
@@ -75,11 +69,10 @@
   </section>
 </main>
 
-<!-- ✅ Footer -->
 <footer>
-    <div class="footer-left">
-      <p>© <span id="yr"></span> Sspace Equity Sdn. Bhd. All rights reserved.</p>
-    </div>
+  <div class="footer-left">
+    <p>© <span id="yr"></span> Sspace Equity Sdn. Bhd. All rights reserved.</p>
+  </div>
   <div class="footer-center">
     <a href="https://www.facebook.com/squarespacesolutions">
       <img src="../image/facebook.png" alt="Facebook" class="social-icon">
@@ -90,9 +83,9 @@
   </div>
 </footer>
 
-<!-- ✅ Scripts -->
+<!-- Scripts -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
 <script src="../js/catalogue.js"></script>
-<script src="../js/addon.js"></script>
+<script src="../js/addonb.js"></script>
 </body>
 </html>

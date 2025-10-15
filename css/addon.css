@@ -26,50 +26,47 @@ main {
   padding: 0 5%;
 }
 
-/* =====================
-   HEADER
-===================== */
+/* ========== HEADER ========== */
 header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   background: #018749;
   color: #fff;
-  padding: 15px 25px;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
+  padding: 5px 20px;
 }
 
 header .logo {
   display: flex;
   align-items: center;
   gap: 10px;
-  text-decoration: none;
+  font-size: 1.5em;
+  font-weight: bold;
   color: #fff;
-  font-weight: 700;
-  font-size: 1.4rem;
+  text-decoration: none;
+}
+
+header .logo:hover {
+  opacity: 0.8;
 }
 
 header .logo img {
-  height: 42px;
+  height: 100px;
   width: auto;
 }
 
 header nav {
   display: flex;
-  gap: 22px;
+  gap: 20px;
 }
 
 header nav a {
   color: #fff;
   text-decoration: none;
-  font-weight: 500;
-  transition: opacity 0.2s;
 }
 
-header nav a:hover,
 header nav a.active {
+  font-weight: bold;
   text-decoration: underline;
 }
 
@@ -78,7 +75,7 @@ header nav a.active {
   background: none;
   border: none;
   color: #fff;
-  font-size: 1.6em;
+  font-size: 1.5em;
 }
 
 /* =====================
@@ -141,6 +138,29 @@ header nav a.active {
   margin-bottom: 12px;
 }
 
+/* Room types styled like add-on items */
+.roomContainer label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #eee;
+  font-size: 15px;
+  color: #444;
+  cursor: pointer;
+  position: relative;
+}
+
+.roomContainer label:last-child {
+  border-bottom: none;
+}
+
+.roomContainer input[type="radio"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #018749; /* tick color matches theme */
+}
+
 /* ✅ ADD-ON LIST */
 .addon-list label {
   display: flex;
@@ -159,6 +179,16 @@ header nav a.active {
 .addon-item {
   width: 18px;
   height: 18px;
+}
+
+.addon-right {
+  display: flex;
+  align-items: center; /* ensures checkbox aligns with price text */
+  gap: 10px;
+}
+
+.addon-name {
+  text-align: left;
 }
 
 /* ✅ SUMMARY */
@@ -191,19 +221,16 @@ header nav a.active {
 }
 
 
-/* =====================
-   FOOTER
-===================== */
+/* ========== FOOTER ========== */
 footer {
   margin-top: auto;
-  padding: 20px 30px;
+  padding: 1rem;
   background-color: #018749;
-  color: #fff;
+  color: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.1);
 }
 
 .footer-left {
@@ -212,13 +239,15 @@ footer {
 
 .footer-center {
   display: flex;
-  gap: 18px;
+  gap: 15px;
+  justify-content: center;
+  align-items: center;
 }
 
 .footer-center a img {
-  width: 28px;
-  height: 28px;
-  transition: transform 0.25s ease, filter 0.25s ease;
+  width: 35px;
+  height: 35px;
+  transition: transform 0.2s ease, filter 0.2s ease;
 }
 
 .footer-center a img:hover {
@@ -308,12 +337,12 @@ footer {
 }
 
 @media (max-width: 600px) {
-    .card {
+
+  .card {
     padding: 20px;
   }
-  
 
-    .summary {
+  .summary {
     flex-direction: column;
     gap: 12px;
   }
@@ -322,8 +351,8 @@ footer {
     width: 100%;
     text-align: center;
   }
-}
 
+  /* ✅ These must be inside the media query */
   .addon-section {
     max-width: 100%;
   }

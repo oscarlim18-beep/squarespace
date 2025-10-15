@@ -29,7 +29,7 @@ header {
   align-items: center;
   background: #018749;
   color: #fff;
-  padding: 15px 20px;
+  padding: 5px 20px;
 }
 
 header .logo {
@@ -47,7 +47,7 @@ header .logo:hover {
 }
 
 header .logo img {
-  height: 40px;
+  height: 100px;
   width: auto;
 }
 
