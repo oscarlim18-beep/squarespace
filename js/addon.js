@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // ✅ Add header + content
     pdfContainer.innerHTML = `
       <div style="display:flex; align-items:flex-start; margin-bottom:20px;">
-        <img src="../image/SS logo.png" style="width:80px; height:auto; margin-right:15px;">
+        <img src="../image/SS logos.png" style="width:80px; height:auto; margin-right:15px;">
         <div>
           <h2 style="margin:0; font-size:18px;">Square Space Solution</h2>
           <p style="margin:2px 0;">B-21-06, Residensi Aradia,<br>102, Jalan Sibu, Taman Wahyu</p>
