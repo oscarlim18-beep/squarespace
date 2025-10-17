@@ -10,34 +10,43 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-// 2) TOUCH CARD LOGIC
+// 2) TOUCH CARD LOGIC - MOBILE & TABLET FRIENDLY
 document.addEventListener("DOMContentLoaded", () => {
   const cards = document.querySelectorAll(".collection-card");
 
-  if ("ontouchstart" in window || navigator.maxTouchPoints > 0) {
+  const isTouchDevice = "ontouchstart" in window || navigator.maxTouchPoints > 0;
+
+  if (isTouchDevice) {
     cards.forEach(card => {
       let tapped = false;
 
       card.addEventListener("click", (e) => {
         const btn = card.querySelector(".overlay .btn");
 
+        // Always allow button clicks
+        if (e.target.closest(".btn")) {
+          return;
+        }
+
+        // If not tapped yet, show overlay
         if (!tapped) {
           e.preventDefault();
           card.classList.add("tapped");
           tapped = true;
+        }
+      });
 
-          setTimeout(() => {
-            tapped = false;
-            card.classList.remove("tapped");
-          }, 1500);
-        } else if (e.target === btn) {
-          tapped = false;
+      // Optional: hide overlay when tapping outside
+      document.addEventListener("click", (e) => {
+        if (!card.contains(e.target)) {
           card.classList.remove("tapped");
+          tapped = false;
         }
       });
     });
   }
 });
+
 
 // 3) CONTACT FORM + TOAST
 document.addEventListener("DOMContentLoaded", () => {

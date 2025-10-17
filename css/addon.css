@@ -161,34 +161,61 @@ header nav a.active {
   accent-color: #018749; /* tick color matches theme */
 }
 
-/* ✅ ADD-ON LIST */
+/* ===== Add-On List Upgrade ===== */
 .addon-list label {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  padding: 12px 0;
-  border-bottom: 1px solid #eee;
+  align-items: center;
+  padding: 14px 16px;
+  border-radius: 10px;
+  border: 1px solid #e0e0e0;
+  background-color: #fff;
+  margin-bottom: 10px;
   font-size: 15px;
-  color: #444;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
 
-.addon-list label:last-child {
-  border-bottom: none;
+.addon-list label:hover {
+  background-color: #f9f9f9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
-.addon-item {
-  width: 18px;
-  height: 18px;
+.addon-list .addon-name {
+  font-weight: 500;
 }
 
 .addon-right {
   display: flex;
-  align-items: center; /* ensures checkbox aligns with price text */
-  gap: 10px;
+  align-items: center;
+  gap: 15px;
 }
 
-.addon-name {
-  text-align: left;
+.addon-right span {
+  font-weight: 600;
+  color: #018749; /* theme color for price */
+}
+
+.addon-item {
+  width: 20px;
+  height: 20px;
+  accent-color: #018749;
+}
+
+.addon-group {
+  margin-top: 25px;
+}
+
+.addon-group h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #018749;
+  margin-bottom: 12px;
+  border-bottom: 2px solid #01874933;
+  padding-bottom: 5px;
 }
 
 /* ✅ SUMMARY */

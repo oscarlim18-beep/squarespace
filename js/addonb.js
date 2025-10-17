@@ -27,36 +27,63 @@ document.addEventListener("DOMContentLoaded", () => {
     roomContainer.appendChild(label);
   });
 
-  // ===== THEME-BASED ADD-ONS =====
-  const themeAddons = {
-    Cocoa: [
-      { name: "Smart Switch", price: 180 },
-      { name: "Premium Curtains", price: 320 },
-      { name: "Feature Wall", price: 650 },
-      { name: "Lighting Package", price: 400 },
-      { name: "TV Console", price: 550 },
+  // ===== GROUPED ADD-ONS =====
+  const groupedAddons = {
+    "Furniture": [
+      { name: "Dining Set Upgrade", price: 490 },
+      { name: "Kitchen Cabinet include 15mm Thick Quartz Stone", price: 6900 }
     ],
-    Natural: [
-      { name: "Smart Switch", price: 180 },
-      { name: "Premium Curtains", price: 320 },
-      { name: "Feature Wall", price: 650 },
-      { name: "Lighting Package", price: 400 },
-      { name: "TV Console", price: 550 },
+    "Electrical Components": [
+      { name: "TV 55 inch", price: 2000 },
+      { name: "Aircon 1HP Non-Inverter (Midea)", price: 1800 },
+      { name: "Aircon 2HP Non-Inverter (Midea)", price: 3360 },
+      { name: "Instant Water Heater", price: 0 },
+      { name: "Fan (Deka) 56/48 inch", price: 285 },
+      { name: "Lighting 12 Watt, 4000K", price: 25 },
+      { name: "Lighting 18 Watt, 4000K", price: 30 },
+      { name: "Lighting 24 Watt, 4000K", price: 35 },
+      { name: "13 Amp Single Socket", price: 190 },
+      { name: "Smart Door Lock", price: 1250 },
+      { name: "Washing machine 7.5KG Frontload", price: 1450 },
+      { name: "8.5KG/6KG Combo Washer and Dryer", price: 2000 },
+      { name: "Fridge 240L Two Door", price: 1450 }
     ],
+    "Curtain": [
+      { name: "Type A", price: 3300 },
+      { name: "Type B", price: 3500 },
+      { name: "Type C", price: 3700 },
+      { name: "Type D1", price: 4890 },
+      { name: "Type D2", price: 3600 },
+      { name: "Type E", price: 4300 },
+      { name: "Type F", price: 5800 }
+    ],
+    "Accessories": [
+      { name: "Partition", price: 0 },
+      { name: "Plaster Ceiling", price: 0 },
+      { name: "Yard Grill", price: 1300 },
+      { name: "Door Grill", price: 2100 },
+      { name: "Shower Screen", price: 980 }
+    ]
   };
 
   const addonContainer = document.getElementById("addonItemsContainer");
-  themeAddons[theme].forEach(item => {
-    const label = document.createElement("label");
-    label.classList.add("addon-list");
-    label.innerHTML = `
-      <span class="addon-name">${item.name}</span>
-      <div class="addon-right">
-        <span>RM${item.price}</span>
-        <input type="checkbox" class="addon-item" data-name="${item.name}" data-price="${item.price}">
-      </div>
-    `;
-    addonContainer.appendChild(label);
+  Object.keys(groupedAddons).forEach(group => {
+    const groupHeader = document.createElement("h3");
+    groupHeader.textContent = group;
+    addonContainer.appendChild(groupHeader);
+
+    groupedAddons[group].forEach(item => {
+      const label = document.createElement("label");
+      label.classList.add("addon-list");
+      label.innerHTML = `
+        <span class="addon-name">${item.name}</span>
+        <div class="addon-right">
+          <span>RM${item.price}</span>
+          <input type="checkbox" class="addon-item" data-name="${item.name}" data-price="${item.price}" data-group="${group}">
+        </div>
+      `;
+      addonContainer.appendChild(label);
+    });
   });
 
   // ===== CALCULATION =====
@@ -67,8 +94,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const selectedRoom = document.querySelector(".room-type:checked");
     const roomPrice = selectedRoom ? parseFloat(selectedRoom.dataset.price) : 0;
 
-    const addonCheckboxes = document.querySelectorAll(".addon-item");
-    const addonTotal = Array.from(addonCheckboxes)
+    const addonTotal = Array.from(document.querySelectorAll(".addon-item"))
       .filter(cb => cb.checked)
       .reduce((sum, cb) => sum + parseFloat(cb.dataset.price), 0);
 
@@ -86,7 +112,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("generatePDF").addEventListener("click", () => {
     const name = document.querySelector('input[name="name"]').value || "-";
     const email = document.querySelector('input[name="email"]').value || "-";
-    const phone = document.querySelector('input[name="phone"]') ? document.querySelector('input[name="phone"]').value : "-";
+    const phone = document.querySelector('input[name="phone"]')?.value || "-";
     const unit = document.querySelector('input[name="unit"]').value || "-";
     const unitType = document.querySelector('input[name="type"]').value || "-";
 
@@ -96,7 +122,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const selectedAddons = Array.from(document.querySelectorAll(".addon-item"))
       .filter(cb => cb.checked)
-      .map(cb => ({ name: cb.dataset.name, price: parseFloat(cb.dataset.price) }));
+      .map(cb => ({
+        name: cb.dataset.name,
+        price: parseFloat(cb.dataset.price),
+        group: cb.dataset.group
+      }));
 
     // PDF content
     const pdfContainer = document.createElement("div");
@@ -137,11 +167,14 @@ document.addEventListener("DOMContentLoaded", () => {
           </tr>
         </thead>
         <tbody>
-          ${selectedAddons.map(item => `
-            <tr>
-              <td style="padding:5px; border-top:1px solid #ccc;">${item.name}</td>
-              <td style="padding:5px; border-top:1px solid #ccc; text-align:right;">${item.price.toFixed(2)}</td>
-            </tr>
+          ${[...new Set(selectedAddons.map(a => a.group))].map(group => `
+            <tr style="font-weight:bold; background:#e0e0e0;"><td colspan="2">${group}</td></tr>
+            ${selectedAddons.filter(a => a.group === group).map(item => `
+              <tr>
+                <td style="padding:5px; border-top:1px solid #ccc;">${item.name}</td>
+                <td style="padding:5px; border-top:1px solid #ccc; text-align:right;">${item.price.toFixed(2)}</td>
+              </tr>
+            `).join("")}
           `).join("")}
         </tbody>
       </table>
@@ -173,8 +206,6 @@ document.addEventListener("DOMContentLoaded", () => {
       jsPDF: { unit: "mm", format: "a4", orientation: "portrait" }
     };
 
-    setTimeout(() => {
-      html2pdf().set(opt).from(pdfContainer).save().then(() => pdfContainer.remove());
-    }, 300);
+    html2pdf().set(opt).from(pdfContainer).save().then(() => pdfContainer.remove());
   });
 });
