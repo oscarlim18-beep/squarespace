@@ -188,10 +188,13 @@ header nav a.active {
   font-weight: 500;
 }
 
+/* ✅ RIGHT SIDE CONTENT (Quantity + Price + Checkbox) */
 .addon-right {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 10px;
+  justify-content: flex-end;
+  flex-wrap: nowrap;
 }
 
 .addon-right span {
@@ -205,6 +208,60 @@ header nav a.active {
   accent-color: #018749;
 }
 
+/* ✅ IMPROVED QUANTITY BOX */
+.addon-qty-control {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #f4f4f4;
+  transition: 0.2s;
+}
+
+.addon-qty-control:focus-within {
+  border-color: #018749;
+  box-shadow: 0 0 4px rgba(1, 135, 73, 0.3);
+}
+
+.qty-btn {
+  background: #eaeaea;
+  border: none;
+  padding: 4px 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.qty-btn:hover {
+  background: #018749;
+  color: white;
+}
+
+.addon-qty {
+  width: 25px;
+  min-width: 10px;
+  padding: 3px 4px;
+  border: none;
+  text-align: center;
+  font-weight: 600;
+  font-size: 13px;
+  background: transparent;
+  color: #333;
+}
+
+.addon-qty:focus {
+  outline: none;
+}
+
+/* Disabled look */
+.addon-qty-control.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
 .addon-group {
   margin-top: 25px;
 }
@@ -216,6 +273,18 @@ header nav a.active {
   margin-bottom: 12px;
   border-bottom: 2px solid #01874933;
   padding-bottom: 5px;
+}
+
+.qty-value {
+  width: 40px;
+  text-align: center;
+}
+
+/* ✅ Remove number input arrows (Chrome, Safari, Edge, Opera) */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 /* ✅ SUMMARY */
@@ -246,7 +315,6 @@ header nav a.active {
 .btn:hover {
   background: #016f3d;
 }
-
 
 /* ========== FOOTER ========== */
 footer {
@@ -289,10 +357,6 @@ footer {
   main {
     padding: 0 25px;
   }
-
-  .hero h1 {
-    font-size: 2.2rem;
-  }
 }
 
 @media (max-width: 768px) {
@@ -320,15 +384,6 @@ footer {
     border-radius: 10px;
   }
 
-  .addon-section h1 {
-    font-size: 22px;
-  }
-
-  .addon-section p {
-    font-size: 15px;
-    margin-bottom: 18px;
-  }
-
   .addon-list label {
     font-size: 15px;
     padding: 10px 0;
@@ -339,32 +394,18 @@ footer {
     height: 16px;
   }
 
-  .hero {
-    padding: 60px 15px;
+  .addon-qty {
+    width: 30px;
+    font-size: 13px;
+    padding: 3px 5px;
   }
 
-  .hero-content {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .hero-text h1 {
-    font-size: 2rem;
-  }
-
-  .hero-text p {
-    font-size: 1rem;
-  }
-
-  .hero-qr img {
-    margin-top: 20px;
-    width: 120px;
-    height: 120px;
+  .addon-right {
+    gap: 6px;
   }
 }
 
 @media (max-width: 600px) {
-
   .card {
     padding: 20px;
   }
@@ -379,23 +420,23 @@ footer {
     text-align: center;
   }
 
-  /* ✅ These must be inside the media query */
   .addon-section {
     max-width: 100%;
   }
 
-  footer {
+  footer { 
     flex-direction: column;
     text-align: center;
     gap: 12px;
   }
 
-  .furniture-card img {
-    aspect-ratio: 1 / 1;
-    max-height: 220px;
+  .addon-qty {
+    width: 28px;
+    font-size: 12px;
+    padding: 2px 3px;
   }
 
-  .hero h1 {
-    font-size: 1.9rem;
+  .addon-right {
+    gap: 5px;
   }
 }

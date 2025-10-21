@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // ===== GROUPED ADD-ONS =====
   const groupedAddons = {
     "Furniture": [
-      { name: "Dining Set Upgrade", price: 490 },
+      { name: "Dining Set Upgrade to 6pax", price: 490 },
       { name: "Kitchen Cabinet include 15mm Thick Quartz Stone", price: 6900 }
     ],
     "Electrical Components": [
@@ -58,8 +58,8 @@ document.addEventListener("DOMContentLoaded", () => {
       { name: "Type F", price: 5800 }
     ],
     "Accessories": [
-      { name: "Partition", price: 0 },
-      { name: "Plaster Ceiling", price: 0 },
+      { name: "Partition per sq ft", price: 12 },
+      { name: "Plaster Ceiling per sq ft", price: 7 },
       { name: "Yard Grill", price: 1300 },
       { name: "Door Grill", price: 2100 },
       { name: "Shower Screen", price: 980 }
@@ -79,6 +79,11 @@ document.addEventListener("DOMContentLoaded", () => {
         <span class="addon-name">${item.name}</span>
         <div class="addon-right">
           <span>RM${item.price}</span>
+          <div class="qty-input" data-name="${item.name}" data-price="${item.price}" data-group="${group}">
+            <button type="button" class="qty-btn minus">−</button>
+            <input type="number" class="qty-value" min="1" value="1">
+            <button type="button" class="qty-btn plus">+</button>
+          </div>
           <input type="checkbox" class="addon-item" data-name="${item.name}" data-price="${item.price}" data-group="${group}">
         </div>
       `;
@@ -96,14 +101,38 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const addonTotal = Array.from(document.querySelectorAll(".addon-item"))
       .filter(cb => cb.checked)
-      .reduce((sum, cb) => sum + parseFloat(cb.dataset.price), 0);
+      .reduce((sum, cb) => {
+        const qty = parseInt(cb.parentElement.querySelector(".qty-value").value) || 1;
+        return sum + parseFloat(cb.dataset.price) * qty;
+      }, 0);
 
     total = roomPrice + addonTotal;
     totalDisplay.textContent = total.toFixed(2);
   }
 
-  document.querySelectorAll(".room-type, .addon-item").forEach(input => {
+  document.querySelectorAll(".room-type, .addon-item, .qty-value").forEach(input => {
     input.addEventListener("change", calculateTotal);
+  });
+
+  // ===== QUANTITY BUTTON FUNCTIONALITY =====
+  addonContainer.addEventListener("click", e => {
+    if (e.target.classList.contains("qty-btn")) {
+      const input = e.target.parentElement.querySelector(".qty-value");
+      let value = parseInt(input.value) || 1;
+
+      if (e.target.classList.contains("plus")) value++;
+      if (e.target.classList.contains("minus") && value > 1) value--;
+
+      input.value = value;
+      calculateTotal();
+    }
+  });
+
+  addonContainer.addEventListener("input", e => {
+    if (e.target.classList.contains("qty-value")) {
+      if (parseInt(e.target.value) < 1 || isNaN(e.target.value)) e.target.value = 1;
+      calculateTotal();
+    }
   });
 
   calculateTotal(); // initialize total
@@ -122,13 +151,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const selectedAddons = Array.from(document.querySelectorAll(".addon-item"))
       .filter(cb => cb.checked)
-      .map(cb => ({
-        name: cb.dataset.name,
-        price: parseFloat(cb.dataset.price),
-        group: cb.dataset.group
-      }));
+      .map(cb => {
+        const qty = parseInt(cb.parentElement.querySelector(".qty-value").value) || 1;
+        const price = parseFloat(cb.dataset.price);
+        return {
+          name: cb.dataset.name,
+          price: price,
+          qty: qty,
+          subtotal: price * qty,
+          group: cb.dataset.group
+        };
+      });
 
-    // PDF content
     const pdfContainer = document.createElement("div");
     pdfContainer.style.padding = "20px";
     pdfContainer.style.background = "#fff";
@@ -159,25 +193,31 @@ document.addEventListener("DOMContentLoaded", () => {
       </table>
 
       <h2 style="font-size:16px; margin-bottom:5px;">Selected Add-Ons</h2>
-      <table style="width:100%; border-collapse: collapse; margin-bottom: 20px; border: 1px solid #ccc;">
-        <thead>
-          <tr style="background:#f0f0f0;">
-            <th style="text-align:left; padding:5px;">Item</th>
-            <th style="text-align:right; padding:5px;">Price (RM)</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${[...new Set(selectedAddons.map(a => a.group))].map(group => `
-            <tr style="font-weight:bold; background:#e0e0e0;"><td colspan="2">${group}</td></tr>
-            ${selectedAddons.filter(a => a.group === group).map(item => `
-              <tr>
-                <td style="padding:5px; border-top:1px solid #ccc;">${item.name}</td>
-                <td style="padding:5px; border-top:1px solid #ccc; text-align:right;">${item.price.toFixed(2)}</td>
-              </tr>
+      ${selectedAddons.length === 0 ? "<p>No Add-Ons Selected</p>" : `
+        <table style="width:100%; border-collapse: collapse; margin-bottom: 20px; border: 1px solid #ccc;">
+          <thead>
+            <tr style="background:#f0f0f0;">
+              <th style="text-align:left; padding:5px;">Item</th>
+              <th style="text-align:right; padding:5px;">Qty</th>
+              <th style="text-align:right; padding:5px;">Unit Price (RM)</th>
+              <th style="text-align:right; padding:5px;">Subtotal (RM)</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${[...new Set(selectedAddons.map(a => a.group))].map(group => `
+              <tr style="font-weight:bold; background:#e0e0e0;"><td colspan="4">${group}</td></tr>
+              ${selectedAddons.filter(a => a.group === group).map(item => `
+                <tr>
+                  <td style="padding:5px; border-top:1px solid #ccc;">${item.name}</td>
+                  <td style="padding:5px; border-top:1px solid #ccc; text-align:right;">${item.qty}</td>
+                  <td style="padding:5px; border-top:1px solid #ccc; text-align:right;">${item.price.toFixed(2)}</td>
+                  <td style="padding:5px; border-top:1px solid #ccc; text-align:right;">${item.subtotal.toFixed(2)}</td>
+                </tr>
+              `).join("")}
             `).join("")}
-          `).join("")}
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      `}
 
       <h2 style="text-align:right; margin-top:10px; font-size:16px;">Total: RM${total.toFixed(2)}</h2>
 

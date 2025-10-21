@@ -110,8 +110,8 @@ header nav a:hover {
 
 .collection-card img {
   width: 100%;
-  height: auto;
-  object-fit: cover;
+  height: 100%; /* fixed height for uniformity */
+  object-fit: cover; /* keeps aspect ratio without distortion */
   display: block;
   transition: transform 0.4s ease;
 }
