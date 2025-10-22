@@ -53,6 +53,7 @@ header .logo:hover {
 header .logo img {
   height: 100px;
   width: auto;
+  object-fit: contain;
 }
 
 header nav {
@@ -158,7 +159,7 @@ header nav a.active {
 .roomContainer input[type="radio"] {
   width: 18px;
   height: 18px;
-  accent-color: #018749; /* tick color matches theme */
+  accent-color: #018749;
 }
 
 /* ===== Add-On List Upgrade ===== */
@@ -178,6 +179,15 @@ header nav a.active {
   box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
 
+/* ✅ Add-on item image fix */
+.addon-list img {
+  width: 80px;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+  margin-right: 15px;
+}
+
 .addon-list label:hover {
   background-color: #f9f9f9;
   transform: translateY(-2px);
@@ -186,6 +196,7 @@ header nav a.active {
 
 .addon-list .addon-name {
   font-weight: 500;
+  width: 400px;
 }
 
 /* ✅ RIGHT SIDE CONTENT (Quantity + Price + Checkbox) */
@@ -199,7 +210,7 @@ header nav a.active {
 
 .addon-right span {
   font-weight: 600;
-  color: #018749; /* theme color for price */
+  color: #018749;
 }
 
 .addon-item {
@@ -280,7 +291,34 @@ header nav a.active {
   text-align: center;
 }
 
-/* ✅ Remove number input arrows (Chrome, Safari, Edge, Opera) */
+.unit-buttons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.unit-btn {
+  padding: 8px 14px;
+  border: 1px solid #018749;
+  border-radius: 8px;
+  background: #fff;
+  color: #018749;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 14px;
+}
+
+.unit-btn:hover {
+  background-color: #f0fff6;
+}
+
+.unit-btn.active {
+  background-color: #018749;
+  color: #fff;
+}
+
+/* ✅ Remove number input arrows */
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
@@ -403,6 +441,10 @@ footer {
   .addon-right {
     gap: 6px;
   }
+
+  .addon-list img {
+    width: 60px;
+  }
 }
 
 @media (max-width: 600px) {
@@ -438,5 +480,10 @@ footer {
 
   .addon-right {
     gap: 5px;
+  }
+
+  .addon-list img {
+    width: 50px;
+    margin-right: 10px;
   }
 }
