@@ -305,213 +305,256 @@ document.addEventListener("DOMContentLoaded", () => {
   applyFilters();
   calculateTotal();
 
-  // ===== PDF GENERATION =====
-  document.getElementById("generatePDF").addEventListener("click", () => {
-    const name = document.querySelector('input[name="name"]').value || "-";
-    const email = document.querySelector('input[name="email"]').value || "-";
-    const phone = document.querySelector('input[name="phone"]').value || "-";
-    const unit = document.querySelector('input[name="unit"]').value || "-";
-    const selectedUnitType = document.querySelector(".unit-type:checked")?.dataset.name || "-";
-    const selectedRoom = document.querySelector(".room-type:checked");
-    const selectedRoomName = selectedRoom ? selectedRoom.dataset.name : "-";
-    const roomPrice = selectedRoom ? parseFloat(selectedRoom.dataset.price) : 0;
-    const selectedRoomObj = roomTypes.find(r => r.name === selectedRoomName);
-    const includedItems = selectedRoomObj?.includedItems || [];
+// ===== PDF GENERATION =====
+document.getElementById("generatePDF").addEventListener("click", () => {
+  const name = document.querySelector('input[name="name"]').value || "-";
+  const email = document.querySelector('input[name="email"]').value || "-";
+  const phone = document.querySelector('input[name="phone"]').value || "-";
+  const unit = document.querySelector('input[name="unit"]').value || "-";
+  const selectedUnitType = document.querySelector(".unit-type:checked")?.dataset.name || "-";
+  const selectedRoom = document.querySelector(".room-type:checked");
+  const selectedRoomName = selectedRoom ? selectedRoom.dataset.name : "-";
+  const roomPrice = selectedRoom ? parseFloat(selectedRoom.dataset.price) : 0;
+  const selectedRoomObj = roomTypes.find(r => r.name === selectedRoomName);
+  const includedItems = selectedRoomObj?.includedItems || [];
 
-    const selectedAddons = Array.from(document.querySelectorAll(".addon-item"))
-      .filter(cb => cb.checked && cb.closest("label").style.display !== "none")
-      .map(cb => {
-        const qty = parseInt(cb.parentElement.querySelector(".qty-value").value) || 1;
-        const price = parseFloat(cb.dataset.price);
-        const group = cb.dataset.group;
-        return { name: cb.dataset.name, price, qty, subtotal: price * qty, group };
-      });
+  const selectedAddons = Array.from(document.querySelectorAll(".addon-item"))
+    .filter(cb => cb.checked && cb.closest("label").style.display !== "none")
+    .map(cb => {
+      const qty = parseInt(cb.parentElement.querySelector(".qty-value").value) || 1;
+      const price = parseFloat(cb.dataset.price);
+      const group = cb.dataset.group;
+      return { name: cb.dataset.name, price, qty, subtotal: price * qty, group };
+    });
 
-    const total = parseFloat(totalDisplay.textContent) || 0;
+  const total = parseFloat(totalDisplay.textContent) || 0;
 
-    // ===== Create Professional PDF Layout =====
-    const pdfContainer = document.createElement("div");
-    pdfContainer.style.padding = "20px";
-    pdfContainer.style.background = "#fff";
-    pdfContainer.style.fontFamily = "Arial, sans-serif";
-    pdfContainer.style.fontSize = "12px";
-    pdfContainer.style.color = "#333";
-    pdfContainer.style.lineHeight = "1.4";
-    pdfContainer.style.maxWidth = "100%";
-    pdfContainer.style.overflow = "hidden";
+  // ===== Create Professional PDF Layout =====
+  const pdfContainer = document.createElement("div");
+  pdfContainer.style.padding = "15mm";
+  pdfContainer.style.background = "#ffffff";
+  pdfContainer.style.fontFamily = "Arial, sans-serif";
+  pdfContainer.style.fontSize = "12px"; // Original font size
+  pdfContainer.style.color = "#000000";
+  pdfContainer.style.lineHeight = "1.4";
+  pdfContainer.style.width = "190mm"; // Slightly smaller to account for margins
+  pdfContainer.style.minHeight = "280mm"; // Slightly smaller than A4
+  pdfContainer.style.margin = "0 auto";
+  pdfContainer.style.boxSizing = "border-box";
 
-    // HEADER SECTION WITH LOGO
-    pdfContainer.innerHTML = `
-      <div style="display:flex; align-items:center; margin-bottom:20px; padding-bottom:15px; border-bottom:1px solid #ccc;">
-        <img src="../image/SS logo.png" style="width:80px; height:auto; margin-right:20px;">
-        <div style="flex:1;">
-          <h1 style="margin:0; font-size:18px; font-weight:bold;">Square Space Solution</h1>
-          <p style="margin:3px 0 0 0; font-size:11px; color:#666;">B-21-06, Residensi Aradia, 102, Jalan Sibu, Taman Wahyu</p>
-        </div>
+  // HEADER SECTION WITH LOGO
+  pdfContainer.innerHTML = `
+    <style>
+      @media all {
+        * {
+          box-sizing: border-box;
+        }
+        body {
+          background: white !important;
+          margin: 0 !important;
+          padding: 0 !important;
+        }
+      }
+    </style>
+    
+    <div style="display: flex; align-items: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #ccc;">
+      <img src="../image/SS logo.png" style="width: 80px; height: auto; margin-right: 20px;">
+      <div style="flex: 1;">
+        <h1 style="margin: 0; font-size: 18px; font-weight: bold;">Square Space Solution</h1>
+        <p style="margin: 3px 0 0 0; font-size: 11px; color: #666;">B-21-06, Residensi Aradia, 102, Jalan Sibu, Taman Wahyu</p>
       </div>
+    </div>
 
-      <!-- DOCUMENT TITLE -->
-      <div style="text-align:center; margin-bottom:25px;">
-        <h1 style="margin:0 0 5px 0; font-size:16px; font-weight:bold;">Premium Package Add-On Summary</h1>
-        <h2 style="margin:0; font-size:14px; font-weight:normal;">Theme: ${theme}</h2>
-      </div>
+    <!-- DOCUMENT TITLE -->
+    <div style="text-align: center; margin-bottom: 25px;">
+      <h1 style="margin: 0 0 5px 0; font-size: 16px; font-weight: bold;">Premium Package Add-On Summary</h1>
+      <h2 style="margin: 0; font-size: 14px; font-weight: normal;">Theme: ${theme}</h2>
+    </div>
 
-      <!-- CLIENT INFORMATION -->
-      <table style="width:100%; border-collapse:collapse; margin-bottom:25px;">
-        <tr>
-          <td style="padding:4px 0; width:25%;"><strong>Name:</strong></td>
-          <td style="padding:4px 0; width:25%;">${name}</td>
-          <td style="padding:4px 0; width:25%;"><strong>Phone:</strong></td>
-          <td style="padding:4px 0; width:25%;">${phone}</td>
-        </tr>
-        <tr>
-          <td style="padding:4px 0;"><strong>Email:</strong></td>
-          <td style="padding:4px 0;">${email}</td>
-          <td style="padding:4px 0;"><strong>Unit:</strong></td>
-          <td style="padding:4px 0;">${unit}</td>
-        </tr>
-        <tr>
-          <td style="padding:4px 0;"><strong>Unit Type:</strong></td>
-          <td style="padding:4px 0;">${selectedUnitType}</td>
-          <td style="padding:4px 0;"><strong>Room Type:</strong></td>
-          <td style="padding:4px 0;">${selectedRoomName} (RM${roomPrice.toFixed(2)})</td>
-        </tr>
-      </table>
-    `;
+    <!-- CLIENT INFORMATION -->
+    <table style="width: 100%; border-collapse: collapse; margin-bottom: 25px;">
+      <tr>
+        <td style="padding: 4px 0; width: 25%;"><strong>Name:</strong></td>
+        <td style="padding: 4px 0; width: 25%;">${name}</td>
+        <td style="padding: 4px 0; width: 25%;"><strong>Phone:</strong></td>
+        <td style="padding: 4px 0; width: 25%;">${phone}</td>
+      </tr>
+      <tr>
+        <td style="padding: 4px 0;"><strong>Email:</strong></td>
+        <td style="padding: 4px 0;">${email}</td>
+        <td style="padding: 4px 0;"><strong>Unit:</strong></td>
+        <td style="padding: 4px 0;">${unit}</td>
+      </tr>
+      <tr>
+        <td style="padding: 4px 0;"><strong>Unit Type:</strong></td>
+        <td style="padding: 4px 0;">${selectedUnitType}</td>
+        <td style="padding: 4px 0;"><strong>Room Type:</strong></td>
+        <td style="padding: 4px 0;">${selectedRoomName} (RM${roomPrice.toFixed(2)})</td>
+      </tr>
+    </table>
+  `;
 
-    // PACKAGE INCLUSIONS SECTION
-    pdfContainer.innerHTML += `
-      <h2 style="font-size:14px; margin-bottom:10px; padding-bottom:5px; border-bottom:1px solid #ccc;">Included in Package</h2>
-      ${includedItems.length ? `
-        <table style="width:100%; border:1px solid #ccc; border-collapse:collapse; margin-bottom:25px;">
-          <thead>
-            <tr style="background:#f8f8f8;">
-              <th style="text-align:left; padding:8px; border-bottom:1px solid #ccc;">Item</th>
-              <th style="text-align:left; padding:8px; border-bottom:1px solid #ccc;">Area</th>
-              <th style="text-align:center; padding:8px; border-bottom:1px solid #ccc;">Quantity</th>
+  // PACKAGE INCLUSIONS SECTION
+  pdfContainer.innerHTML += `
+    <h2 style="font-size: 14px; margin-bottom: 10px; padding-bottom: 5px; border-bottom: 1px solid #ccc;">Included in Package</h2>
+    ${includedItems.length ? `
+      <table style="width: 100%; border: 1px solid #ccc; border-collapse: collapse; margin-bottom: 25px;">
+        <thead>
+          <tr style="background: #f8f8f8;">
+            <th style="text-align: left; padding: 8px; border-bottom: 1px solid #ccc;">Item</th>
+            <th style="text-align: left; padding: 8px; border-bottom: 1px solid #ccc;">Area</th>
+            <th style="text-align: center; padding: 8px; border-bottom: 1px solid #ccc;">Quantity</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${includedItems.map(i => `
+            <tr>
+              <td style="padding: 6px; border-top: 1px solid #eee;">${i.item}</td>
+              <td style="padding: 6px; border-top: 1px solid #eee;">${i.area}</td>
+              <td style="text-align: center; padding: 6px; border-top: 1px solid #eee;">${i.quantity}</td>
             </tr>
-          </thead>
-          <tbody>
-            ${includedItems.map(i => `
-              <tr>
-                <td style="padding:6px; border-top:1px solid #eee;">${i.item}</td>
-                <td style="padding:6px; border-top:1px solid #eee;">${i.area}</td>
-                <td style="text-align:center; padding:6px; border-top:1px solid #eee;">${i.quantity}</td>
-              </tr>
-            `).join('')}
-          </tbody>
-        </table>
-      ` : '<p style="margin-bottom:25px;">No base inclusions</p>'}
-    `;
+          `).join('')}
+        </tbody>
+      </table>
+    ` : '<p style="margin-bottom: 25px;">No base inclusions</p>'}
+  `;
 
-    // ADD-ONS SECTION
-    if (selectedAddons.length > 0) {
-      // Group add-ons by category
-      const groupedAddons = {};
-      selectedAddons.forEach(a => {
-        if (!groupedAddons[a.group]) groupedAddons[a.group] = [];
-        groupedAddons[a.group].push(a);
-      });
+  // ADD-ONS SECTION
+  if (selectedAddons.length > 0) {
+    // Group add-ons by category
+    const groupedAddons = {};
+    selectedAddons.forEach(a => {
+      if (!groupedAddons[a.group]) groupedAddons[a.group] = [];
+      groupedAddons[a.group].push(a);
+    });
 
-      let addonRows = '';
-      Object.keys(groupedAddons).forEach(group => {
+    let addonRows = '';
+    Object.keys(groupedAddons).forEach(group => {
+      addonRows += `
+        <tr style="background: #e9e9e9;">
+          <td colspan="4" style="padding: 8px; font-weight: bold; border-top: 1px solid #ccc;">${group}</td>
+        </tr>
+      `;
+      
+      groupedAddons[group].forEach(a => {
         addonRows += `
-          <tr style="background:#e9e9e9;">
-            <td colspan="4" style="padding:8px; font-weight:bold; border-top:1px solid #ccc;">${group}</td>
+          <tr>
+            <td style="padding: 6px; border-top: 1px solid #eee;">${a.name}</td>
+            <td style="text-align: center; padding: 6px; border-top: 1px solid #eee;">${a.qty}</td>
+            <td style="text-align: right; padding: 6px; border-top: 1px solid #eee;">${a.price.toFixed(2)}</td>
+            <td style="text-align: right; padding: 6px; border-top: 1px solid #eee;">${a.subtotal.toFixed(2)}</td>
           </tr>
         `;
-        
-        groupedAddons[group].forEach(a => {
-          addonRows += `
-            <tr>
-              <td style="padding:6px; border-top:1px solid #eee;">${a.name}</td>
-              <td style="text-align:center; padding:6px; border-top:1px solid #eee;">${a.qty}</td>
-              <td style="text-align:right; padding:6px; border-top:1px solid #eee;">${a.price.toFixed(2)}</td>
-              <td style="text-align:right; padding:6px; border-top:1px solid #eee;">${a.subtotal.toFixed(2)}</td>
-            </tr>
-          `;
-        });
       });
+    });
 
-      pdfContainer.innerHTML += `
-        <h2 style="font-size:14px; margin-bottom:10px; padding-bottom:5px; border-bottom:1px solid #ccc;">Selected Add-Ons</h2>
-        <table style="width:100%; border:1px solid #ccc; border-collapse:collapse; margin-bottom:25px;">
-          <thead>
-            <tr style="background:#f0f0f0;">
-              <th style="text-align:left; padding:8px; border-bottom:1px solid #ccc;">Item</th>
-              <th style="text-align:center; padding:8px; border-bottom:1px solid #ccc;">Qty</th>
-              <th style="text-align:right; padding:8px; border-bottom:1px solid #ccc;">Price (RM)</th>
-              <th style="text-align:right; padding:8px; border-bottom:1px solid #ccc;">Subtotal (RM)</th>
-            </tr>
-          </thead>
-          <tbody>${addonRows}</tbody>
-        </table>
-      `;
-    } else {
-      pdfContainer.innerHTML += `
-        <h2 style="font-size:14px; margin-bottom:10px; padding-bottom:5px; border-bottom:1px solid #ccc;">Selected Add-Ons</h2>
-        <p style="margin-bottom:25px;">No add-ons selected.</p>
-      `;
-    }
-
-    // TOTAL SECTION
     pdfContainer.innerHTML += `
-      <div style="text-align:right; margin-bottom:30px;">
-        <h2 style="margin:0; font-size:16px; font-weight:bold;">Total: RM${total.toFixed(2)}</h2>
-      </div>
+      <h2 style="font-size: 14px; margin-bottom: 10px; padding-bottom: 5px; border-bottom: 1px solid #ccc;">Selected Add-Ons</h2>
+      <table style="width: 100%; border: 1px solid #ccc; border-collapse: collapse; margin-bottom: 25px;">
+        <thead>
+          <tr style="background: #f0f0f0;">
+            <th style="text-align: left; padding: 8px; border-bottom: 1px solid #ccc;">Item</th>
+            <th style="text-align: center; padding: 8px; border-bottom: 1px solid #ccc;">Qty</th>
+            <th style="text-align: right; padding: 8px; border-bottom: 1px solid #ccc;">Price (RM)</th>
+            <th style="text-align: right; padding: 8px; border-bottom: 1px solid #ccc;">Subtotal (RM)</th>
+          </tr>
+        </thead>
+        <tbody>${addonRows}</tbody>
+      </table>
     `;
-
-    // SIGNATURE SECTION
+  } else {
     pdfContainer.innerHTML += `
-      <div style="margin-top:80px; padding-top:20px">
-        <div style="display:flex; justify-content:space-between; font-size:12px;">
-          <!-- Client Signature -->
-          <div style="width:45%;">
-            <div>_________________________</div>
-            <div style="margin-top:5px;">Client Signature</div>
-            <div style="margin-top:10px;">Name: ___________________</div>
-            <div>Date: ___________________</div>
-          </div>
-          
-          <!-- Company Representative -->
-          <div style="width:45%; text-align:right;">
-            <div>_________________________</div>
-            <div style="margin-top:5px;">Company Representative</div>
-            <div style="margin-top:10px;">Name: ___________________</div>
-            <div>Date: ___________________</div>
-          </div>
+      <h2 style="font-size: 14px; margin-bottom: 10px; padding-bottom: 5px; border-bottom: 1px solid #ccc;">Selected Add-Ons</h2>
+      <p style="margin-bottom: 25px;">No add-ons selected.</p>
+    `;
+  }
+
+  // TOTAL SECTION
+  pdfContainer.innerHTML += `
+    <div style="text-align: right; margin-bottom: 30px;">
+      <h2 style="margin: 0; font-size: 16px; font-weight: bold;">Total: RM${total.toFixed(2)}</h2>
+    </div>
+  `;
+
+  // SIGNATURE SECTION
+  pdfContainer.innerHTML += `
+    <div style="margin-top: 60px; padding-top: 20px; border-top: 1px solid #ccc;">
+      <div style="display: flex; justify-content: space-between; font-size: 12px;">
+        <!-- Client Signature -->
+        <div style="width: 45%;">
+          <div>_________________________</div>
+          <div style="margin-top: 5px;">Client Signature</div>
+          <div style="margin-top: 10px;">Name: ___________________</div>
+          <div>Date: ___________________</div>
+        </div>
+        
+        <!-- Company Representative -->
+        <div style="width: 45%; text-align: right;">
+          <div>_________________________</div>
+          <div style="margin-top: 5px;">Company Representative</div>
+          <div style="margin-top: 10px;">Name: ___________________</div>
+          <div>Date: ___________________</div>
         </div>
       </div>
-    `;
+    </div>
+  `;
 
-// ===== Export to PDF =====
-document.body.appendChild(pdfContainer);
+  // ===== Export to PDF =====
+  document.body.appendChild(pdfContainer);
 
-pdfContainer.style.background = "#ffffff";
-pdfContainer.style.boxShadow = "none";
-pdfContainer.style.margin = "0";
+  // Add loading indicator
+  const originalText = document.getElementById("generatePDF").textContent;
+  document.getElementById("generatePDF").textContent = "⏳ Generating PDF...";
+  document.getElementById("generatePDF").disabled = true;
 
-html2pdf()
-  .set({
-    margin: 10,
+  // PDF settings with proper scaling
+  const options = {
+    margin: [10, 10, 10, 10],
     filename: `Premium_AddOn_Summary_${selectedUnitType}.pdf`,
     html2canvas: { 
-      scale: 2,
+      scale: 1.5, // Balanced scale
       useCORS: true,
-      backgroundColor: "#ffffff", // ✅ Fix for black PDF
-      logging: false
+      logging: false,
+      backgroundColor: "#FFFFFF",
+      width: 794,
+      height: pdfContainer.scrollHeight,
+      scrollX: 0,
+      scrollY: 0,
+      onclone: function(clonedDoc) {
+        clonedDoc.body.style.backgroundColor = "#FFFFFF";
+        clonedDoc.body.style.color = "#000000";
+        clonedDoc.body.style.margin = "0";
+        clonedDoc.body.style.padding = "0";
+      }
     },
-    jsPDF: { unit: "mm", format: "a4", orientation: "portrait" }
-  })
-  .from(pdfContainer)
-  .save()
-  .then(() => {
-    console.log("PDF generated successfully!");
-    pdfContainer.remove();
-  })
-  .catch(err => {
-    console.error("PDF generation failed:", err);
-    pdfContainer.remove();
-  });
-  });
+    jsPDF: { 
+      unit: "mm", 
+      format: "a4", 
+      orientation: "portrait"
+    }
+  };
+
+  setTimeout(() => {
+    html2pdf()
+      .set(options)
+      .from(pdfContainer)
+      .save()
+      .then(() => {
+        console.log("PDF generated successfully!");
+        document.getElementById("generatePDF").textContent = originalText;
+        document.getElementById("generatePDF").disabled = false;
+        pdfContainer.remove();
+      })
+      .catch(err => {
+        console.error("PDF generation failed:", err);
+        document.getElementById("generatePDF").textContent = "❌ Error - Try Again";
+        document.getElementById("generatePDF").disabled = false;
+        setTimeout(() => {
+          document.getElementById("generatePDF").textContent = originalText;
+          document.getElementById("generatePDF").disabled = false;
+        }, 2000);
+        pdfContainer.remove();
+      });
+  }, 500);
 });
+  });
