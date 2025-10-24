@@ -121,27 +121,17 @@ document.addEventListener("DOMContentLoaded", () => {
       { name: "Curtain", price: 3600, allowedUnits: ["Type D2"] },
       { name: "Curtain", price: 4300, allowedUnits: ["Type E"] },
       { name: "Curtain", price: 5800, allowedUnits: ["Type F"] },
-      { name: "Tinted Film", price: 600, allowedUnits: ["Type A"] },
-      { name: "Tinted Film", price: 800, allowedUnits: ["Type B"] },
-      { name: "Tinted Film", price: 700, allowedUnits: ["Type C"] },
-      { name: "Tinted Film", price: 1200, allowedUnits: ["Type D1"] },
-      { name: "Tinted Film", price: 800, allowedUnits: ["Type D2"] },
-      { name: "Tinted Film", price: 900, allowedUnits: ["Type E"] },
-      { name: "Tinted Film", price: 2099, allowedUnits: ["Type F"] },
+      { name: "Tinted Advance Series", price: 600, allowedUnits: ["Type A"] },
+      { name: "Tinted Advance Series", price: 800, allowedUnits: ["Type B"] },
+      { name: "Tinted Advance Series", price: 700, allowedUnits: ["Type C"] },
+      { name: "Tinted Advance Series", price: 1200, allowedUnits: ["Type D1"] },
+      { name: "Tinted Advance Series", price: 800, allowedUnits: ["Type D2"] },
+      { name: "Tinted Advance Series", price: 900, allowedUnits: ["Type E"] },
+      { name: "Tinted Advance Series", price: 2099, allowedUnits: ["Type F"] },
       { name: "Yard Grill", price: 1300 },
       { name: "Door Grill", price: 2100 },
       { name: "Shower Screen", price: 800 }
     ],
-    "Partition": [
-      { name: "Partition per sq ft", price: 600, allowedUnits: ["Type A"] },
-      { name: "Partition per sq ft", price: 800, allowedUnits: ["Type B"] },
-      { name: "Partition per sq ft", price: 700, allowedUnits: ["Type C"] },
-      { name: "Partition per sq ft", price: 1200, allowedUnits: ["Type D1"] },
-      { name: "Partition per sq ft", price: 800, allowedUnits: ["Type D2"] },
-      { name: "Partition per sq ft", price: 900, allowedUnits: ["Type E"] },
-      { name: "Partition per sq ft", price: 2099, allowedUnits: ["Type F"] },
-    ],
-
     "Plaster Ceiling": [
       //Type A
       { name: "Living Area", price: 644, allowedUnits: ["Type A"] },
@@ -160,11 +150,11 @@ document.addEventListener("DOMContentLoaded", () => {
       { name: "Bedroom 2", price: 700, allowedUnits: ["Type C"] },
       { name: "Study Area", price: 672, allowedUnits: ["Type C"] },
       //Type D1
-      { name: "Living Area", price: 600, allowedUnits: ["Type D1"] },
-      { name: "Dining Area", price: 800, allowedUnits: ["Type D1"] },
-      { name: "Master Bedroom", price: 700, allowedUnits: ["Type D1"] },
-      { name: "Bedroom 2", price: 1200, allowedUnits: ["Type D1"] },
-      { name: "Bedroom 3", price: 800, allowedUnits: ["Type D1"] },
+      { name: "Living Area", price: 1120, allowedUnits: ["Type D1"] },
+      { name: "Dining Area", price: 1505, allowedUnits: ["Type D1"] },
+      { name: "Master Bedroom", price: 1050, allowedUnits: ["Type D1"] },
+      { name: "Bedroom 2", price: 812, allowedUnits: ["Type D1"] },
+      { name: "Bedroom 3", price: 658, allowedUnits: ["Type D1"] },
       //Type D2
       { name: "Living Area", price: 1120, allowedUnits: ["Type D2"] },
       { name: "Dining Area", price: 1505, allowedUnits: ["Type D2"] },
@@ -310,143 +300,191 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const total = parseFloat(totalDisplay.textContent) || 0;
 
-    // ===== Create PDF Layout =====
+    // ===== Create Professional PDF Layout =====
     const pdfContainer = document.createElement("div");
-    pdfContainer.style.padding = "25px";
+    pdfContainer.style.padding = "20px";
     pdfContainer.style.background = "#fff";
-    pdfContainer.style.fontFamily = "Poppins, Arial, sans-serif";
+    pdfContainer.style.fontFamily = "Arial, sans-serif";
     pdfContainer.style.fontSize = "12px";
     pdfContainer.style.color = "#333";
+    pdfContainer.style.lineHeight = "1.4";
+    pdfContainer.style.maxWidth = "100%";
+    pdfContainer.style.overflow = "hidden";
 
+    // HEADER SECTION WITH LOGO
     pdfContainer.innerHTML = `
-      <div style="display:flex; align-items:center; margin-bottom:20px;">
-        <img src="../image/SS logo.png" style="width:90px; margin-right:15px;">
-        <div>
-          <h2 style="margin:0; font-size:18px;">Square Space Solution</h2>
-          <p style="margin:2px 0; font-size:11px;">B-21-06, Residensi Aradia, 102, Jalan Sibu, Taman Wahyu</p>
+      <div style="display:flex; align-items:center; margin-bottom:20px; padding-bottom:15px; border-bottom:1px solid #ccc;">
+        <img src="../image/SS logo.png" style="width:80px; height:auto; margin-right:20px;">
+        <div style="flex:1;">
+          <h1 style="margin:0; font-size:18px; font-weight:bold;">Square Space Solution</h1>
+          <p style="margin:3px 0 0 0; font-size:11px; color:#666;">B-21-06, Residensi Aradia, 102, Jalan Sibu, Taman Wahyu</p>
         </div>
       </div>
-      <hr style="margin-bottom:15px;">
-      <h1 style="text-align:center; font-size:18px; margin-bottom:10px;">Basic Package Add-On Summary</h1>
-      <h3 style="text-align:center; font-weight:normal; margin-bottom:20px;">Theme: ${theme}</h3>
 
-      <table style="width:100%; border-collapse:collapse; margin-bottom:20px;">
-        <tr><td><strong>Name:</strong></td><td>${name}</td><td><strong>Phone:</strong></td><td>${phone}</td></tr>
-        <tr><td><strong>Email:</strong></td><td>${email}</td><td><strong>Unit:</strong></td><td>${unit}</td></tr>
-        <tr><td><strong>Unit Type:</strong></td><td>${selectedUnitType}</td><td><strong>Room Type:</strong></td><td>${selectedRoomName} (RM${roomPrice.toFixed(2)})</td></tr>
+      <!-- DOCUMENT TITLE -->
+      <div style="text-align:center; margin-bottom:25px;">
+        <h1 style="margin:0 0 5px 0; font-size:16px; font-weight:bold;">Basic Package Add-On Summary</h1>
+        <h2 style="margin:0; font-size:14px; font-weight:normal;">Theme: ${theme}</h2>
+      </div>
+
+      <!-- CLIENT INFORMATION -->
+      <table style="width:100%; border-collapse:collapse; margin-bottom:25px;">
+        <tr>
+          <td style="padding:4px 0; width:25%;"><strong>Name:</strong></td>
+          <td style="padding:4px 0; width:25%;">${name}</td>
+          <td style="padding:4px 0; width:25%;"><strong>Phone:</strong></td>
+          <td style="padding:4px 0; width:25%;">${phone}</td>
+        </tr>
+        <tr>
+          <td style="padding:4px 0;"><strong>Email:</strong></td>
+          <td style="padding:4px 0;">${email}</td>
+          <td style="padding:4px 0;"><strong>Unit:</strong></td>
+          <td style="padding:4px 0;">${unit}</td>
+        </tr>
+        <tr>
+          <td style="padding:4px 0;"><strong>Unit Type:</strong></td>
+          <td style="padding:4px 0;">${selectedUnitType}</td>
+          <td style="padding:4px 0;"><strong>Room Type:</strong></td>
+          <td style="padding:4px 0;">${selectedRoomName} (RM${roomPrice.toFixed(2)})</td>
+        </tr>
       </table>
     `;
 
-    // ===== Included Items (NEW FORMAT) =====
+    // PACKAGE INCLUSIONS SECTION
     pdfContainer.innerHTML += `
-      <h2 style="font-size:14px; margin-bottom:5px;">Included in Package</h2>
-      ${includedItems.length
-        ? `<table style="width:100%; border:1px solid #ccc; border-collapse:collapse; margin-bottom:20px;">
-            <thead>
-              <tr style="background:#f8f8f8;">
-                <th style="text-align:left; padding:5px;">Item</th>
-                <th style="text-align:left; padding:5px;">Area</th>
-                <th style="text-align:center; padding:5px;">Quantity</th>
+      <h2 style="font-size:14px; margin-bottom:10px; padding-bottom:5px; border-bottom:1px solid #ccc;">Included in Package</h2>
+      ${includedItems.length ? `
+        <table style="width:100%; border:1px solid #ccc; border-collapse:collapse; margin-bottom:25px;">
+          <thead>
+            <tr style="background:#f8f8f8;">
+              <th style="text-align:left; padding:8px; border-bottom:1px solid #ccc;">Item</th>
+              <th style="text-align:left; padding:8px; border-bottom:1px solid #ccc;">Area</th>
+              <th style="text-align:center; padding:8px; border-bottom:1px solid #ccc;">Quantity</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${includedItems.map(i => `
+              <tr>
+                <td style="padding:6px; border-top:1px solid #eee;">${i.item}</td>
+                <td style="padding:6px; border-top:1px solid #eee;">${i.area}</td>
+                <td style="text-align:center; padding:6px; border-top:1px solid #eee;">${i.quantity}</td>
               </tr>
-            </thead>
-            <tbody>
-              ${includedItems.map(i => `
-                <tr>
-                  <td style="padding:5px; border-top:1px solid #ccc;">${i.item}</td>
-                  <td style="padding:5px; border-top:1px solid #ccc;">${i.area}</td>
-                  <td style="text-align:center; padding:5px; border-top:1px solid #ccc;">${i.quantity}</td>
-                </tr>`).join("")}
-            </tbody>
-          </table>`
-        : "<p>No base inclusions</p>"}
+            `).join('')}
+          </tbody>
+        </table>
+      ` : '<p style="margin-bottom:25px;">No base inclusions</p>'}
     `;
 
-// ===== Combined Add-Ons (Single Table with Section Headers) =====
-if (selectedAddons.length > 0) {
-  // Group add-ons by category (group = section name)
-  const groupedAddons = {};
-  selectedAddons.forEach(a => {
-    if (!groupedAddons[a.group]) groupedAddons[a.group] = [];
-    groupedAddons[a.group].push(a);
-  });
+    // ADD-ONS SECTION
+    if (selectedAddons.length > 0) {
+      // Group add-ons by category
+      const groupedAddons = {};
+      selectedAddons.forEach(a => {
+        if (!groupedAddons[a.group]) groupedAddons[a.group] = [];
+        groupedAddons[a.group].push(a);
+      });
 
-  let addonRows = "";
+      let addonRows = '';
+      Object.keys(groupedAddons).forEach(group => {
+        addonRows += `
+          <tr style="background:#e9e9e9;">
+            <td colspan="4" style="padding:8px; font-weight:bold; border-top:1px solid #ccc;">${group}</td>
+          </tr>
+        `;
+        
+        groupedAddons[group].forEach(a => {
+          addonRows += `
+            <tr>
+              <td style="padding:6px; border-top:1px solid #eee;">${a.name}</td>
+              <td style="text-align:center; padding:6px; border-top:1px solid #eee;">${a.qty}</td>
+              <td style="text-align:right; padding:6px; border-top:1px solid #eee;">${a.price.toFixed(2)}</td>
+              <td style="text-align:right; padding:6px; border-top:1px solid #eee;">${a.subtotal.toFixed(2)}</td>
+            </tr>
+          `;
+        });
+      });
 
-  // Build table rows with section name as a bold header row
-  Object.keys(groupedAddons).forEach(group => {
-    addonRows += `
-      <tr style="background:#e9e9e9; font-weight:700; border-top:2px solid #999;">
-        <td colspan="4" style="padding:8px 6px; text-transform:uppercase;">${group}</td>
-      </tr>
-    `;
-
-    groupedAddons[group].forEach(a => {
-      addonRows += `
-        <tr>
-          <td style="padding:6px; border-top:1px solid #ccc;">${a.name}</td>
-          <td style="text-align:center; border-top:1px solid #ccc;">${a.qty}</td>
-          <td style="text-align:right; border-top:1px solid #ccc;">${a.price.toFixed(2)}</td>
-          <td style="text-align:right; border-top:1px solid #ccc;">${a.subtotal.toFixed(2)}</td>
-        </tr>
+      pdfContainer.innerHTML += `
+        <h2 style="font-size:14px; margin-bottom:10px; padding-bottom:5px; border-bottom:1px solid #ccc;">Selected Add-Ons</h2>
+        <table style="width:100%; border:1px solid #ccc; border-collapse:collapse; margin-bottom:25px;">
+          <thead>
+            <tr style="background:#f0f0f0;">
+              <th style="text-align:left; padding:8px; border-bottom:1px solid #ccc;">Item</th>
+              <th style="text-align:center; padding:8px; border-bottom:1px solid #ccc;">Qty</th>
+              <th style="text-align:right; padding:8px; border-bottom:1px solid #ccc;">Price (RM)</th>
+              <th style="text-align:right; padding:8px; border-bottom:1px solid #ccc;">Subtotal (RM)</th>
+            </tr>
+          </thead>
+          <tbody>${addonRows}</tbody>
+        </table>
       `;
-    });
-  });
+    } else {
+      pdfContainer.innerHTML += `
+        <h2 style="font-size:14px; margin-bottom:10px; padding-bottom:5px; border-bottom:1px solid #ccc;">Selected Add-Ons</h2>
+        <p style="margin-bottom:25px;">No add-ons selected.</p>
+      `;
+    }
 
-  pdfContainer.innerHTML += `
-    <h2 style="font-size:15px; margin-bottom:8px;">Selected Add-Ons</h2>
-    <table style="width:100%; border:1px solid #ccc; border-collapse:collapse; margin-bottom:20px;">
-      <thead>
-        <tr style="background:#f0f0f0; font-weight:600;">
-          <th style="text-align:left; padding:6px;">Item</th>
-          <th style="text-align:center; padding:6px;">Qty</th>
-          <th style="text-align:right; padding:6px;">Price (RM)</th>
-          <th style="text-align:right; padding:6px;">Subtotal (RM)</th>
-        </tr>
-      </thead>
-      <tbody>${addonRows}</tbody>
-    </table>
-  `;
-} else {
-  pdfContainer.innerHTML += `<p>No add-ons selected.</p>`;
-}
-
-    // ===== Total =====
+    // TOTAL SECTION
     pdfContainer.innerHTML += `
-      <h2 style="text-align:right; font-size:15px;">Total: RM${total.toFixed(2)}</h2>
+      <div style="text-align:right; margin-bottom:30px;">
+        <h2 style="margin:0; font-size:16px; font-weight:bold;">Total: RM${total.toFixed(2)}</h2>
+      </div>
     `;
 
-    // ===== Signature Section =====
+    // SIGNATURE SECTION
     pdfContainer.innerHTML += `
-      <div style="margin-top:40px; display:flex; justify-content:space-between;">
-        <!-- Left: Client Signature -->
-        <div style="width:45%; text-align:left;">
-          <div>_________________________</div>
-          <div style="font-size:12px;">Client Signature</div>
-          <div>Name: ___________________</div>
-          <div>Date: ___________________</div>
-        </div>
-
-        <!-- Right: Company Representative -->
-        <div style="width:45%; text-align:right;">
-          <div>_________________________</div>
-          <div style="font-size:12px;">Company Representative</div>
-          <div>Name: ___________________</div>
-          <div>Date: ___________________</div>
+      <div style="margin-top:80px; padding-top:20px">
+        <div style="display:flex; justify-content:space-between; font-size:12px;">
+          <!-- Client Signature -->
+          <div style="width:45%;">
+            <div>_________________________</div>
+            <div style="margin-top:5px;">Client Signature</div>
+            <div style="margin-top:10px;">Name: ___________________</div>
+            <div>Date: ___________________</div>
+          </div>
+          
+          <!-- Company Representative -->
+          <div style="width:45%; text-align:right;">
+            <div>_________________________</div>
+            <div style="margin-top:5px;">Company Representative</div>
+            <div style="margin-top:10px;">Name: ___________________</div>
+            <div>Date: ___________________</div>
+          </div>
         </div>
       </div>
     `;
 
     // ===== Export to PDF =====
     document.body.appendChild(pdfContainer);
+    
+    // Fix for content cutoff - use proper PDF settings
     html2pdf()
       .set({
         margin: 10,
-        filename: "Basic_AddOn_Summary.pdf",
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: "mm", format: "a4", orientation: "portrait" }
+        filename: `Basic_AddOn_Summary_${selectedUnitType}.pdf`,
+        html2canvas: { 
+          scale: 2,
+          useCORS: true,
+          logging: false,
+          width: 794, // A4 width in pixels at 96 DPI
+          height: pdfContainer.scrollHeight
+        },
+        jsPDF: { 
+          unit: "mm", 
+          format: "a4", 
+          orientation: "portrait" 
+        }
       })
       .from(pdfContainer)
       .save()
-      .then(() => pdfContainer.remove());
+      .then(() => {
+        console.log("PDF generated successfully!");
+        pdfContainer.remove();
+      })
+      .catch(err => {
+        console.error("PDF generation failed:", err);
+        pdfContainer.remove();
+      });
   });
 });
