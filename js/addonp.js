@@ -20,6 +20,12 @@ function ensureHtml2Pdf() {
   });
 }
 
+// Detect Honor / MagicOS / Huawei-like devices
+function isHonorDevice() {
+  const ua = navigator.userAgent.toLowerCase();
+  return ua.includes('honor') || ua.includes('magicos') || ua.includes('huawei');
+}
+
 document.addEventListener("DOMContentLoaded", () => {
 
   // ===== Get Theme from URL =====
@@ -647,34 +653,49 @@ document.addEventListener("DOMContentLoaded", () => {
         </html>
       `;
 
-      // Method 1: Try html2pdf first
+      // Method 1: Try html2pdf first, unless Honor device
       try {
-        const pdfContainer = document.createElement('div');
-        pdfContainer.innerHTML = pdfContent;
-        document.body.appendChild(pdfContainer);
+        const honor = isHonorDevice();
 
-        const options = {
-          margin: 10,
-          filename: `Premium_AddOn_Summary_${selectedUnitType}_${new Date().toISOString().split('T')[0]}.pdf`,
-          html2canvas: { 
-            scale: 2, // Higher scale for better quality
-            useCORS: true,
-            logging: false,
-            backgroundColor: "#FFFFFF",
-            width: 794,
-            height: pdfContainer.scrollHeight,
-            scrollX: 0,
-            scrollY: 0
-          },
-          jsPDF: { 
-            unit: "mm", 
-            format: "a4", 
-            orientation: "portrait"
-          }
-        };
+        if (!honor && typeof html2pdf !== 'undefined') {
+          const pdfContainer = document.createElement('div');
+          pdfContainer.innerHTML = pdfContent;
+          document.body.appendChild(pdfContainer);
 
-        await html2pdf().set(options).from(pdfContainer).save();
-        pdfContainer.remove();
+          const options = {
+            margin: 10,
+            filename: `Premium_AddOn_Summary_${selectedUnitType}_${new Date().toISOString().split('T')[0]}.pdf`,
+            html2canvas: { 
+              scale: 2, // Higher scale for better quality
+              useCORS: true,
+              logging: false,
+              backgroundColor: "#FFFFFF",
+              width: 794,
+              height: pdfContainer.scrollHeight,
+              scrollX: 0,
+              scrollY: 0
+            },
+            jsPDF: { 
+              unit: "mm", 
+              format: "a4", 
+              orientation: "portrait"
+            }
+          };
+
+          await html2pdf().set(options).from(pdfContainer).save();
+          pdfContainer.remove();
+        } else {
+          // Honor device or html2pdf not available → print fallback
+          console.warn('Using print fallback (Honor device or html2pdf unavailable).');
+          const printWindow = window.open('', '_blank');
+          printWindow.document.write(pdfContent);
+          printWindow.document.close();
+
+          setTimeout(() => {
+            printWindow.print();
+            setTimeout(() => printWindow.close(), 1000);
+          }, 1000);
+        }
         
       } catch (pdfError) {
         console.log('html2pdf failed, trying print method:', pdfError);

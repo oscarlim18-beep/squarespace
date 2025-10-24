@@ -1,5 +1,25 @@
 console.log("html2pdf exists?", typeof html2pdf);
 
+// Check for html2pdf availability and load if needed
+function ensureHtml2Pdf() {
+  return new Promise((resolve, reject) => {
+    if (typeof html2pdf !== 'undefined') {
+      resolve();
+      return;
+    }
+    
+    // Try to load html2pdf if not available
+    const script = document.createElement('script');
+    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
+    script.onload = resolve;
+    script.onerror = () => {
+      console.warn('html2pdf failed to load, using print fallback');
+      resolve(); // Still resolve to continue with fallback
+    };
+    document.head.appendChild(script);
+  });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
 
   // ===== Get Theme from URL =====
@@ -277,214 +297,390 @@ document.addEventListener("DOMContentLoaded", () => {
   calculateTotal();
 
   // ===== PDF GENERATION =====
-  document.getElementById("generatePDF").addEventListener("click", () => {
-    const name = document.querySelector('input[name="name"]').value || "-";
-    const email = document.querySelector('input[name="email"]').value || "-";
-    const phone = document.querySelector('input[name="phone"]').value || "-";
-    const unit = document.querySelector('input[name="unit"]').value || "-";
-    const selectedUnitType = document.querySelector(".unit-type:checked")?.dataset.name || "-";
-    const selectedRoom = document.querySelector(".room-type:checked");
-    const selectedRoomName = selectedRoom ? selectedRoom.dataset.name : "-";
-    const roomPrice = selectedRoom ? parseFloat(selectedRoom.dataset.price) : 0;
-    const selectedRoomObj = roomTypes.find(r => r.name === selectedRoomName);
-    const includedItems = selectedRoomObj?.includedItems || [];
+  document.getElementById("generatePDF").addEventListener("click", async () => {
+    try {
+      // Ensure html2pdf is available
+      await ensureHtml2Pdf();
+      
+      const name = document.querySelector('input[name="name"]').value || "-";
+      const email = document.querySelector('input[name="email"]').value || "-";
+      const phone = document.querySelector('input[name="phone"]').value || "-";
+      const unit = document.querySelector('input[name="unit"]').value || "-";
+      const selectedUnitType = document.querySelector(".unit-type:checked")?.dataset.name || "-";
+      const selectedRoom = document.querySelector(".room-type:checked");
+      const selectedRoomName = selectedRoom ? selectedRoom.dataset.name : "-";
+      const roomPrice = selectedRoom ? parseFloat(selectedRoom.dataset.price) : 0;
+      const selectedRoomObj = roomTypes.find(r => r.name === selectedRoomName);
+      const includedItems = selectedRoomObj?.includedItems || [];
 
-    const selectedAddons = Array.from(document.querySelectorAll(".addon-item"))
-      .filter(cb => cb.checked && cb.closest("label").style.display !== "none")
-      .map(cb => {
-        const qty = parseInt(cb.parentElement.querySelector(".qty-value").value) || 1;
-        const price = parseFloat(cb.dataset.price);
-        const group = cb.dataset.group;
-        return { name: cb.dataset.name, price, qty, subtotal: price * qty, group };
-      });
-
-    const total = parseFloat(totalDisplay.textContent) || 0;
-
-    // ===== Create Professional PDF Layout =====
-    const pdfContainer = document.createElement("div");
-    pdfContainer.style.padding = "20px";
-    pdfContainer.style.background = "#fff";
-    pdfContainer.style.fontFamily = "Arial, sans-serif";
-    pdfContainer.style.fontSize = "12px";
-    pdfContainer.style.color = "#333";
-    pdfContainer.style.lineHeight = "1.4";
-    pdfContainer.style.maxWidth = "100%";
-    pdfContainer.style.overflow = "hidden";
-
-    // HEADER SECTION WITH LOGO
-    pdfContainer.innerHTML = `
-      <div style="display:flex; align-items:center; margin-bottom:20px; padding-bottom:15px; border-bottom:1px solid #ccc;">
-        <img src="../image/SS logo.png" style="width:80px; height:auto; margin-right:20px;">
-        <div style="flex:1;">
-          <h1 style="margin:0; font-size:18px; font-weight:bold;">Square Space Solution</h1>
-          <p style="margin:3px 0 0 0; font-size:11px; color:#666;">B-21-06, Residensi Aradia, 102, Jalan Sibu, Taman Wahyu</p>
-        </div>
-      </div>
-
-      <!-- DOCUMENT TITLE -->
-      <div style="text-align:center; margin-bottom:25px;">
-        <h1 style="margin:0 0 5px 0; font-size:16px; font-weight:bold;">Basic Package Add-On Summary</h1>
-        <h2 style="margin:0; font-size:14px; font-weight:normal;">Theme: ${theme}</h2>
-      </div>
-
-      <!-- CLIENT INFORMATION -->
-      <table style="width:100%; border-collapse:collapse; margin-bottom:25px;">
-        <tr>
-          <td style="padding:4px 0; width:25%;"><strong>Name:</strong></td>
-          <td style="padding:4px 0; width:25%;">${name}</td>
-          <td style="padding:4px 0; width:25%;"><strong>Phone:</strong></td>
-          <td style="padding:4px 0; width:25%;">${phone}</td>
-        </tr>
-        <tr>
-          <td style="padding:4px 0;"><strong>Email:</strong></td>
-          <td style="padding:4px 0;">${email}</td>
-          <td style="padding:4px 0;"><strong>Unit:</strong></td>
-          <td style="padding:4px 0;">${unit}</td>
-        </tr>
-        <tr>
-          <td style="padding:4px 0;"><strong>Unit Type:</strong></td>
-          <td style="padding:4px 0;">${selectedUnitType}</td>
-          <td style="padding:4px 0;"><strong>Room Type:</strong></td>
-          <td style="padding:4px 0;">${selectedRoomName} (RM${roomPrice.toFixed(2)})</td>
-        </tr>
-      </table>
-    `;
-
-    // PACKAGE INCLUSIONS SECTION
-    pdfContainer.innerHTML += `
-      <h2 style="font-size:14px; margin-bottom:10px; padding-bottom:5px; border-bottom:1px solid #ccc;">Included in Package</h2>
-      ${includedItems.length ? `
-        <table style="width:100%; border:1px solid #ccc; border-collapse:collapse; margin-bottom:25px;">
-          <thead>
-            <tr style="background:#f8f8f8;">
-              <th style="text-align:left; padding:8px; border-bottom:1px solid #ccc;">Item</th>
-              <th style="text-align:left; padding:8px; border-bottom:1px solid #ccc;">Area</th>
-              <th style="text-align:center; padding:8px; border-bottom:1px solid #ccc;">Quantity</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${includedItems.map(i => `
-              <tr>
-                <td style="padding:6px; border-top:1px solid #eee;">${i.item}</td>
-                <td style="padding:6px; border-top:1px solid #eee;">${i.area}</td>
-                <td style="text-align:center; padding:6px; border-top:1px solid #eee;">${i.quantity}</td>
-              </tr>
-            `).join('')}
-          </tbody>
-        </table>
-      ` : '<p style="margin-bottom:25px;">No base inclusions</p>'}
-    `;
-
-    // ADD-ONS SECTION
-    if (selectedAddons.length > 0) {
-      // Group add-ons by category
-      const groupedAddons = {};
-      selectedAddons.forEach(a => {
-        if (!groupedAddons[a.group]) groupedAddons[a.group] = [];
-        groupedAddons[a.group].push(a);
-      });
-
-      let addonRows = '';
-      Object.keys(groupedAddons).forEach(group => {
-        addonRows += `
-          <tr style="background:#e9e9e9;">
-            <td colspan="4" style="padding:8px; font-weight:bold; border-top:1px solid #ccc;">${group}</td>
-          </tr>
-        `;
-        
-        groupedAddons[group].forEach(a => {
-          addonRows += `
-            <tr>
-              <td style="padding:6px; border-top:1px solid #eee;">${a.name}</td>
-              <td style="text-align:center; padding:6px; border-top:1px solid #eee;">${a.qty}</td>
-              <td style="text-align:right; padding:6px; border-top:1px solid #eee;">${a.price.toFixed(2)}</td>
-              <td style="text-align:right; padding:6px; border-top:1px solid #eee;">${a.subtotal.toFixed(2)}</td>
-            </tr>
-          `;
+      const selectedAddons = Array.from(document.querySelectorAll(".addon-item"))
+        .filter(cb => cb.checked && cb.closest("label").style.display !== "none")
+        .map(cb => {
+          const qty = parseInt(cb.parentElement.querySelector(".qty-value").value) || 1;
+          const price = parseFloat(cb.dataset.price);
+          const group = cb.dataset.group;
+          return { name: cb.dataset.name, price, qty, subtotal: price * qty, group };
         });
-      });
 
-      pdfContainer.innerHTML += `
-        <h2 style="font-size:14px; margin-bottom:10px; padding-bottom:5px; border-bottom:1px solid #ccc;">Selected Add-Ons</h2>
-        <table style="width:100%; border:1px solid #ccc; border-collapse:collapse; margin-bottom:25px;">
-          <thead>
-            <tr style="background:#f0f0f0;">
-              <th style="text-align:left; padding:8px; border-bottom:1px solid #ccc;">Item</th>
-              <th style="text-align:center; padding:8px; border-bottom:1px solid #ccc;">Qty</th>
-              <th style="text-align:right; padding:8px; border-bottom:1px solid #ccc;">Price (RM)</th>
-              <th style="text-align:right; padding:8px; border-bottom:1px solid #ccc;">Subtotal (RM)</th>
+      const total = parseFloat(totalDisplay.textContent) || 0;
+
+      // Add loading indicator
+      const originalText = document.getElementById("generatePDF").textContent;
+      document.getElementById("generatePDF").textContent = "⏳ Generating PDF...";
+      document.getElementById("generatePDF").disabled = true;
+
+      // Create PDF content with improved styling
+      const pdfContent = `
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <meta charset="UTF-8">
+          <style>
+            body { 
+              font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+              font-size: 12px; 
+              line-height: 1.4; 
+              color: #333; 
+              background: white;
+              margin: 0;
+              padding: 15mm;
+              max-width: 190mm;
+            }
+            .header { 
+              display: flex; 
+              align-items: center; 
+              margin-bottom: 25px; 
+              padding-bottom: 20px; 
+              border-bottom: 2px solid #2c5aa0; 
+            }
+            .logo { 
+              width: 120px; 
+              height: auto; 
+              margin-right: 25px; 
+            }
+            .company-info h1 {
+              margin: 0 0 5px 0; 
+              font-size: 22px; 
+              font-weight: bold;
+              color: #2c5aa0;
+            }
+            .company-info p {
+              margin: 2px 0;
+              font-size: 11px;
+              color: #666;
+            }
+            .title { 
+              text-align: center; 
+              margin-bottom: 30px;
+              padding: 15px;
+              background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+              border-radius: 8px;
+              border-left: 4px solid #2c5aa0;
+            }
+            .title h1 {
+              margin: 0 0 8px 0; 
+              font-size: 18px; 
+              font-weight: bold;
+              color: #2c5aa0;
+            }
+            .title h2 {
+              margin: 0; 
+              font-size: 14px; 
+              font-weight: normal;
+              color: #666;
+            }
+            .info-table { 
+              width: 100%; 
+              border-collapse: collapse; 
+              margin-bottom: 30px; 
+            }
+            .info-table td { 
+              padding: 8px 0; 
+              vertical-align: top; 
+              border-bottom: 1px solid #f0f0f0;
+            }
+            .info-table tr:last-child td {
+              border-bottom: none;
+            }
+            .info-table strong {
+              color: #2c5aa0;
+            }
+            .section-title {
+              font-size: 14px; 
+              margin: 25px 0 12px 0; 
+              padding-bottom: 8px; 
+              border-bottom: 2px solid #2c5aa0;
+              color: #2c5aa0;
+              font-weight: bold;
+            }
+            .data-table { 
+              width: 100%; 
+              border-collapse: collapse; 
+              margin-bottom: 25px; 
+              border: 1px solid #ddd;
+              box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            }
+            .data-table th, 
+            .data-table td { 
+              padding: 10px 8px; 
+              text-align: left; 
+              border: 1px solid #ddd; 
+            }
+            .data-table th { 
+              background: #2c5aa0; 
+              color: white;
+              font-weight: bold;
+              font-size: 11px;
+            }
+            .data-table tr:nth-child(even) {
+              background-color: #f8f9fa;
+            }
+            .group-header {
+              background: #e3f2fd !important;
+              font-weight: bold;
+              color: #2c5aa0;
+              font-size: 11px;
+            }
+            .total-section {
+              text-align: right; 
+              margin: 35px 0; 
+              padding: 20px;
+              background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+              border-radius: 8px;
+              border: 2px solid #2c5aa0;
+            }
+            .total-amount {
+              font-size: 24px; 
+              font-weight: bold;
+              color: #2c5aa0;
+              margin: 10px 0;
+            }
+            .signature { 
+              margin-top: 80px; 
+              display: flex; 
+              justify-content: space-between; 
+            }
+            .signature-box {
+              width: 45%;
+              text-align: center;
+            }
+            .signature-line {
+              margin: 40px 0 5px 0;
+              border-top: 1px solid #333;
+            }
+            .signature-label {
+              font-size: 11px;
+              color: #666;
+            }
+            .footer {
+              margin-top: 40px;
+              text-align: center;
+              font-size: 10px;
+              color: #999;
+              border-top: 1px solid #eee;
+              padding-top: 10px;
+            }
+            @media print {
+              body { margin: 0; padding: 15mm; }
+              .total-section {
+                border: 2px solid #2c5aa0 !important;
+              }
+            }
+          </style>
+        </head>
+        <body>
+          <div class="header">
+            <img class="logo" src="${window.location.origin}${window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/'))}/../image/SS logo.png" alt="Square Space Solution Logo" onerror="this.style.display='none'">
+            <div class="company-info">
+              <h1>Square Space Solution</h1>
+              <p>B-21-06, Residensi Aradia, 102, Jalan Sibu, Taman Wahyu</p>
+              <p>Phone: +60 12-345 6789 | Email: info@squarespace.com</p>
+            </div>
+          </div>
+
+          <div class="title">
+            <h1>Basic Package Add-On Summary</h1>
+            <h2>Theme: ${theme}</h2>
+          </div>
+
+          <h3 class="section-title">Client Information</h3>
+          <table class="info-table">
+            <tr>
+              <td style="width: 25%;"><strong>Name:</strong></td>
+              <td style="width: 25%;">${name}</td>
+              <td style="width: 25%;"><strong>Phone:</strong></td>
+              <td style="width: 25%;">${phone}</td>
             </tr>
-          </thead>
-          <tbody>${addonRows}</tbody>
-        </table>
+            <tr>
+              <td><strong>Email:</strong></td>
+              <td>${email}</td>
+              <td><strong>Unit:</strong></td>
+              <td>${unit}</td>
+            </tr>
+            <tr>
+              <td><strong>Unit Type:</strong></td>
+              <td>${selectedUnitType}</td>
+              <td><strong>Room Type:</strong></td>
+              <td><strong>${selectedRoomName}</strong> (RM${roomPrice.toFixed(2)})</td>
+            </tr>
+          </table>
+
+          <h3 class="section-title">Package Inclusions</h3>
+          ${includedItems.length ? `
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th style="width: 50%;">Item</th>
+                  <th style="width: 30%;">Area</th>
+                  <th style="width: 20%; text-align: center;">Quantity</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${includedItems.map(i => `
+                  <tr>
+                    <td>${i.item}</td>
+                    <td>${i.area}</td>
+                    <td style="text-align: center;">${i.quantity}</td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          ` : '<p style="text-align: center; color: #666; margin: 20px 0;">No base inclusions</p>'}
+
+          ${selectedAddons.length > 0 ? `
+            <h3 class="section-title">Selected Add-Ons</h3>
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th style="width: 45%;">Item</th>
+                  <th style="width: 15%; text-align: center;">Qty</th>
+                  <th style="width: 20%; text-align: right;">Price (RM)</th>
+                  <th style="width: 20%; text-align: right;">Subtotal (RM)</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${(() => {
+                  const grouped = {};
+                  selectedAddons.forEach(a => {
+                    if (!grouped[a.group]) grouped[a.group] = [];
+                    grouped[a.group].push(a);
+                  });
+                  
+                  let rows = '';
+                  Object.keys(grouped).forEach(group => {
+                    rows += `<tr class="group-header"><td colspan="4">${group}</td></tr>`;
+                    grouped[group].forEach(a => {
+                      rows += `
+                        <tr>
+                          <td>${a.name}</td>
+                          <td style="text-align: center;">${a.qty}</td>
+                          <td style="text-align: right;">${a.price.toFixed(2)}</td>
+                          <td style="text-align: right;">${a.subtotal.toFixed(2)}</td>
+                        </tr>
+                      `;
+                    });
+                  });
+                  return rows;
+                })()}
+              </tbody>
+            </table>
+          ` : '<p style="text-align: center; color: #666; margin: 20px 0;">No add-ons selected</p>'}
+
+          <div class="total-section">
+            <div style="font-size: 14px; color: #666;">Total Amount</div>
+            <div class="total-amount">RM${total.toFixed(2)}</div>
+            <div style="font-size: 11px; color: #999;">Inclusive of all selected items and package</div>
+          </div>
+
+          <div class="signature">
+            <div class="signature-box">
+              <div class="signature-line"></div>
+              <div class="signature-label">Client Signature</div>
+              <div style="margin-top: 15px; font-size: 11px;">
+                <div>Name: ___________________</div>
+                <div>Date: ___________________</div>
+              </div>
+            </div>
+            <div class="signature-box">
+              <div class="signature-line"></div>
+              <div class="signature-label">Company Representative</div>
+              <div style="margin-top: 15px; font-size: 11px;">
+                <div>Name: ___________________</div>
+                <div>Date: ___________________</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="footer">
+            Generated on ${new Date().toLocaleDateString()} | Square Space Solution - Basic Package Add-On Summary
+          </div>
+        </body>
+        </html>
       `;
-    } else {
-      pdfContainer.innerHTML += `
-        <h2 style="font-size:14px; margin-bottom:10px; padding-bottom:5px; border-bottom:1px solid #ccc;">Selected Add-Ons</h2>
-        <p style="margin-bottom:25px;">No add-ons selected.</p>
+
+      // Method 1: Try html2pdf first
+      try {
+        const pdfContainer = document.createElement('div');
+        pdfContainer.innerHTML = pdfContent;
+        document.body.appendChild(pdfContainer);
+
+        const options = {
+          margin: 10,
+          filename: `Basic_AddOn_Summary_${selectedUnitType}_${new Date().toISOString().split('T')[0]}.pdf`,
+          html2canvas: { 
+            scale: 2, // Higher scale for better quality
+            useCORS: true,
+            logging: false,
+            backgroundColor: "#FFFFFF",
+            width: 794,
+            height: pdfContainer.scrollHeight,
+            scrollX: 0,
+            scrollY: 0
+          },
+          jsPDF: { 
+            unit: "mm", 
+            format: "a4", 
+            orientation: "portrait"
+          }
+        };
+
+        await html2pdf().set(options).from(pdfContainer).save();
+        pdfContainer.remove();
+        
+      } catch (pdfError) {
+        console.log('html2pdf failed, trying print method:', pdfError);
+        
+        // Method 2: Print fallback
+        const printWindow = window.open('', '_blank');
+        printWindow.document.write(pdfContent);
+        printWindow.document.close();
+        
+        setTimeout(() => {
+          printWindow.print();
+          setTimeout(() => printWindow.close(), 1000);
+        }, 1000);
+      }
+
+      document.getElementById("generatePDF").textContent = originalText;
+      document.getElementById("generatePDF").disabled = false;
+
+    } catch (error) {
+      console.error('PDF generation completely failed:', error);
+      document.getElementById("generatePDF").textContent = "❌ Use Print";
+      document.getElementById("generatePDF").disabled = false;
+      
+      // Final fallback: Simple alert with data
+      const simpleContent = `
+        Square Space Solution - Basic Package
+        Client: ${name}
+        Total: RM${total.toFixed(2)}
+        Please take a screenshot of this page.
       `;
+      alert(simpleContent);
+      
+      setTimeout(() => {
+        document.getElementById("generatePDF").textContent = originalText;
+      }, 3000);
     }
-
-    // TOTAL SECTION
-    pdfContainer.innerHTML += `
-      <div style="text-align:right; margin-bottom:30px;">
-        <h2 style="margin:0; font-size:16px; font-weight:bold;">Total: RM${total.toFixed(2)}</h2>
-      </div>
-    `;
-
-    // SIGNATURE SECTION
-    pdfContainer.innerHTML += `
-      <div style="margin-top:80px; padding-top:20px">
-        <div style="display:flex; justify-content:space-between; font-size:12px;">
-          <!-- Client Signature -->
-          <div style="width:45%;">
-            <div>_________________________</div>
-            <div style="margin-top:5px;">Client Signature</div>
-            <div style="margin-top:10px;">Name: ___________________</div>
-            <div>Date: ___________________</div>
-          </div>
-          
-          <!-- Company Representative -->
-          <div style="width:45%; text-align:right;">
-            <div>_________________________</div>
-            <div style="margin-top:5px;">Company Representative</div>
-            <div style="margin-top:10px;">Name: ___________________</div>
-            <div>Date: ___________________</div>
-          </div>
-        </div>
-      </div>
-    `;
-
-    // ===== Export to PDF =====
-    document.body.appendChild(pdfContainer);
-    
-    // Fix for content cutoff - use proper PDF settings
-    html2pdf()
-      .set({
-        margin: 10,
-        filename: `Basic_AddOn_Summary_${selectedUnitType}.pdf`,
-        html2canvas: { 
-          scale: 2,
-          useCORS: true,
-          logging: false,
-          width: 794, // A4 width in pixels at 96 DPI
-          height: pdfContainer.scrollHeight
-        },
-        jsPDF: { 
-          unit: "mm", 
-          format: "a4", 
-          orientation: "portrait" 
-        }
-      })
-      .from(pdfContainer)
-      .save()
-      .then(() => {
-        console.log("PDF generated successfully!");
-        pdfContainer.remove();
-      })
-      .catch(err => {
-        console.error("PDF generation failed:", err);
-        pdfContainer.remove();
-      });
   });
 });
