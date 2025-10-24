@@ -484,36 +484,34 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>
     `;
 
-    // ===== Export to PDF =====
-    document.body.appendChild(pdfContainer);
-    
-    // Fix for content cutoff - use proper PDF settings
-    html2pdf()
-      .set({
-        margin: 10,
-        filename: `Premium_AddOn_Summary_${selectedUnitType}.pdf`,
-        html2canvas: { 
-          scale: 2,
-          useCORS: true,
-          logging: false,
-          width: 794, // A4 width in pixels at 96 DPI
-          height: pdfContainer.scrollHeight
-        },
-        jsPDF: { 
-          unit: "mm", 
-          format: "a4", 
-          orientation: "portrait" 
-        }
-      })
-      .from(pdfContainer)
-      .save()
-      .then(() => {
-        console.log("PDF generated successfully!");
-        pdfContainer.remove();
-      })
-      .catch(err => {
-        console.error("PDF generation failed:", err);
-        pdfContainer.remove();
-      });
+// ===== Export to PDF =====
+document.body.appendChild(pdfContainer);
+
+pdfContainer.style.background = "#ffffff";
+pdfContainer.style.boxShadow = "none";
+pdfContainer.style.margin = "0";
+
+html2pdf()
+  .set({
+    margin: 10,
+    filename: `Premium_AddOn_Summary_${selectedUnitType}.pdf`,
+    html2canvas: { 
+      scale: 2,
+      useCORS: true,
+      backgroundColor: "#ffffff", // ✅ Fix for black PDF
+      logging: false
+    },
+    jsPDF: { unit: "mm", format: "a4", orientation: "portrait" }
+  })
+  .from(pdfContainer)
+  .save()
+  .then(() => {
+    console.log("PDF generated successfully!");
+    pdfContainer.remove();
+  })
+  .catch(err => {
+    console.error("PDF generation failed:", err);
+    pdfContainer.remove();
+  });
   });
 });
