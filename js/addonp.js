@@ -1,5 +1,25 @@
 console.log("html2pdf exists?", typeof html2pdf);
 
+// Check for html2pdf availability and load if needed
+function ensureHtml2Pdf() {
+  return new Promise((resolve, reject) => {
+    if (typeof html2pdf !== 'undefined') {
+      resolve();
+      return;
+    }
+    
+    // Try to load html2pdf if not available
+    const script = document.createElement('script');
+    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
+    script.onload = resolve;
+    script.onerror = () => {
+      console.warn('html2pdf failed to load, using print fallback');
+      resolve(); // Still resolve to continue with fallback
+    };
+    document.head.appendChild(script);
+  });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
 
   // ===== Get Theme from URL =====
@@ -308,6 +328,9 @@ document.addEventListener("DOMContentLoaded", () => {
   // ===== PDF GENERATION =====
   document.getElementById("generatePDF").addEventListener("click", async () => {
     try {
+      // Ensure html2pdf is available
+      await ensureHtml2Pdf();
+      
       const name = document.querySelector('input[name="name"]').value || "-";
       const email = document.querySelector('input[name="email"]').value || "-";
       const phone = document.querySelector('input[name="phone"]').value || "-";
@@ -335,7 +358,7 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("generatePDF").textContent = "⏳ Generating PDF...";
       document.getElementById("generatePDF").disabled = true;
 
-      // Create PDF content
+      // Create PDF content with improved styling
       const pdfContent = `
         <!DOCTYPE html>
         <html>
@@ -343,10 +366,10 @@ document.addEventListener("DOMContentLoaded", () => {
           <meta charset="UTF-8">
           <style>
             body { 
-              font-family: Arial, sans-serif; 
+              font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
               font-size: 12px; 
               line-height: 1.4; 
-              color: #000; 
+              color: #333; 
               background: white;
               margin: 0;
               padding: 15mm;
@@ -355,78 +378,161 @@ document.addEventListener("DOMContentLoaded", () => {
             .header { 
               display: flex; 
               align-items: center; 
-              margin-bottom: 20px; 
-              padding-bottom: 15px; 
-              border-bottom: 1px solid #ccc; 
+              margin-bottom: 25px; 
+              padding-bottom: 20px; 
+              border-bottom: 2px solid #2c5aa0; 
             }
             .logo { 
-              width: 80px; 
+              width: 120px; 
               height: auto; 
-              margin-right: 20px; 
+              margin-right: 25px; 
+            }
+            .company-info h1 {
+              margin: 0 0 5px 0; 
+              font-size: 22px; 
+              font-weight: bold;
+              color: #2c5aa0;
+            }
+            .company-info p {
+              margin: 2px 0;
+              font-size: 11px;
+              color: #666;
             }
             .title { 
               text-align: center; 
-              margin-bottom: 25px; 
+              margin-bottom: 30px;
+              padding: 15px;
+              background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+              border-radius: 8px;
+              border-left: 4px solid #2c5aa0;
+            }
+            .title h1 {
+              margin: 0 0 8px 0; 
+              font-size: 18px; 
+              font-weight: bold;
+              color: #2c5aa0;
+            }
+            .title h2 {
+              margin: 0; 
+              font-size: 14px; 
+              font-weight: normal;
+              color: #666;
             }
             .info-table { 
               width: 100%; 
               border-collapse: collapse; 
-              margin-bottom: 25px; 
+              margin-bottom: 30px; 
             }
             .info-table td { 
-              padding: 4px 0; 
+              padding: 8px 0; 
               vertical-align: top; 
+              border-bottom: 1px solid #f0f0f0;
+            }
+            .info-table tr:last-child td {
+              border-bottom: none;
+            }
+            .info-table strong {
+              color: #2c5aa0;
+            }
+            .section-title {
+              font-size: 14px; 
+              margin: 25px 0 12px 0; 
+              padding-bottom: 8px; 
+              border-bottom: 2px solid #2c5aa0;
+              color: #2c5aa0;
+              font-weight: bold;
             }
             .data-table { 
               width: 100%; 
               border-collapse: collapse; 
               margin-bottom: 25px; 
-              border: 1px solid #ccc;
+              border: 1px solid #ddd;
+              box-shadow: 0 1px 3px rgba(0,0,0,0.1);
             }
             .data-table th, 
             .data-table td { 
-              padding: 8px; 
+              padding: 10px 8px; 
               text-align: left; 
-              border: 1px solid #ccc; 
+              border: 1px solid #ddd; 
             }
             .data-table th { 
-              background: #f8f8f8; 
-              font-weight: bold; 
+              background: #2c5aa0; 
+              color: white;
+              font-weight: bold;
+              font-size: 11px;
+            }
+            .data-table tr:nth-child(even) {
+              background-color: #f8f9fa;
             }
             .group-header {
-              background: #e9e9e9 !important;
+              background: #e3f2fd !important;
               font-weight: bold;
+              color: #2c5aa0;
+              font-size: 11px;
             }
-            .total { 
+            .total-section {
               text-align: right; 
-              font-size: 16px; 
-              font-weight: bold; 
-              margin: 30px 0; 
+              margin: 35px 0; 
+              padding: 20px;
+              background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+              border-radius: 8px;
+              border: 2px solid #2c5aa0;
+            }
+            .total-amount {
+              font-size: 24px; 
+              font-weight: bold;
+              color: #2c5aa0;
+              margin: 10px 0;
             }
             .signature { 
-              margin-top: 60px; 
+              margin-top: 80px; 
               display: flex; 
               justify-content: space-between; 
             }
+            .signature-box {
+              width: 45%;
+              text-align: center;
+            }
+            .signature-line {
+              margin: 40px 0 5px 0;
+              border-top: 1px solid #333;
+            }
+            .signature-label {
+              font-size: 11px;
+              color: #666;
+            }
+            .footer {
+              margin-top: 40px;
+              text-align: center;
+              font-size: 10px;
+              color: #999;
+              border-top: 1px solid #eee;
+              padding-top: 10px;
+            }
             @media print {
               body { margin: 0; padding: 15mm; }
+              .total-section {
+                border: 2px solid #2c5aa0 !important;
+              }
             }
           </style>
         </head>
         <body>
           <div class="header">
-            <img class="logo" src="${window.location.origin}${window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/'))}/../image/SS logo.png" alt="Logo">
-            <div>
-              <h1 style="margin: 0; font-size: 18px; font-weight: bold;">Square Space Solution</h1>
-              <p style="margin: 3px 0 0 0; font-size: 11px; color: #666;">B-21-06, Residensi Aradia, 102, Jalan Sibu, Taman Wahyu</p>
+            <img class="logo" src="${window.location.origin}${window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/'))}/../image/SS logo.png" alt="Square Space Solution Logo" onerror="this.style.display='none'">
+            <div class="company-info">
+              <h1>Square Space Solution</h1>
+              <p>B-21-06, Residensi Aradia, 102, Jalan Sibu, Taman Wahyu</p>
+              <p>Phone: +60 12-345 6789 | Email: info@squarespace.com</p>
             </div>
           </div>
 
           <div class="title">
-            <h1 style="margin: 0 0 5px 0; font-size: 16px; font-weight: bold;">Premium Package Add-On Summary</h1>
-            <h2 style="margin: 0; font-size: 14px; font-weight: normal;">Theme: ${theme}</h2>
+            <h1>Premium Package Add-On Summary</h1>
+            <h2>Theme: ${theme}</h2>
           </div>
 
+          <h3 class="section-title">Client Information</h3>
           <table class="info-table">
             <tr>
               <td style="width: 25%;"><strong>Name:</strong></td>
@@ -444,18 +550,18 @@ document.addEventListener("DOMContentLoaded", () => {
               <td><strong>Unit Type:</strong></td>
               <td>${selectedUnitType}</td>
               <td><strong>Room Type:</strong></td>
-              <td>${selectedRoomName} (RM${roomPrice.toFixed(2)})</td>
+              <td><strong>${selectedRoomName}</strong> (RM${roomPrice.toFixed(2)})</td>
             </tr>
           </table>
 
-          <h2 style="font-size: 14px; margin-bottom: 10px; padding-bottom: 5px; border-bottom: 1px solid #ccc;">Included in Package</h2>
+          <h3 class="section-title">Package Inclusions</h3>
           ${includedItems.length ? `
             <table class="data-table">
               <thead>
                 <tr>
-                  <th>Item</th>
-                  <th>Area</th>
-                  <th style="text-align: center;">Quantity</th>
+                  <th style="width: 50%;">Item</th>
+                  <th style="width: 30%;">Area</th>
+                  <th style="width: 20%; text-align: center;">Quantity</th>
                 </tr>
               </thead>
               <tbody>
@@ -468,17 +574,17 @@ document.addEventListener("DOMContentLoaded", () => {
                 `).join('')}
               </tbody>
             </table>
-          ` : '<p style="margin-bottom: 25px;">No base inclusions</p>'}
+          ` : '<p style="text-align: center; color: #666; margin: 20px 0;">No base inclusions</p>'}
 
           ${selectedAddons.length > 0 ? `
-            <h2 style="font-size: 14px; margin-bottom: 10px; padding-bottom: 5px; border-bottom: 1px solid #ccc;">Selected Add-Ons</h2>
+            <h3 class="section-title">Selected Add-Ons</h3>
             <table class="data-table">
               <thead>
                 <tr>
-                  <th>Item</th>
-                  <th style="text-align: center;">Qty</th>
-                  <th style="text-align: right;">Price (RM)</th>
-                  <th style="text-align: right;">Subtotal (RM)</th>
+                  <th style="width: 45%;">Item</th>
+                  <th style="width: 15%; text-align: center;">Qty</th>
+                  <th style="width: 20%; text-align: right;">Price (RM)</th>
+                  <th style="width: 20%; text-align: right;">Subtotal (RM)</th>
                 </tr>
               </thead>
               <tbody>
@@ -507,23 +613,35 @@ document.addEventListener("DOMContentLoaded", () => {
                 })()}
               </tbody>
             </table>
-          ` : '<p style="margin-bottom: 25px;">No add-ons selected</p>'}
+          ` : '<p style="text-align: center; color: #666; margin: 20px 0;">No add-ons selected</p>'}
 
-          <div class="total">Total: RM${total.toFixed(2)}</div>
+          <div class="total-section">
+            <div style="font-size: 14px; color: #666;">Total Amount</div>
+            <div class="total-amount">RM${total.toFixed(2)}</div>
+            <div style="font-size: 11px; color: #999;">Inclusive of all selected items and package</div>
+          </div>
 
           <div class="signature">
-            <div style="width: 45%;">
-              <div>_________________________</div>
-              <div style="margin-top: 5px;">Client Signature</div>
-              <div style="margin-top: 10px;">Name: ___________________</div>
-              <div>Date: ___________________</div>
+            <div class="signature-box">
+              <div class="signature-line"></div>
+              <div class="signature-label">Client Signature</div>
+              <div style="margin-top: 15px; font-size: 11px;">
+                <div>Name: ___________________</div>
+                <div>Date: ___________________</div>
+              </div>
             </div>
-            <div style="width: 45%; text-align: right;">
-              <div>_________________________</div>
-              <div style="margin-top: 5px;">Company Representative</div>
-              <div style="margin-top: 10px;">Name: ___________________</div>
-              <div>Date: ___________________</div>
+            <div class="signature-box">
+              <div class="signature-line"></div>
+              <div class="signature-label">Company Representative</div>
+              <div style="margin-top: 15px; font-size: 11px;">
+                <div>Name: ___________________</div>
+                <div>Date: ___________________</div>
+              </div>
             </div>
+          </div>
+
+          <div class="footer">
+            Generated on ${new Date().toLocaleDateString()} | Square Space Solution - Premium Package Add-On Summary
           </div>
         </body>
         </html>
@@ -537,9 +655,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const options = {
           margin: 10,
-          filename: `Premium_AddOn_Summary_${selectedUnitType}.pdf`,
+          filename: `Premium_AddOn_Summary_${selectedUnitType}_${new Date().toISOString().split('T')[0]}.pdf`,
           html2canvas: { 
-            scale: 1,
+            scale: 2, // Higher scale for better quality
             useCORS: true,
             logging: false,
             backgroundColor: "#FFFFFF",
