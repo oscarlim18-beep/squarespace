@@ -337,7 +337,7 @@ footer {
 @media (max-width: 600px) {
 
   main, section, .container, .collections, .hero, .wrap {
-    padding: 0 12px; /* keeps some side breathing space */
+    padding: 12px; /* keeps some side breathing space */
   }
 
   img {

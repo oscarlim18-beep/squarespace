@@ -362,376 +362,379 @@ document.addEventListener("DOMContentLoaded", () => {
       const total = parseFloat(totalDisplay.textContent) || 0;
 
       // Add loading indicator
-      const originalText = document.getElementById("generatePDF").textContent;
-      document.getElementById("generatePDF").textContent = "⏳ Generating PDF...";
-      document.getElementById("generatePDF").disabled = true;
+      const btn = document.getElementById("generatePDF");
+      const originalText = btn.textContent;
+      btn.textContent = "⏳ Generating PDF...";
+      btn.disabled = true;
 
-      // Create PDF content with improved styling
+      // Create PDF content with EXACT same page break solution
       const pdfContent = `
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <meta charset="UTF-8">
-          <style>
-            body { 
-              font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-              font-size: 12px; 
-              line-height: 1.4; 
-              color: #333; 
-              background: white;
-              margin: 0;
-              padding: 15mm;
-              max-width: 190mm;
-            }
-            .header { 
-              display: flex; 
-              align-items: center; 
-              margin-bottom: 25px; 
-              padding-bottom: 20px; 
-              border-bottom: 2px solid #2c5aa0; 
-            }
-            .logo { 
-              width: 120px; 
-              height: auto; 
-              margin-right: 25px; 
-            }
-            .company-info h1 {
-              margin: 0 0 5px 0; 
-              font-size: 22px; 
-              font-weight: bold;
-              color: #2c5aa0;
-            }
-            .company-info p {
-              margin: 2px 0;
-              font-size: 11px;
-              color: #666;
-            }
-            .title { 
-              text-align: center; 
-              margin-bottom: 30px;
-              padding: 15px;
-              background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-              border-radius: 8px;
-              border-left: 4px solid #2c5aa0;
-            }
-            .title h1 {
-              margin: 0 0 8px 0; 
-              font-size: 18px; 
-              font-weight: bold;
-              color: #2c5aa0;
-            }
-            .title h2 {
-              margin: 0; 
-              font-size: 14px; 
-              font-weight: normal;
-              color: #666;
-            }
-            .info-table { 
-              width: 100%; 
-              border-collapse: collapse; 
-              margin-bottom: 30px; 
-            }
-            .info-table td { 
-              padding: 8px 0; 
-              vertical-align: top; 
-              border-bottom: 1px solid #f0f0f0;
-            }
-            .info-table tr:last-child td {
-              border-bottom: none;
-            }
-            .info-table strong {
-              color: #2c5aa0;
-            }
-            .section-title {
-              font-size: 14px; 
-              margin: 25px 0 12px 0; 
-              padding-bottom: 8px; 
-              border-bottom: 2px solid #2c5aa0;
-              color: #2c5aa0;
-              font-weight: bold;
-            }
-            .data-table { 
-              width: 100%; 
-              border-collapse: collapse; 
-              margin-bottom: 25px; 
-              border: 1px solid #ddd;
-              box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            }
-            .data-table th, 
-            .data-table td { 
-              padding: 10px 8px; 
-              text-align: left; 
-              border: 1px solid #ddd; 
-            }
-            .data-table th { 
-              background: #2c5aa0; 
-              color: white;
-              font-weight: bold;
-              font-size: 11px;
-            }
-            .data-table tr:nth-child(even) {
-              background-color: #f8f9fa;
-            }
-            .group-header {
-              background: #e3f2fd !important;
-              font-weight: bold;
-              color: #2c5aa0;
-              font-size: 11px;
-            }
-            .total-section {
-              text-align: right; 
-              margin: 35px 0; 
-              padding: 20px;
-              background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-              border-radius: 8px;
-              border: 2px solid #2c5aa0;
-            }
-            .total-amount {
-              font-size: 24px; 
-              font-weight: bold;
-              color: #2c5aa0;
-              margin: 10px 0;
-            }
-            .signature { 
-              margin-top: 80px; 
-              display: flex; 
-              justify-content: space-between; 
-            }
-            .signature-box {
-              width: 45%;
-              text-align: center;
-            }
-            .signature-line {
-              margin: 40px 0 5px 0;
-              border-top: 1px solid #333;
-            }
-            .signature-label {
-              font-size: 11px;
-              color: #666;
-            }
-            .footer {
-              margin-top: 40px;
-              text-align: center;
-              font-size: 10px;
-              color: #999;
-              border-top: 1px solid #eee;
-              padding-top: 10px;
-            }
-            @media print {
-              body { margin: 0; padding: 15mm; }
-              .total-section {
-                border: 2px solid #2c5aa0 !important;
-              }
-            }
-          </style>
-        </head>
-        <body>
-          <div class="header">
-            <img class="logo" src="${window.location.origin}${window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/'))}/../image/SS logo.png" alt="Square Space Solution Logo" onerror="this.style.display='none'">
-            <div class="company-info">
-              <h1>Square Space Solution</h1>
-              <p>B-21-06, Residensi Aradia, 102, Jalan Sibu, Taman Wahyu</p>
-              <p>Phone: +60 12-689 4121 | Email: Liefong@squarespacemy.com</p>
-            </div>
-          </div>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { 
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+      font-size: 12px; 
+      line-height: 1.4; 
+      color: #333; 
+      background: white; 
+      margin: 0; 
+      padding: 15mm;
+    }
+    
+    .header { 
+      display: flex; 
+      align-items: center; 
+      margin-bottom: 20px; 
+      padding-bottom: 15px; 
+      border-bottom: 2px solid #2c5aa0;
+    }
+    
+    .logo { width: 120px; height: auto; margin-right: 25px; }
+    
+    .company-info h1 { margin: 0 0 5px 0; font-size: 22px; font-weight: bold; color: #2c5aa0; }
+    .company-info p { margin: 2px 0; font-size: 11px; color: #666; }
+    
+    .title { 
+      text-align: center; 
+      margin-bottom: 25px; 
+      padding: 15px; 
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); 
+      border-radius: 8px; 
+      border-left: 4px solid #2c5aa0;
+    }
+    
+    .title h1 { margin: 0 0 8px 0; font-size: 18px; font-weight: bold; color: #2c5aa0; }
+    .title h2 { margin: 0; font-size: 14px; font-weight: normal; color: #666; }
+    
+    .info-table { 
+      width: 100%; 
+      border-collapse: collapse; 
+      margin-bottom: 25px; 
+    }
+    
+    .info-table td { padding: 10px 5px; vertical-align: top; border-bottom: 1px solid #f0f0f0; }
+    .info-table tr:last-child td { border-bottom: none; }
+    .info-table strong { color: #2c5aa0; }
+    
+    .section-title { 
+      font-size: 14px; 
+      margin: 20px 0 10px 0; 
+      padding-bottom: 6px; 
+      border-bottom: 2px solid #2c5aa0; 
+      color: #2c5aa0; 
+      font-weight: bold;
+    }
+    
+    /* TABLE STYLES */
+    .items-table { 
+      width: 100%; 
+      border-collapse: collapse; 
+      margin-bottom: 20px;
+      font-size: 11px;
+    }
+    
+    .items-table th, .items-table td { 
+      padding: 8px 6px; 
+      text-align: left; 
+      border: 1px solid #ddd;
+    }
+    
+    .items-table th { 
+      background: #2c5aa0; 
+      color: white; 
+      font-weight: bold;
+    }
+    
+    .items-table tbody tr:nth-child(even) { 
+      background-color: #f8f9fa; 
+    }
+    
+    .group-header { 
+      background: #e3f2fd !important; 
+      font-weight: bold; 
+      color: #2c5aa0;
+    }
+    
+    .text-center { text-align: center; }
+    .text-right { text-align: right; }
+    
+    /* TOTAL SECTION - EXACT SAME AS FIRST CODE */
+    .total-section {
+      text-align: right; 
+      padding: 20px; 
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); 
+      border-radius: 8px; 
+      border: 2px solid #2c5aa0;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+    
+    .total-amount-text {
+      font-size: 16px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 8px;
+    }
+    
+    .total-amount-value {
+      font-size: 24px;
+      font-weight: bold;
+      color: #2c5aa0;
+      margin: 12px 0;
+    }
+    
+    .total-note {
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 4px;
+    }
+    
+    .total-note-light {
+      font-size: 12px;
+      color: #666;
+      border-top: 1px solid #eee;
+      padding-top: 6px;
+      margin-top: 8px;
+    }
+    
+    .signature { 
+      margin-top: 60px; 
+      display: flex; 
+      justify-content: space-between;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+    
+    .signature-box { width: 45%; text-align: center; }
+    .signature-line { margin: 30px 0 5px 0; border-top: 1px solid #333; }
+    .signature-label { font-size: 11px; color: #666; }
+    
+    /* CRITICAL FIX: EXACT SAME as first code - both total and signature protected */
+    @media print {
+      .total-section {
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+      }
+      
+      .signature {
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+      }
+      
+      body {
+        margin: 0 !important;
+        padding: 15mm !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <img class="logo" src="../image/SS logo.png" alt="Logo" onerror="this.style.display='none'">
+    <div class="company-info">
+      <h1>Square Space Solution</h1>
+      <p>B-21-06, Residensi Aradia, 102, Jalan Sibu, Taman Wahyu</p>
+      <p>Phone: +60 12-689 4121 | Email: Liefong@squarespacemy.com</p>
+    </div>
+  </div>
 
-          <div class="title">
-            <h1>Premium Package Add-On Summary</h1>
-            <h2>Theme: ${theme}</h2>
-          </div>
+  <div class="title">
+    <h1>Premium Package Add-On Summary</h1>
+    <h2>Theme: ${theme}</h2>
+  </div>
 
-          <h3 class="section-title">Client Information</h3>
-          <table class="info-table">
-            <tr>
-              <td style="width: 25%;"><strong>Name:</strong></td>
-              <td style="width: 25%;">${name}</td>
-              <td style="width: 25%;"><strong>Phone:</strong></td>
-              <td style="width: 25%;">${phone}</td>
-            </tr>
-            <tr>
-              <td><strong>Email:</strong></td>
-              <td>${email}</td>
-              <td><strong>Unit:</strong></td>
-              <td>${unit}</td>
-            </tr>
-            <tr>
-              <td><strong>Unit Type:</strong></td>
-              <td>${selectedUnitType}</td>
-              <td><strong>Room Type:</strong></td>
-              <td><strong>${selectedRoomName}</strong> (RM${roomPrice.toFixed(2)})</td>
-            </tr>
+  <h3 class="section-title">Client Information</h3>
+  <table class="info-table">
+    <tr>
+      <td style="width:30%"><strong>Name:</strong></td>
+      <td style="width:20%">${escapeHtml(name)}</td>
+      <td style="width:20%"><strong>Phone:</strong></td>
+      <td style="width:30%">${escapeHtml(phone)}</td>
+    </tr>
+    <tr>
+      <td><strong>Email:</strong></td>
+      <td>${escapeHtml(email)}</td>
+      <td><strong>Unit:</strong></td>
+      <td>${escapeHtml(unit)}</td>
+    </tr>
+    <tr>
+      <td><strong>Unit Type:</strong></td>
+      <td>${escapeHtml(selectedUnitType)}</td>
+      <td><strong>Room Type:</strong></td>
+      <td><strong>${escapeHtml(selectedRoomName)}</strong> (RM${roomPrice.toFixed(2)})</td>
+    </tr>
+  </table>
+
+  <h3 class="section-title">Package Inclusions</h3>
+  ${includedItems.length > 0 ? createInclusionsTable(includedItems) : '<p style="text-align:center;color:#666;margin:20px 0;">No items included</p>'}
+
+  ${selectedAddons.length > 0 ? `
+    <h3 class="section-title">Selected Add-Ons</h3>
+    ${createAddonsTable(selectedAddons)}
+  ` : ''}
+
+  <!-- TOTAL SECTION - EXACT SAME STRUCTURE AS FIRST CODE -->
+  <div class="total-section">
+    <div class="total-amount-text">Total Amount</div>
+    <div class="total-amount-value">RM ${total.toFixed(2)}</div>
+    <div class="total-note">Inclusive of all selected items and package</div>
+  </div>
+
+  <!-- SIGNATURE SECTION - NOW PROTECTED FROM PAGE BREAKS -->
+  <div class="signature">
+    <div class="signature-box">
+      <div class="signature-line"></div>
+      <div class="signature-label">Client Signature</div>
+      <div style="margin-top:15px; font-size:11px;">
+        <div>Name: ___________________</div>
+        <div>Date: ___________________</div>
+      </div>
+    </div>
+    <div class="signature-box">
+      <div class="signature-line"></div>
+      <div class="signature-label">Company Representative</div>
+      <div style="margin-top:15px; font-size:11px;">
+        <div>Name: ___________________</div>
+        <div>Date: ___________________</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+`;
+
+      // Helper functions for table creation
+      function createInclusionsTable(items) {
+        return `
+          <table class="items-table">
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th class="text-center">Area</th>
+                <th class="text-center">Quantity</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${items.map(item => `
+                <tr>
+                  <td>${escapeHtml(item.item)}</td>
+                  <td class="text-center">${escapeHtml(item.area)}</td>
+                  <td class="text-center">${item.quantity}</td>
+                </tr>
+              `).join('')}
+            </tbody>
           </table>
-
-          <h3 class="section-title">Package Inclusions</h3>
-          ${includedItems.length ? `
-            <table class="data-table">
-              <thead>
-                <tr>
-                  <th style="width: 50%;">Item</th>
-                  <th style="width: 30%;">Area</th>
-                  <th style="width: 20%; text-align: center;">Quantity</th>
-                </tr>
-              </thead>
-              <tbody>
-                ${includedItems.map(i => `
-                  <tr>
-                    <td>${i.item}</td>
-                    <td>${i.area}</td>
-                    <td style="text-align: center;">${i.quantity}</td>
-                  </tr>
-                `).join('')}
-              </tbody>
-            </table>
-          ` : '<p style="text-align: center; color: #666; margin: 20px 0;">No base inclusions</p>'}
-
-          ${selectedAddons.length > 0 ? `
-            <h3 class="section-title">Selected Add-Ons</h3>
-            <table class="data-table">
-              <thead>
-                <tr>
-                  <th style="width: 45%;">Item</th>
-                  <th style="width: 15%; text-align: center;">Qty</th>
-                  <th style="width: 20%; text-align: right;">Price (RM)</th>
-                  <th style="width: 20%; text-align: right;">Subtotal (RM)</th>
-                </tr>
-              </thead>
-              <tbody>
-                ${(() => {
-                  const grouped = {};
-                  selectedAddons.forEach(a => {
-                    if (!grouped[a.group]) grouped[a.group] = [];
-                    grouped[a.group].push(a);
-                  });
-                  
-                  let rows = '';
-                  Object.keys(grouped).forEach(group => {
-                    rows += `<tr class="group-header"><td colspan="4">${group}</td></tr>`;
-                    grouped[group].forEach(a => {
-                      rows += `
-                        <tr>
-                          <td>${a.name}</td>
-                          <td style="text-align: center;">${a.qty}</td>
-                          <td style="text-align: right;">${a.price.toFixed(2)}</td>
-                          <td style="text-align: right;">${a.subtotal.toFixed(2)}</td>
-                        </tr>
-                      `;
-                    });
-                  });
-                  return rows;
-                })()}
-              </tbody>
-            </table>
-          ` : '<p style="text-align: center; color: #666; margin: 20px 0;">No add-ons selected</p>'}
-
-          <div class="total-section">
-            <div style="font-size: 14px; color: #666;">Total Amount</div>
-            <div class="total-amount">RM${total.toFixed(2)}</div>
-            <div style="font-size: 11px; color: #999;">Inclusive of all selected items and package</div>
-          </div>
-
-          <div class="signature">
-            <div class="signature-box">
-              <div class="signature-line"></div>
-              <div class="signature-label">Client Signature</div>
-              <div style="margin-top: 15px; font-size: 11px;">
-                <div>Name: ___________________</div>
-                <div>Date: ___________________</div>
-              </div>
-            </div>
-            <div class="signature-box">
-              <div class="signature-line"></div>
-              <div class="signature-label">Company Representative</div>
-              <div style="margin-top: 15px; font-size: 11px;">
-                <div>Name: ___________________</div>
-                <div>Date: ___________________</div>
-              </div>
-            </div>
-          </div>
-         </body>
-        </html>
-      `;
-
-      // Method 1: Try html2pdf first, unless Honor device
-      try {
-        const honor = isHonorDevice();
-
-        if (!honor && typeof html2pdf !== 'undefined') {
-          const pdfContainer = document.createElement('div');
-          pdfContainer.innerHTML = pdfContent;
-          document.body.appendChild(pdfContainer);
-
-          const options = {
-            margin: 10,
-            filename: `Premium_AddOn_Summary_${selectedUnitType}_${new Date().toISOString().split('T')[0]}.pdf`,
-            html2canvas: { 
-              scale: 2,
-              useCORS: true,
-              logging: false,
-              backgroundColor: "#FFFFFF",
-              scrollX: 0,
-              scrollY: 0,
-              windowWidth: pdfContainer.scrollWidth,
-              windowHeight: pdfContainer.scrollHeight
-            },
-            jsPDF: { 
-              unit: "mm",
-              format: "a4",
-              orientation: "portrait",
-              putOnlyUsedFonts: true,
-              hotfixes: ["px_scaling"]
-            },
-            pagebreak: { mode: ['css', 'legacy'] } // ✅ makes CSS page breaks work
-          };
-
-          await html2pdf().set(options).from(pdfContainer).save();
-          pdfContainer.remove();
-        } else {
-          // Honor device or html2pdf not available → print fallback
-          console.warn('Using print fallback (Honor device or html2pdf unavailable).');
-          const printWindow = window.open('', '_blank');
-          printWindow.document.write(pdfContent);
-          printWindow.document.close();
-
-          setTimeout(() => {
-            printWindow.print();
-            setTimeout(() => printWindow.close(), 1000);
-          }, 1000);
-        }
-        
-      } catch (pdfError) {
-        console.log('html2pdf failed, trying print method:', pdfError);
-        
-        // Method 2: Print fallback
-        const printWindow = window.open('', '_blank');
-        printWindow.document.write(pdfContent);
-        printWindow.document.close();
-        
-        setTimeout(() => {
-          printWindow.print();
-          setTimeout(() => printWindow.close(), 1000);
-        }, 1000);
+        `;
       }
 
-      document.getElementById("generatePDF").textContent = originalText;
-      document.getElementById("generatePDF").disabled = false;
+      function createAddonsTable(addons) {
+        const grouped = {};
+        addons.forEach(a => {
+          const g = a.group || "Add-ons";
+          if (!grouped[g]) grouped[g] = [];
+          grouped[g].push(a);
+        });
+        
+        let tableHtml = `
+          <table class="items-table">
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th class="text-center">Qty</th>
+                <th class="text-right">Price (RM)</th>
+                <th class="text-right">Subtotal (RM)</th>
+              </tr>
+            </thead>
+            <tbody>`;
+        
+        Object.keys(grouped).forEach(group => {
+          tableHtml += `
+            <tr class="group-header">
+              <td colspan="4"><strong>${escapeHtml(group)}</strong></td>
+            </tr>`;
+          
+          grouped[group].forEach(a => {
+            tableHtml += `
+            <tr>
+              <td>${escapeHtml(a.name)}</td>
+              <td class="text-center">${a.qty}</td>
+              <td class="text-right">${a.price.toFixed(2)}</td>
+              <td class="text-right">${a.subtotal.toFixed(2)}</td>
+            </tr>`;
+          });
+        });
+        
+        tableHtml += `
+          </tbody>
+        </table>`;
+        
+        return tableHtml;
+      }
+
+      // create temp container and call html2pdf - EXACT SAME LOGIC
+      const pdfContainerEl = document.createElement("div");
+      pdfContainerEl.style.boxSizing = "border-box";
+      pdfContainerEl.innerHTML = pdfContent;
+      document.body.appendChild(pdfContainerEl);
+
+      // If html2pdf is available use it; otherwise fallback to print
+      if (typeof html2pdf !== "undefined") {
+        await html2pdf().set({
+          margin: [15, 15, 15, 15],
+          filename: `Premium_Package_${selectedRoomName}_${new Date().toISOString().split('T')[0]}.pdf`,
+          html2canvas: {
+            scale: 2,
+            useCORS: true,
+            backgroundColor: "#FFFFFF",
+            logging: false
+          },
+          jsPDF: { 
+            unit: 'mm', 
+            format: 'a4', 
+            orientation: 'portrait'
+          },
+          // EXACT SAME page break configuration - NOW INCLUDES SIGNATURE
+          pagebreak: { 
+            mode: ['css'],
+            avoid: ['.total-section', '.signature']
+          }
+        }).from(pdfContainerEl).save();
+      } else {
+        // fallback: open print window
+        const w = window.open();
+        w.document.write(pdfContent);
+        w.document.close();
+        w.focus();
+        setTimeout(() => { w.print(); setTimeout(() => w.close(), 1000); }, 700);
+      }
+
+      // cleanup
+      pdfContainerEl.remove();
+      btn.textContent = originalText;
+      btn.disabled = false;
 
     } catch (error) {
-      console.error('PDF generation completely failed:', error);
-      document.getElementById("generatePDF").textContent = "❌ Use Print";
-      document.getElementById("generatePDF").disabled = false;
-      
-      // Final fallback: Simple alert with data
-      const simpleContent = `
-        Square Space Solution - Premium Package
-        Client: ${name}
-        Total: RM${total.toFixed(2)}
-        Please take a screenshot of this page.
-      `;
-      alert(simpleContent);
-      
-      setTimeout(() => {
-        document.getElementById("generatePDF").textContent = originalText;
-      }, 3000);
+      console.error("PDF generation failed:", error);
+      alert("PDF generation failed. See console for details.");
+      const btn = document.getElementById("generatePDF");
+      if (btn) {
+        btn.disabled = false;
+        btn.textContent = "Generate PDF";
+      }
     }
   });
-});
+
+// ===== ADD HELPER FUNCTIONS =====
+function escapeHtml(str) {
+  if (!str && str !== 0) return "";
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
+  });

@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
         { name: "Slavia 3 SEATER Sofa", price: 1470, img: "../image/cocoa-sofa.png", description: "Malaysia OAK with Meadow Fabric"},
         { name: "Modern Rustic L Shape Sofa with Cushion", price: 6420, img: "../image/rustic-sofa.png", description: "Solid Wood Structure, High Density Foam, Fabric" },
         { name: "Timeless Elegant L Shape Sofa with Cushion", price: 6420, img: "../image/timeless-sofa.png", description: "Solid Wood Structure, High Density Foam, Fabric" },
-        { name: "Scandinavian Snug L Shape Sofa with Cushion", price: 2500, img: "../image/scandinavian-sofa.png", description: "Solid Wood Structure, High Density Foam, Fabric" },
+        { name: "Scandinavian Snug L Shape Sofa with Cushion", price: 6420, img: "../image/scandinavian-sofa.png", description: "Solid Wood Structure, High Density Foam, Fabric" },
       ],
 
       "Coffee Table": [
@@ -70,11 +70,11 @@ document.addEventListener("DOMContentLoaded", () => {
         { name: "Modern Rustic 4 Pax Dining Table & Chairs", price: 2500, img: "../image/rustic-diningset.png", description: "Dining Table：Sintered Stone Table top with metal leg<br>Chairs：PU Leather, Metal Leg" },
         { name: "Timeless Elegant 4 Pax Dining Table & Chairs", price: 2650, img: "../image/timeless-diningset.png", description: "Dining Table：Sintered Stone Table top with metal leg<br>Chairs：PU Leather, Metal Leg" },
         { name: "Scandinavian Snug 4 Pax Dining Table & Chairs", price: 2500, img: "../image/scandinavian-diningset.png", description: "Dining Table：Solid wood<br>Chairs：Solid wood, sponge, fabric" },
-        { name: "6 pax WALD DINING SET", price: 857, img: "../image/natural-diningset.png", description: "TABLE LEG: MALAYSIAN OAK<br>TABLE TOP: MDF+VENEER<br>CHAIR FRAME: MALAYSIAN OAK<br>CHAIR SEAT: MDF+VINYL" },
-        { name: "6 pax WALD DINING SET", price: 857, img: "../image/cocoa-diningset.png", description: "TABLE LEG: MALAYSIAN OAK<br>TABLE TOP: MDF+VENEER<br>CHAIR FRAME: MALAYSIAN OAK<br>CHAIR SEAT: MDF+VINYL"},
-        { name: "Modern Rustic 6 Pax Dining Table & Chairs", price: 2500, img: "../image/rustic-diningset.png", description: "Dining Table：Sintered Stone Table top with metal leg<br>Chairs：PU Leather, Metal Leg" },
-        { name: "Timeless Elegant 6 Pax Dining Table & Chairs", price: 2650, img: "../image/timeless-diningset.png", description: "Dining Table：Sintered Stone Table top with metal leg<br>Chairs：PU Leather, Metal Leg" },
-        { name: "Scandinavian Snug 6 Pax Dining Table & Chairs", price: 2500, img: "../image/scandinavian-diningset.png", description: "Dining Table：Solid wood<br>Chairs：Solid wood, sponge, fabric" },      
+        { name: "6 pax WALD DINING SET", price: 1350, img: "../image/natural-diningset.png", description: "TABLE LEG: MALAYSIAN OAK<br>TABLE TOP: MDF+VENEER<br>CHAIR FRAME: MALAYSIAN OAK<br>CHAIR SEAT: MDF+VINYL" },
+        { name: "6 pax WALD DINING SET", price: 1350, img: "../image/cocoa-diningset.png", description: "TABLE LEG: MALAYSIAN OAK<br>TABLE TOP: MDF+VENEER<br>CHAIR FRAME: MALAYSIAN OAK<br>CHAIR SEAT: MDF+VINYL"},
+        { name: "Modern Rustic 6 Pax Dining Table & Chairs", price: 3080, img: "../image/rustic-diningset.png", description: "Dining Table：Sintered Stone Table top with metal leg<br>Chairs：PU Leather, Metal Leg" },
+        { name: "Timeless Elegant 6 Pax Dining Table & Chairs", price: 3230, img: "../image/timeless-diningset.png", description: "Dining Table：Sintered Stone Table top with metal leg<br>Chairs：PU Leather, Metal Leg" },
+        { name: "Scandinavian Snug 6 Pax Dining Table & Chairs", price: 3080, img: "../image/scandinavian-diningset.png", description: "Dining Table：Solid wood<br>Chairs：Solid wood, sponge, fabric" },      
       ],
 
       "Beds": [
@@ -344,6 +344,17 @@ function createAddonCard(group, item) {
 }
 
 
+// Collapse all addon categories by default
+document.querySelectorAll(".addon-category-header").forEach(header => {
+  const content = header.nextElementSibling;
+  const icon = header.querySelector("span:last-child");
+
+  // collapsed by default
+  header.classList.remove("active");
+  content.classList.add("collapsed");
+  if (icon) icon.textContent = "▶";
+});
+
 // ===== Collapsible MAIN Categories =====
 document.querySelectorAll(".addon-category-header").forEach(header => {
   header.addEventListener("click", () => {
@@ -352,7 +363,7 @@ document.querySelectorAll(".addon-category-header").forEach(header => {
 
     header.classList.toggle("active");
     content.classList.toggle("collapsed");
-    icon.textContent = header.classList.contains("active") ? "▼" : "▶";
+    if (icon) icon.textContent = header.classList.contains("active") ? "▼" : "▶";
   });
 });
 
@@ -492,115 +503,285 @@ document.addEventListener("click", (e) => {
         btn.disabled = true;
       }
 
-      // Build PDF HTML (keeps your exact styling/layout)
-      const pdfContent = `
-      <!DOCTYPE html>
-      <html>
-      <head>
-        <meta charset="UTF-8">
-        <style>
-          body { font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:12px; line-height:1.4; color:#333; background:white; margin:0; padding:15mm; max-width:190mm; }
-          .header { display:flex; align-items:center; margin-bottom:25px; padding-bottom:20px; border-bottom:2px solid #2c5aa0; }
-          .logo { width:120px; height:auto; margin-right:25px; }
-          .company-info h1 { margin:0 0 5px 0; font-size:22px; font-weight:bold; color:#2c5aa0; }
-          .company-info p { margin:2px 0; font-size:11px; color:#666; }
-          .title { text-align:center; margin-bottom:30px; padding:15px; background:linear-gradient(135deg,#f8f9fa 0%,#e9ecef 100%); border-radius:8px; border-left:4px solid #2c5aa0; }
-          .title h1 { margin:0 0 8px 0; font-size:18px; font-weight:bold; color:#2c5aa0; }
-          .title h2 { margin:0; font-size:14px; font-weight:normal; color:#666; }
-          .info-table { width:100%; border-collapse:collapse; margin-bottom:30px; }
-          .info-table td { padding:8px 0; vertical-align:top; border-bottom:1px solid #f0f0f0; }
-          .info-table tr:last-child td { border-bottom:none; }
-          .info-table strong { color:#2c5aa0; }
-          .section-title { font-size:14px; margin:25px 0 12px 0; padding-bottom:8px; border-bottom:2px solid #2c5aa0; color:#2c5aa0; font-weight:bold; }
-          .data-table { width:100%; border-collapse:collapse; margin-bottom:25px; border:1px solid #ddd; box-shadow:0 1px 3px rgba(0,0,0,0.1); }
-          .data-table th, .data-table td { padding:10px 8px; text-align:left; border:1px solid #ddd; }
-          .data-table th { background:#2c5aa0; color:white; font-weight:bold; font-size:11px; }
-          .data-table tr:nth-child(even) { background-color:#f8f9fa; }
-          .group-header { background:#e3f2fd !important; font-weight:bold; color:#2c5aa0; font-size:11px; }
-          .total-section { text-align:right; margin:35px 0; padding:20px; background:linear-gradient(135deg,#f8f9fa 0%,#e9ecef 100%); border-radius:8px; border:2px solid #2c5aa0; }
-          .total-amount { font-size:24px; font-weight:bold; color:#2c5aa0; margin:10px 0; }
-          .signature { margin-top:80px; display:flex; justify-content:space-between; }
-          .signature-box { width:45%; text-align:center; }
-          .signature-line { margin:40px 0 5px 0; border-top:1px solid #333; }
-          .signature-label { font-size:11px; color:#666; }
-          @media print {
-            body { margin:0; padding:15mm; }
-          }
-        </style>
-      </head>
-      <body>
-        <div class="header">
-          <img class="logo" src="../image/SS logo.png" alt="Logo" onerror="this.style.display='none'">
-          <div class="company-info">
-            <h1>Square Space Solution</h1>
-            <p>B-21-06, Residensi Aradia, 102, Jalan Sibu, Taman Wahyu</p>
-            <p>Phone: +60 12-689 4121 | Email: Liefong@squarespacemy.com</p>
-          </div>
-        </div>
+// Build PDF HTML with better total section placement
+const pdfContent = `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { 
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+      font-size: 12px; 
+      line-height: 1.4; 
+      color: #333; 
+      background: white; 
+      margin: 0; 
+      padding: 15mm;
+    }
+    
+    .header { 
+      display: flex; 
+      align-items: center; 
+      margin-bottom: 20px; 
+      padding-bottom: 15px; 
+      border-bottom: 2px solid #2c5aa0;
+    }
+    
+    .logo { width: 120px; height: auto; margin-right: 25px; }
+    
+    .company-info h1 { margin: 0 0 5px 0; font-size: 22px; font-weight: bold; color: #2c5aa0; }
+    .company-info p { margin: 2px 0; font-size: 11px; color: #666; }
+    
+    .title { 
+      text-align: center; 
+      margin-bottom: 25px; 
+      padding: 15px; 
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); 
+      border-radius: 8px; 
+      border-left: 4px solid #2c5aa0;
+    }
+    
+    .title h1 { margin: 0 0 8px 0; font-size: 18px; font-weight: bold; color: #2c5aa0; }
+    .title h2 { margin: 0; font-size: 14px; font-weight: normal; color: #666; }
+    
+    .info-table { 
+      width: 100%; 
+      border-collapse: collapse; 
+      margin-bottom: 25px; 
+    }
+    
+    .info-table td { padding: 10px 5px; vertical-align: top; border-bottom: 1px solid #f0f0f0; }
+    .info-table tr:last-child td { border-bottom: none; }
+    .info-table strong { color: #2c5aa0; }
+    
+    .section-title { 
+      font-size: 14px; 
+      margin: 20px 0 10px 0; 
+      padding-bottom: 6px; 
+      border-bottom: 2px solid #2c5aa0; 
+      color: #2c5aa0; 
+      font-weight: bold;
+    }
+    
+    /* TABLE STYLES */
+    .items-table { 
+      width: 100%; 
+      border-collapse: collapse; 
+      margin-bottom: 20px;
+      font-size: 11px;
+    }
+    
+    .items-table th, .items-table td { 
+      padding: 8px 6px; 
+      text-align: left; 
+      border: 1px solid #ddd;
+    }
+    
+    .items-table th { 
+      background: #2c5aa0; 
+      color: white; 
+      font-weight: bold;
+    }
+    
+    .items-table tbody tr:nth-child(even) { 
+      background-color: #f8f9fa; 
+    }
+    
+    .group-header { 
+      background: #e3f2fd !important; 
+      font-weight: bold; 
+      color: #2c5aa0;
+    }
+    
+    .text-center { text-align: center; }
+    .text-right { text-align: right; }
+    
+    /* TOTAL SECTION - FIXED: Allow page break before but not inside */
+    .total-container {
+      margin: 30px 0;
+    }
+    
+    .total-section {
+      text-align: right; 
+      padding: 20px; 
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); 
+      border-radius: 8px; 
+      border: 2px solid #2c5aa0;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+    
+    .total-amount-text {
+      font-size: 16px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 8px;
+    }
+    
+    .total-amount-value {
+      font-size: 24px;
+      font-weight: bold;
+      color: #2c5aa0;
+      margin: 12px 0;
+    }
+    
+    .total-note {
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 4px;
+    }
+    
+    .total-note-light {
+      font-size: 12px;
+      color: #666;
+      border-top: 1px solid #eee;
+      padding-top: 6px;
+      margin-top: 8px;
+    }
+    
+    .signature { 
+      margin-top: 60px; 
+      display: flex; 
+      justify-content: space-between;
+    }
+    
+    .signature-box { width: 45%; text-align: center; }
+    .signature-line { margin: 30px 0 5px 0; border-top: 1px solid #333; }
+    .signature-label { font-size: 11px; color: #666; }
+    
+    /* CRITICAL FIX: Remove page-break-before from total section */
+    @media print {
+      .total-section {
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+      }
+      
+      .signature {
+        page-break-inside: avoid;
+        break-inside: avoid;
+      }
+      
+      body {
+        margin: 0 !important;
+        padding: 15mm !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <img class="logo" src="../image/SS logo.png" alt="Logo" onerror="this.style.display='none'">
+    <div class="company-info">
+      <h1>Square Space Solution</h1>
+      <p>B-21-06, Residensi Aradia, 102, Jalan Sibu, Taman Wahyu</p>
+      <p>Phone: +60 12-689 4121 | Email: Liefong@squarespacemy.com</p>
+    </div>
+  </div>
 
-        <div class="title">
-          <h1>Custom Furniture Selection</h1>
-        </div>
+  <div class="title">
+    <h1>Custom Furniture Selection</h1>
+    <h2>Quotation</h2>
+  </div>
 
-        <h3 class="section-title">Client Information</h3>
-        <table class="info-table">
-          <tr>
-            <td style="width:25%"><strong>Name:</strong></td><td>${escapeHtml(name)}</td>
-            <td style="width:25%"><strong>Phone:</strong></td><td>${escapeHtml(phone)}</td>
-          </tr>
-          <tr>
-            <td><strong>Email:</strong></td><td>${escapeHtml(email)}</td>
-            <td><strong>Unit:</strong></td><td>${escapeHtml(unit)}</td>
-          </tr>
-          <tr>
-            <td><strong>Selected Theme (If any):</strong></td><td>${escapeHtml(selectedTheme)}</td>
-            <td><strong>Unit Type:</strong></td><td>${escapeHtml(selectedUnitType)}</td>
-          </tr>
-        </table>
+  <h3 class="section-title">Client Information</h3>
+  <table class="info-table">
+    <tr>
+      <td style="width:30%"><strong>Name:</strong></td>
+      <td style="width:20%">${escapeHtml(name)}</td>
+      <td style="width:20%"><strong>Phone:</strong></td>
+      <td style="width:30%">${escapeHtml(phone)}</td>
+    </tr>
+    <tr>
+      <td><strong>Email:</strong></td>
+      <td>${escapeHtml(email)}</td>
+      <td><strong>Unit:</strong></td>
+      <td>${escapeHtml(unit)}</td>
+    </tr>
+    <tr>
+      <td><strong>Selected Theme (if any):</strong></td>
+      <td>${escapeHtml(selectedTheme)}</td>
+      <td><strong>Unit Type:</strong></td>
+      <td>${escapeHtml(selectedUnitType)}</td>
+    </tr>
+  </table>
 
-        <h3 class="section-title">Selected Furniture Items</h3>
-        ${selectedAddons.length > 0 ? `
-        <table class="data-table">
-          <thead>
-            <tr>
-              <th>Item</th>
-              <th style="text-align:center;">Qty</th>
-              <th style="text-align:right;">Price (RM)</th>
-              <th style="text-align:right;">Subtotal (RM)</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${groupRowsHtml(selectedAddons)}
-          </tbody>
-        </table>` : '<p style="text-align:center;color:#666;margin:20px 0;">No items selected</p>'}
+  <h3 class="section-title">Selected Furniture Items</h3>
+  ${selectedAddons.length > 0 ? createTableHtml(selectedAddons) : '<p style="text-align:center;color:#666;margin:20px 0;">No items selected</p>'}
 
-        <div class="total-section">
-          <div style="font-size:14px;color:#666;">Total Amount</div>
-          <div class="total-amount">RM${(total).toFixed(2)}</div>
-          <div style="font-size:11px;color:#999;">Inclusive of all selected items</div>
-        </div>
+  <!-- TOTAL SECTION - SIMPLIFIED: No wrapper, just the section -->
+  <div class="total-section">
+    <div class="total-amount-text">Total Amount</div>
+    <div class="total-amount-value">RM ${total.toFixed(2)}</div>
+    <div class="total-note">Inclusive of all selected items</div>
+  </div>
 
-        <div class="signature">
-          <div class="signature-box">
-            <div class="signature-line"></div>
-            <div class="signature-label">Client Signature</div>
-            <div style="margin-top:15px; font-size:11px;">
-              <div>Name: ___________________</div>
-              <div>Date: ___________________</div>
-            </div>
-          </div>
-          <div class="signature-box">
-            <div class="signature-line"></div>
-            <div class="signature-label">Company Representative</div>
-            <div style="margin-top:15px; font-size:11px;">
-              <div>Name: ___________________</div>
-              <div>Date: ___________________</div>
-            </div>
-          </div>
-        </div>
-      </body>
-      </html>
-      `;
+  <div class="signature">
+    <div class="signature-box">
+      <div class="signature-line"></div>
+      <div class="signature-label">Client Signature</div>
+      <div style="margin-top:15px; font-size:11px;">
+        <div>Name: ___________________</div>
+        <div>Date: ___________________</div>
+      </div>
+    </div>
+    <div class="signature-box">
+      <div class="signature-line"></div>
+      <div class="signature-label">Company Representative</div>
+      <div style="margin-top:15px; font-size:11px;">
+        <div>Name: ___________________</div>
+        <div>Date: ___________________</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+`;
+
+// Table creation function
+function createTableHtml(selectedAddons) {
+  const grouped = {};
+  selectedAddons.forEach(i => {
+    const g = i.group || "Add-ons";
+    if (!grouped[g]) grouped[g] = [];
+    grouped[g].push(i);
+  });
+  
+  let tableHtml = `
+  <table class="items-table">
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th class="text-center">Qty</th>
+        <th class="text-right">Price (RM)</th>
+        <th class="text-right">Subtotal (RM)</th>
+      </tr>
+    </thead>
+    <tbody>`;
+  
+  Object.keys(grouped).forEach(group => {
+    tableHtml += `
+      <tr class="group-header">
+        <td colspan="4"><strong>${escapeHtml(group)}</strong></td>
+      </tr>`;
+    
+    grouped[group].forEach(a => {
+      tableHtml += `
+      <tr>
+        <td>${escapeHtml(a.name)}</td>
+        <td class="text-center">${a.qty}</td>
+        <td class="text-right">${a.price.toFixed(2)}</td>
+        <td class="text-right">${a.subtotal.toFixed(2)}</td>
+      </tr>`;
+    });
+  });
+  
+  tableHtml += `
+    </tbody>
+  </table>`;
+  
+  return tableHtml;
+}
 
       // create temp container and call html2pdf
       const pdfContainerEl = document.createElement("div");
@@ -611,14 +792,24 @@ document.addEventListener("click", (e) => {
       // If html2pdf is available use it; otherwise fallback to print
       if (typeof html2pdf !== "undefined") {
         await html2pdf().set({
-          margin: 10,
+          margin: [15, 15, 15, 15],
           filename: `Custom_Furniture_${new Date().toISOString().split('T')[0]}.pdf`,
           html2canvas: {
             scale: 2,
             useCORS: true,
-            backgroundColor: "#FFFFFF"
+            backgroundColor: "#FFFFFF",
+            logging: false
           },
-          jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+          jsPDF: { 
+            unit: 'mm', 
+            format: 'a4', 
+            orientation: 'portrait'
+          },
+          // SIMPLIFIED page break configuration
+          pagebreak: { 
+            mode: ['css'],
+            avoid: '.total-section'
+          }
         }).from(pdfContainerEl).save();
       } else {
         // fallback: open print window
