@@ -131,7 +131,10 @@ document.addEventListener("DOMContentLoaded", () => {
       { name: "Smart Door Lock", price: 1250 },
       { name: "Washing machine 7.5KG Frontload", price: 1450 },
       { name: "8.5KG/6KG Combo Washer and Dryer", price: 2000 },
-      { name: "Fridge 240L Two Door", price: 1450 }
+      { name: "Fridge 240L Two Door", price: 1450 },
+      { name: "NESH Indoor Water Filter I-Hot Water Dispenser", price: 2930},
+      { name: "NESH Indoor Water Filter Ocean & Smart Tap", price: 4190},
+      { name: "NESH Outdoor Water Filter Mini Queen", price: 2850}
     ],
     "Accessories": [
       { name: "Curtain", price: 3300, allowedUnits: ["Type A"] },
@@ -141,14 +144,13 @@ document.addEventListener("DOMContentLoaded", () => {
       { name: "Curtain", price: 3600, allowedUnits: ["Type D2"] },
       { name: "Curtain", price: 4300, allowedUnits: ["Type E"] },
       { name: "Curtain", price: 5800, allowedUnits: ["Type F"] },
-      { name: "Tinted Advance Series", price: 600, allowedUnits: ["Type A"] },
-      { name: "Tinted Advance Series", price: 800, allowedUnits: ["Type B"] },
-      { name: "Tinted Advance Series", price: 700, allowedUnits: ["Type C"] },
-      { name: "Tinted Advance Series", price: 1200, allowedUnits: ["Type D1"] },
-      { name: "Tinted Advance Series", price: 800, allowedUnits: ["Type D2"] },
-      { name: "Tinted Advance Series", price: 900, allowedUnits: ["Type E"] },
-      { name: "Tinted Advance Series", price: 2099, allowedUnits: ["Type F"] },
-      { name: "Yard Grill", price: 1300 },
+      { name: "RAVO Window Tinted Advanced Series Whole House", price: 600, allowedUnits: ["Type A"] },
+      { name: "RAVO Window Tinted Advanced Series Whole House", price: 800, allowedUnits: ["Type B"] },
+      { name: "RAVO Window Tinted Advanced Series Whole House", price: 700, allowedUnits: ["Type C"] },
+      { name: "RAVO Window Tinted Advanced Series Whole House", price: 1200, allowedUnits: ["Type D1"] },
+      { name: "RAVO Window Tinted Advanced Series Whole House", price: 800, allowedUnits: ["Type D2"] },
+      { name: "RAVO Window Tinted Advanced Series Whole House", price: 900, allowedUnits: ["Type E"] },
+      { name: "RAVO Window Tinted Advanced Series Whole House", price: 2099, allowedUnits: ["Type F"] },
       { name: "Door Grill", price: 2100 },
       { name: "Shower Screen", price: 800 }
     ],
@@ -494,7 +496,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <div class="company-info">
               <h1>Square Space Solution</h1>
               <p>B-21-06, Residensi Aradia, 102, Jalan Sibu, Taman Wahyu</p>
-              <p>Phone: +60 12-345 6789 | Email: info@squarespace.com</p>
+              <p>Phone: +60 12-689 4121 | Email: Liefong@squarespacemy.com</p>
             </div>
           </div>
 

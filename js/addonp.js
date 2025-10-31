@@ -166,7 +166,10 @@ document.addEventListener("DOMContentLoaded", () => {
       { name: "Smart Door Lock", price: 1250 },
       { name: "Washing machine 7.5KG Frontload", price: 1450 },
       { name: "8.5KG/6KG Combo Washer and Dryer", price: 2000 },
-      { name: "Fridge 240L Two Door", price: 1450 }
+      { name: "Fridge 240L Two Door", price: 1450 },
+      { name: "NESH Indoor Water Filter I-Hot Water Dispenser", price: 2930},
+      { name: "NESH Indoor Water Filter Ocean & Smart Tap", price: 4190},
+      { name: "NESH Outdoor Water Filter Mini Queen", price: 2850}
     ],
     "Accessories": [
       { name: "Curtain", price: 3300, allowedUnits: ["Type A"] },
@@ -176,14 +179,13 @@ document.addEventListener("DOMContentLoaded", () => {
       { name: "Curtain", price: 3600, allowedUnits: ["Type D2"] },
       { name: "Curtain", price: 4300, allowedUnits: ["Type E"] },
       { name: "Curtain", price: 5800, allowedUnits: ["Type F"] },
-      { name: "Tinted IonMax Series", price: 1099, allowedUnits: ["Type A"] },
-      { name: "Tinted IonMax Series", price: 1399, allowedUnits: ["Type B"] },
-      { name: "Tinted IonMax Series", price: 1199, allowedUnits: ["Type C"] },
-      { name: "Tinted IonMax Series", price: 2099, allowedUnits: ["Type D1"] },
-      { name: "Tinted IonMax Series", price: 1499, allowedUnits: ["Type D2"] },
-      { name: "Tinted IonMax Series", price: 1499, allowedUnits: ["Type E"] },
-      { name: "Tinted IonMax Series", price: 4399, allowedUnits: ["Type F"] },
-      { name: "Yard Grill", price: 1300 },
+      { name: "RAVO Window Tinted IonMax Series Whole House", price: 1099, allowedUnits: ["Type A"] },
+      { name: "RAVO Window Tinted IonMax Series Whole House", price: 1399, allowedUnits: ["Type B"] },
+      { name: "RAVO Window Tinted IonMax Series Whole House", price: 1199, allowedUnits: ["Type C"] },
+      { name: "RAVO Window Tinted IonMax Series Whole House", price: 2099, allowedUnits: ["Type D1"] },
+      { name: "RAVO Window Tinted IonMax Series Whole House", price: 1499, allowedUnits: ["Type D2"] },
+      { name: "RAVO Window Tinted IonMax Series Whole House", price: 1499, allowedUnits: ["Type E"] },
+      { name: "RAVO Window Tinted IonMax Series Whole House", price: 4399, allowedUnits: ["Type F"] },
       { name: "Door Grill", price: 2100 },
       { name: "Shower Screen", price: 800 }
     ],
@@ -301,7 +303,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(".unit-type").forEach(input => {
     input.addEventListener("change", applyFilters);
   });
-
+  
   // ===== EVENT HANDLERS =====
   addonContainer.addEventListener("click", e => {
     if (e.target.classList.contains("qty-btn")) {
@@ -529,7 +531,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <div class="company-info">
               <h1>Square Space Solution</h1>
               <p>B-21-06, Residensi Aradia, 102, Jalan Sibu, Taman Wahyu</p>
-              <p>Phone: +60 12-345 6789 | Email: info@squarespace.com</p>
+              <p>Phone: +60 12-689 4121 | Email: Liefong@squarespacemy.com</p>
             </div>
           </div>
 
@@ -645,11 +647,7 @@ document.addEventListener("DOMContentLoaded", () => {
               </div>
             </div>
           </div>
-
-          <div class="footer">
-            Generated on ${new Date().toLocaleDateString()} | Square Space Solution - Premium Package Add-On Summary
-          </div>
-        </body>
+         </body>
         </html>
       `;
 
@@ -666,20 +664,23 @@ document.addEventListener("DOMContentLoaded", () => {
             margin: 10,
             filename: `Premium_AddOn_Summary_${selectedUnitType}_${new Date().toISOString().split('T')[0]}.pdf`,
             html2canvas: { 
-              scale: 2, // Higher scale for better quality
+              scale: 2,
               useCORS: true,
               logging: false,
               backgroundColor: "#FFFFFF",
-              width: 794,
-              height: pdfContainer.scrollHeight,
               scrollX: 0,
-              scrollY: 0
+              scrollY: 0,
+              windowWidth: pdfContainer.scrollWidth,
+              windowHeight: pdfContainer.scrollHeight
             },
             jsPDF: { 
-              unit: "mm", 
-              format: "a4", 
-              orientation: "portrait"
-            }
+              unit: "mm",
+              format: "a4",
+              orientation: "portrait",
+              putOnlyUsedFonts: true,
+              hotfixes: ["px_scaling"]
+            },
+            pagebreak: { mode: ['css', 'legacy'] } // ✅ makes CSS page breaks work
           };
 
           await html2pdf().set(options).from(pdfContainer).save();

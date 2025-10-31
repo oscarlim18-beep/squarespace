@@ -5,7 +5,19 @@
 }
 
 html, body {
-  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  scroll-behavior:smooth;
+}
+
+/* Ensure all major containers expand fully on small screens */
+main, section, .container, .collections, .hero, .wrap {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 
 body {
@@ -169,27 +181,38 @@ header nav a:hover {
   pointer-events: auto; /* enable on hover/tap */
 }
 
-/* Footer */
+/* ================================
+   FOOTER SECTION
+================================ */
+
 footer {
   margin-top: auto;
-  padding: 1rem;
+  padding: 1rem 1.5rem;
   background-color: #018749;
   color: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
+  position: relative;
+  text-align: left;
 }
 
+/* Left Section */
 .footer-left {
   font-size: 0.9rem;
+  flex: 1;
+  min-width: 180px;
 }
 
+/* Center Section (Social Icons) */
 .footer-center {
   display: flex;
-  gap: 15px;
   justify-content: center;
   align-items: center;
+  gap: 15px;
+  flex: 1;
+  min-width: 200px;
 }
 
 .footer-center a img {
@@ -199,8 +222,27 @@ footer {
 }
 
 .footer-center a img:hover {
-  transform: scale(1.2);
+  transform: scale(1.15);
   filter: brightness(1.2);
+}
+
+/* Right Section (Terms & Conditions) */
+.footer-right {
+  font-size: 0.9rem;
+  flex: 1;
+  text-align: right;
+  position: relative;
+  min-width: 180px;
+}
+
+.footer-right a {
+  color: white;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.footer-right a:hover {
+  opacity: 0.8;
 }
 
 /* Responsive Layouts */
@@ -221,6 +263,12 @@ footer {
     font-size: 2.2rem;
   }
 
+  .footer-right {
+    position: absolute;
+    right: 1.5rem;
+    bottom: 0.5rem;
+    text-align: right;
+  }
 }
 
 @media (max-width: 768px) {
@@ -266,13 +314,35 @@ footer {
   .hero p {
     font-size: 1rem;
   }
+
+  footer {
+    flex-direction: row;
+    text-align: center;
+    gap: 10px;
+  }
+
+  .footer-left,
+  .footer-center,
+  .footer-right {
+    flex: 1 1 100%;
+    text-align: center;
+  }
+
+  .footer-right {
+    position: static;
+    margin-top: 8px;
+  }
 }
 
 @media (max-width: 600px) {
-  footer {
-    flex-direction: column;
-    text-align: center;
-    gap: 10px;
+
+  main, section, .container, .collections, .hero, .wrap {
+    padding: 0 12px; /* keeps some side breathing space */
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
   }
 
     .furniture-card img {
@@ -282,5 +352,30 @@ footer {
 
   .hero h1 {
     font-size: 1.9rem;
+  }
+
+  footer {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+    padding: 1rem;
+  }
+
+  .footer-left,
+  .footer-center,
+  .footer-right {
+    flex: 1 1 100%;
+    text-align: center;
+    margin: 5px 0;
+  }
+
+  .footer-center a img {
+    width: 32px;
+    height: 32px;
+  }
+
+  .footer-right {
+    position: static;
+    margin-top: 4px;
   }
 }

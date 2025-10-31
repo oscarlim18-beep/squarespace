@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sanctuary</title>
+  <link rel="stylesheet" href="../css/furniture.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header>
+    <a href="homepage.html" class="logo">
+      <img src="../image/SS logo.png" alt="Square Space Logo">
+    </a>
+
+    <nav id="nav-menu">
+      <a href="homepage.html">Homepage</a>
+      <a href="luxury.html">Luxury</a>
+      <a href="contactus.html">Contact Us</a>
+      <a href="dark.html">Dark Premium</a>
+      <a href="century.html">Mid Century</a>
+      <a href="sanctuary.html" class="active">Sanctuary</a>
+    </nav>
+
+    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-text">
+        <h1>Sanctuary Collection</h1>
+        <p>Warm, earthy, and inviting. Embraces organic living and relaxation through natural surroundings.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Illustration Notice -->
+  <p style="text-align:center; font-style:italic; color:gray; margin-top:20px;">
+    *Illustration purposes only.*
+  </p>
+
+  <!-- LIVING AREA -->
+  <section>
+    <h2 style="text-align:center; margin-top:40px;">Living Area</h2>
+    <main class="furniture-grid">
+      <div class="furniture-card">
+        <img src="../image/sanctuary-sofa.png" alt="Fabric Sofa">
+        <div class="furniture-info">
+          <h2>Fabric Sofa</h2>
+          <p>Light beige upholstery with oak wood legs<br>Size: —</p>
+        </div>
+      </div>
+
+      <div class="furniture-card">
+        <img src="../image/sanctuary-tv.png" alt="TV Cabinet">
+        <div class="furniture-info">
+          <h2>TV Cabinet</h2>
+          <p>Natural oak finish with woven rattan doors<br>Size: —</p>
+        </div>
+      </div>
+
+      <div class="furniture-card">
+        <img src="../image/sanctuary-coffee.png" alt="Coffee Table">
+        <div class="furniture-info">
+          <h2>Coffee Table</h2>
+          <p>Round solid wood top, light oak tone<br>Size: —</p>
+        </div>
+      </div>
+    </main>
+  </section>
+
+  <!-- DINING AREA -->
+  <section>
+    <h2 style="text-align:center; margin-top:40px;">Dining Area</h2>
+    <main class="furniture-grid">
+      <div class="furniture-card">
+        <img src="../image/sanctuary-diningtable.png" alt="Dining Table">
+        <div class="furniture-info">
+          <h2>Dining Table</h2>
+          <p>6-pax wooden table, smooth matte finish<br>Size: —</p>
+        </div>
+      </div>
+
+      <div class="furniture-card">
+        <img src="../image/sanctuary-diningchair.png" alt="Dining Chairs">
+        <div class="furniture-info">
+          <h2>Dining Chairs</h2>
+          <p>Fabric seating, curved oak backrest<br>Qty: 6</p>
+        </div>
+      </div>
+    </main>
+  </section>
+
+  <!-- MASTER BEDROOM -->
+  <section>
+    <h2 style="text-align:center; margin-top:40px;">Master Bedroom</h2>
+    <main class="furniture-grid">
+      <div class="furniture-card">
+        <img src="../image/sanctuary-bed1.png" alt="Queen Size Bed">
+        <div class="furniture-info">
+          <h2>Queen Size Bed</h2>
+          <p>Oak veneer frame, natural rattan headboard<br>Size: —</p>
+        </div>
+      </div>
+
+      <div class="furniture-card">
+        <img src="../image/sanctuary-night1.png" alt="Nightstand">
+        <div class="furniture-info">
+          <h2>Nightstand</h2>
+          <p>Light oak wood with rattan drawer front<br>Qty: 2</p>
+        </div>
+      </div>
+    </main>
+  </section>
+
+  <!-- BEDROOM 2 -->
+  <section>
+    <h2 style="text-align:center; margin-top:40px;">Bedroom 2</h2>
+    <main class="furniture-grid">
+      <div class="furniture-card">
+        <img src="../image/sanctuary-bed2.png" alt="Single Bed">
+        <div class="furniture-info">
+          <h2>Single Bed</h2>
+          <p>White oak frame, minimalist fabric headboard<br>Size: —</p>
+        </div>
+      </div>
+
+      <div class="furniture-card">
+        <img src="../image/sanctuary-night2.png" alt="Nightstand">
+        <div class="furniture-info">
+          <h2>Nightstand</h2>
+          <p>Compact open-shelf bedside table<br>Qty: 1</p>
+        </div>
+      </div>
+    </main>
+  </section>
+
+  <!-- TOILETS -->
+  <section>
+    <h2 style="text-align:center; margin-top:40px;">Toilets</h2>
+    <main class="furniture-grid">
+      <div class="furniture-card">
+        <img src="../image/sanctuary-mirror.png" alt="Mirror Cabinet">
+        <div class="furniture-info">
+          <h2>Mirror Cabinet</h2>
+          <p>Light oak frame with hidden compartment<br>Size: —</p>
+        </div>
+      </div>
+    </main>
+  </section>
+
+  <!-- OVERALL -->
+  <section>
+    <h2 style="text-align:center; margin-top:40px;">Overall</h2>
+    <main class="furniture-grid">
+      <div class="furniture-card">
+        <img src="../image/sanctuary-decor.png" alt="Lighting & Decor">
+        <div class="furniture-info">
+          <h2>Lighting & Decor</h2>
+          <p>Warm-toned pendant lights, greenery decor<br>Qty: —</p>
+        </div>
+      </div>
+    </main>
+  </section>
+
+  <!-- Customize Package -->
+  <section>
+    <h2 style="text-align:center; margin-top:40px;">Customize Your Package</h2>
+    <div class="addon-cta-container">
+      <div class="floating-addon-btn">
+        <a href="addonl.html?package=Luxury&theme=Sanctuary" class="addon-btn-pulse">
+          🛍️ Explore Add-Ons
+          <span class="btn-sparkle">✨</span>
+        </a>
+        <div class="tooltip">Add furniture, electronics & more!</div>
+      </div>
+    </div>
+  </section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-left">
+    <p>© <span id="yr"></span> Sspace Equity Sdn. Bhd. All rights reserved.</p>
+  </div>
+
+  <div class="footer-center">
+    <a href="https://www.facebook.com/squarespacesolutions" target="_blank">
+      <img src="../image/facebook.png" alt="Facebook" class="social-icon">
+    </a>
+    <a href="https://www.instagram.com/squarespacesolutions/" target="_blank">
+      <img src="../image/instagram.png" alt="Instagram" class="social-icon">
+    </a>
+  </div>
+
+  <div class="footer-right">
+    <a href="tnc.html">Terms & Conditions</a>
+  </div>
+</footer>
+
+  <script src="../js/catalogue.js"></script>
+</body>
+</html>
