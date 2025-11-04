@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
         { name: "Hiace Coffee Table", price: 278, img: "../image/natural-coffee.png", description: "TABLE LEG: MALAYSIAN OAK<br>TABLE TOP: MDF+MALAYSIAN OAK VENEER" },
         { name: "Hiace Coffee Table", price: 278, img: "../image/cocoa-coffee.png", description: "TABLE LEG: MALAYSIAN OAK<br>TABLE TOP: MDF+VENEER"},
         { name: "Modern Rustic Coffee Table", price: 1200, img: "../image/timeless-coffee.png", description: "Metal Base, Sintered Stone Table Top" },
-        { name: "Scandinavian Snug Coffee Table", price: 950, img: "../image/scandinavian-coffee.png", description: "Solid Wood Structure" },
+        { name: "Scandinavian Snug Coffee Table", price: 1200, img: "../image/scandinavian-coffee.png", description: "Solid Wood Structure" },
       ],
 
       "TV Console": [
@@ -68,12 +68,12 @@ document.addEventListener("DOMContentLoaded", () => {
         { name: "4 pax WALD DINING SET", price: 857, img: "../image/natural-diningset.png", description: "TABLE LEG: MALAYSIAN OAK<br>TABLE TOP: MDF+VENEER<br>CHAIR FRAME: MALAYSIAN OAK<br>CHAIR SEAT: MDF+VINYL" },
         { name: "4 pax WALD DINING SET", price: 857, img: "../image/cocoa-diningset.png", description: "TABLE LEG: MALAYSIAN OAK<br>TABLE TOP: MDF+VENEER<br>CHAIR FRAME: MALAYSIAN OAK<br>CHAIR SEAT: MDF+VINYL"},
         { name: "Modern Rustic 4 Pax Dining Table & Chairs", price: 2500, img: "../image/rustic-diningset.png", description: "Dining Table：Sintered Stone Table top with metal leg<br>Chairs：PU Leather, Metal Leg" },
-        { name: "Timeless Elegant 4 Pax Dining Table & Chairs", price: 2650, img: "../image/timeless-diningset.png", description: "Dining Table：Sintered Stone Table top with metal leg<br>Chairs：PU Leather, Metal Leg" },
+        { name: "Timeless Elegant 4 Pax Dining Table & Chairs", price: 2500, img: "../image/timeless-diningset.png", description: "Dining Table：Sintered Stone Table top with metal leg<br>Chairs：PU Leather, Metal Leg" },
         { name: "Scandinavian Snug 4 Pax Dining Table & Chairs", price: 2500, img: "../image/scandinavian-diningset.png", description: "Dining Table：Solid wood<br>Chairs：Solid wood, sponge, fabric" },
         { name: "6 pax WALD DINING SET", price: 1350, img: "../image/natural-diningset.png", description: "TABLE LEG: MALAYSIAN OAK<br>TABLE TOP: MDF+VENEER<br>CHAIR FRAME: MALAYSIAN OAK<br>CHAIR SEAT: MDF+VINYL" },
         { name: "6 pax WALD DINING SET", price: 1350, img: "../image/cocoa-diningset.png", description: "TABLE LEG: MALAYSIAN OAK<br>TABLE TOP: MDF+VENEER<br>CHAIR FRAME: MALAYSIAN OAK<br>CHAIR SEAT: MDF+VINYL"},
         { name: "Modern Rustic 6 Pax Dining Table & Chairs", price: 3080, img: "../image/rustic-diningset.png", description: "Dining Table：Sintered Stone Table top with metal leg<br>Chairs：PU Leather, Metal Leg" },
-        { name: "Timeless Elegant 6 Pax Dining Table & Chairs", price: 3230, img: "../image/timeless-diningset.png", description: "Dining Table：Sintered Stone Table top with metal leg<br>Chairs：PU Leather, Metal Leg" },
+        { name: "Timeless Elegant 6 Pax Dining Table & Chairs", price: 3080, img: "../image/timeless-diningset.png", description: "Dining Table：Sintered Stone Table top with metal leg<br>Chairs：PU Leather, Metal Leg" },
         { name: "Scandinavian Snug 6 Pax Dining Table & Chairs", price: 3080, img: "../image/scandinavian-diningset.png", description: "Dining Table：Solid wood<br>Chairs：Solid wood, sponge, fabric" },      
       ],
 
