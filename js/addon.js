@@ -185,7 +185,7 @@ document.addEventListener("DOMContentLoaded", () => {
       { name: "Modern Rustic Carpet", price: 890, img: "../image/rustic-carpet.png", description: "Polyester" },
       { name: "Scandinavian Snug Carpet", price: 890, img: "../image/scandinavian-carpet.png", description: "Polyester" },  
       { name: "Door Grill", price: 2100 },
-      { name: "Shower Screen", price: 800 },
+      { name: "Shower Screen", price: 580 },
       { name: "Decorative Mirror fo Toilets", price: 120, img: "../image/mirror.png" },
       { name: "Pillow, Pilow Case, Comforter, Bedsheet & Blanket", price: 850, img: "../image/beddingset.png" },
       { name: "Overall Decorations: Include Wall artwork, Artificial Plant, cuhions & others ", price: 850, img: "../image/accessories.png" },

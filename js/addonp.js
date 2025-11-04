@@ -187,7 +187,7 @@ document.addEventListener("DOMContentLoaded", () => {
       { name: "RAVO Window Tinted IonMax Series Whole House", price: 1499, allowedUnits: ["Type E"] },
       { name: "RAVO Window Tinted IonMax Series Whole House", price: 4399, allowedUnits: ["Type F"] },
       { name: "Door Grill", price: 2100 },
-      { name: "Shower Screen", price: 800 }
+      { name: "Shower Screen", price: 580 }
     ],
     "Plaster Ceiling": [
       //Type A
