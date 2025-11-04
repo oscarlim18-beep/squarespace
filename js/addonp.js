@@ -167,9 +167,9 @@ document.addEventListener("DOMContentLoaded", () => {
       { name: "Washing machine 7.5KG Frontload", price: 1450 },
       { name: "8.5KG/6KG Combo Washer and Dryer", price: 2000 },
       { name: "Fridge 240L Two Door", price: 1450 },
-      { name: "NESH Indoor Water Filter I-Hot Water Dispenser", price: 2930},
-      { name: "NESH Indoor Water Filter Ocean & Smart Tap", price: 4190},
-      { name: "NESH Outdoor Water Filter Mini Queen", price: 2850}
+      { name: "NESH Indoor Water Filter I-Hot Water Dispenser", price: 2788},
+      { name: "NESH Indoor Water Filter Ocean & Smart Tap", price: 3988},
+      { name: "NESH Outdoor Water Filter Mini Queen", price: 2688}
     ],
     "Accessories": [
       { name: "Curtain", price: 3300, allowedUnits: ["Type A"] },

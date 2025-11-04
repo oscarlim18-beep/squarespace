@@ -151,9 +151,9 @@ document.addEventListener("DOMContentLoaded", () => {
       { name: "8.5KG/6KG Combo Washer and Dryer", price: 2000, img: "../image/washer.png" },
       { name: "Fridge 240L Two Door", price: 1450, img: "../image/fridge.png" },
       { name: "Door Bell", price: 80, img: "../image/doorbell.png" },
-      { name: "NESH Indoor Water Filter I-Hot Water Dispenser", price: 2930, img: "../image/neshihot.png", description: "Power saver, dispense-on-demand or else it sleeps. Slender yet stylish with hassle free 5 temperature settings to accommodate your hot and room temperature water needs throughout the day." },
-      { name: "NESH Indoor Water Filter Ocean & Smart Tap", price: 4190, img: "../image/neshsmart.png", description: "–Filtration System Designed for the Malaysian Water<br> –⁠Built-in Anti-Bacterial UV Steriliser<br>–Instant Heating Technology<br>" },
-      { name: "NESH Outdoor Water Filter Mini Queen", price: 2850, img: "../image/neshmini.png", description: "A compact space-saving pre-filter with minimalist design tailored for compact spaces, like kitchen pantries. Level up your living experience with the convenience and efficiency of Mini Queen." }
+      { name: "NESH Indoor Water Filter I-Hot Water Dispenser", price: 2788, img: "../image/neshihot.png", description: "Power saver, dispense-on-demand or else it sleeps. Slender yet stylish with hassle free 5 temperature settings to accommodate your hot and room temperature water needs throughout the day." },
+      { name: "NESH Indoor Water Filter Ocean & Smart Tap", price: 3988, img: "../image/neshsmart.png", description: "–Filtration System Designed for the Malaysian Water<br> –⁠Built-in Anti-Bacterial UV Steriliser<br>–Instant Heating Technology<br>" },
+      { name: "NESH Outdoor Water Filter Mini Queen", price: 2688, img: "../image/neshmini.png", description: "A compact space-saving pre-filter with minimalist design tailored for compact spaces, like kitchen pantries. Level up your living experience with the convenience and efficiency of Mini Queen." }
     ],
     "Accessories": [
       { name: "Kitchen Cabinet include Thick Quartz Stone", price: 6900},
