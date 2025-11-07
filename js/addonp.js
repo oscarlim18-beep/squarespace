@@ -537,7 +537,7 @@ document.addEventListener("DOMContentLoaded", () => {
   <div class="header">
     <img class="logo" src="../image/SS logo.png" alt="Logo" onerror="this.style.display='none'">
     <div class="company-info">
-      <h1>Square Space Solution</h1>
+      <h1>SSpace Equity</h1>
       <p>B-21-06, Residensi Aradia, 102, Jalan Sibu, Taman Wahyu</p>
       <p>Phone: +60 12-689 4121 | Email: Liefong@squarespacemy.com</p>
     </div>
