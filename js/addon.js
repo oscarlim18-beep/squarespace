@@ -156,7 +156,7 @@ document.addEventListener("DOMContentLoaded", () => {
       { name: "NESH Outdoor Water Filter Mini Queen", price: 2688, img: "../image/neshmini.png", description: "A compact space-saving pre-filter with minimalist design tailored for compact spaces, like kitchen pantries. Level up your living experience with the convenience and efficiency of Mini Queen." }
     ],
     "Accessories": [
-      { name: "Kitchen Cabinet include Thick Quartz Stone", price: 6900},
+      { name: "Lower Kitchen Cabinet include Thick Quartz Stone", price: 6900},
       { name: "Kitchen Yard Cabinet(Including Quartz Stone, Aluminium Gas Cylinder Roller Slide & Gas Hob)", price: 4600},
       { name: "Customize Wardrobe (Melamine Finish) per ft", price: 890},
       { name: "Kitchen Sliding Door per sq ft", price: 70},  

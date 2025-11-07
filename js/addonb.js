@@ -78,12 +78,12 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     {
       name: "3 Room",
-      price: 13700,
+      price: 14190,
       includedItems: [
         { item: "3-Seater Sofa", area: "Living Room", quantity: 1 },
         { item: "Coffee Table", area: "Living Room", quantity: 1 },
         { item: "TV Cabinet", area: "Living Room", quantity: 1 },
-        { item: "4 pax Dining Set", area: "Dining Area", quantity: 1 },
+        { item: "6 pax Dining Set", area: "Dining Area", quantity: 1 },
         { item: "Queen Size Bed", area: "Master Bedroom", quantity: 1 },
         { item: "Side Table", area: "Master Bedroom", quantity: 1 },
         { item: "3-Door Wardrobe", area: "Master Bedroom", quantity: 1 },
@@ -115,11 +115,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const groupedAddons = {
     "Furniture": [
       { name: "Dining Set Upgrade to 6pax", price: 490 },
-      { name: "Kitchen Cabinet include Thick Quartz Stone", price: 6200 },
+      { name: "Low Kitchen Cabinet include Thick Quartz Stone", price: 6200 },
       { name: "Kitchen Yard Cabinet(Including Quartz Stone, Aluminium Gas Cylinder Roller Slide & Gas Hob)", price: 4600 }
     ],
     "Electrical Components": [
       { name: "TV 55 inch", price: 2000 },
+      { name: "Aircon 1HP Inverter (Midea)", price: 2080 },
+      { name: "Aircon 2HP Inverter (Midea)", price: 3590 },
       { name: "Aircon 1HP Non-Inverter (Midea)", price: 1800 },
       { name: "Aircon 2HP Non-Inverter (Midea)", price: 3360 },
       { name: "Instant Water Heater", price: 400 },
@@ -132,9 +134,9 @@ document.addEventListener("DOMContentLoaded", () => {
       { name: "Washing machine 7.5KG Frontload", price: 1450 },
       { name: "8.5KG/6KG Combo Washer and Dryer", price: 2000 },
       { name: "Fridge 240L Two Door", price: 1450 },
-      { name: "NESH Indoor Water Filter I-Hot Water Dispenser", price: 2930},
-      { name: "NESH Indoor Water Filter Ocean & Smart Tap", price: 4190},
-      { name: "NESH Outdoor Water Filter Mini Queen", price: 2850}
+      { name: "NESH Indoor Water Filter I-Hot Water Dispenser", price: 2788},
+      { name: "NESH Indoor Water Filter Ocean & Smart Tap", price: 3988},
+      { name: "NESH Outdoor Water Filter Mini Queen", price: 2688}
     ],
     "Accessories": [
       { name: "Curtain", price: 3300, allowedUnits: ["Type A"] },

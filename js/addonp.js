@@ -90,7 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     {
       name: "3 Room",
-      price: 41700,
+      price: 42280,
       includedItems: [
         { item: "L Shape Sofa with Cushion", area: "Living Room", quantity: 1 },
         { item: "Coffee Table", area: "Living Room", quantity: 1 },
@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
         { item: "Tinted", area: "Living Room", quantity: 1 },
         { item: "Window Bay Cushion & Pillows", area: "Living Room", quantity: 1 },
         { item: "Dining Table", area: "Dining Area", quantity: 1 },
-        { item: "Dining Chair", area: "Dining Area", quantity: 4 },
+        { item: "Dining Chair", area: "Dining Area", quantity: 6 },
         { item: "Pendant", area: "Dining Area", quantity: 1 },
         { item: "Fridge", area: "Kitchen & Yard", quantity: 1 },
         { item: "Dressing Table & Chair", area: "Master Bedroom", quantity: 1 },
@@ -147,7 +147,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const groupedAddons = {
     "Furniture": [
       { name: "Dining Set Upgrade to 6pax", price: 580 },
-      { name: "Kitchen Cabinet include Thick Quartz Stone", price: 6900},
+      { name: "Lower Kitchen Cabinet include Thick Quartz Stone", price: 6900},
       { name: "Kitchen Yard Cabinet(Including Quartz Stone, Aluminium Gas Cylinder Roller Slide & Gas Hob)", price: 4600},
       { name: "Customize Wardrobe (Melamine Finish) per ft", price: 890},
       { name: "Kitchen Sliding Door per sq ft", price: 70},
@@ -157,6 +157,8 @@ document.addEventListener("DOMContentLoaded", () => {
       { name: "TV 55 inch", price: 2000 },
       { name: "Aircon 1HP Inverter (Midea)", price: 2080 },
       { name: "Aircon 2HP Inverter (Midea)", price: 3590 },
+      { name: "Aircon 1HP Non-Inverter (Midea)", price: 1800 },
+      { name: "Aircon 2HP Non-Inverter (Midea)", price: 3360 },
       { name: "Instant Water Heater", price: 400 },
       { name: "Fan (Deka) 56/48 inch", price: 285 },
       { name: "Lighting 12 Watt, 4000K", price: 25 },
