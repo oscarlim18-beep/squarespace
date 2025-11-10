@@ -116,7 +116,11 @@ document.addEventListener("DOMContentLoaded", () => {
     "Furniture": [
       { name: "Dining Set Upgrade to 6pax", price: 490 },
       { name: "Low Kitchen Cabinet include Thick Quartz Stone", price: 6200 },
-      { name: "Kitchen Yard Cabinet(Including Quartz Stone, Aluminium Gas Cylinder Roller Slide & Gas Hob)", price: 4600 }
+      { name: "Kitchen Yard Cabinet(Including Quartz Stone, Aluminium Gas Cylinder Roller Slide & Gas Hob)", price: 4600 },
+        { name: "White Mando 2-Door Wardrobe", price: 504},
+        { name: "Black Mando 2-Door Wardrobe", price: 479},
+        { name: "White Mando 3-Door Wardrobe", price: 773 },
+        { name: "Black Mando 3-Door Wardrobe", price: 740},  
     ],
     "Electrical Components": [
       { name: "TV 55 inch", price: 2000 },

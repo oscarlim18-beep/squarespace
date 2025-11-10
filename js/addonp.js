@@ -152,6 +152,10 @@ document.addEventListener("DOMContentLoaded", () => {
       { name: "Customize Wardrobe (Melamine Finish) per ft", price: 890},
       { name: "Kitchen Sliding Door per sq ft", price: 70},
       { name: "Upgrade Fixed Shoe Cabinet per ft ", price: 450},      
+      { name: "White Mando 2-Door Wardrobe", price: 504},
+      { name: "Black Mando 2-Door Wardrobe", price: 479},
+      { name: "White Mando 3-Door Wardrobe", price: 773},
+      { name: "Black Mando 3-Door Wardrobe", price: 740},  
     ],
     "Electrical Components": [
       { name: "TV 55 inch", price: 2000 },
