@@ -125,6 +125,7 @@ document.addEventListener("DOMContentLoaded", () => {
       { name: "Black Mando 2-Door Wardrobe", price: 479},
       { name: "White Mando 3-Door Wardrobe", price: 773 },
       { name: "Black Mando 3-Door Wardrobe", price: 740},  
+      { name: "Volos 3-Door Wardrobe", price: 1260},
       { name: "Kitchen Wall Cabinet 700mm height per ft", price: 400},
       { name: "Kitchen Wall Cabinet 701-900mm height per ft", price: 500},
       { name: "Kitchen Wall Cabinet 901-1200mm height per ft", price: 640},
