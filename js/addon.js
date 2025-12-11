@@ -106,7 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
         { name: "Mando 2-Door Wardrobe", price: 479, img: "../image/cocoa-wardrobe.png", description: "LAMINATED BOARD， 600*400*1800"},
         { name: "Mando 3-Door Wardrobe", price: 773, img: "../image/natural-3wardrobe.png", description: "LAMINATED BOARD， 900*400*1800<br>(WHITE MB PAPER)" },
         { name: "Mando 3-Door Wardrobe", price: 740, img: "../image/cocoa-3wardrobe.png", description: "LAMINATED BOARD， 900*400*1800"},
-        { name: "Volos 3-Door Wardrobe", price: 1260, img: "../image/cocoa-3wardrobe.png", description: "LAMINATED BOARD， 1500*440*2003"},   
+        { name: "Volos 3-Door Wardrobe", price: 1260, img: "../image/Volos.png", description: "LAMINATED BOARD， 1500*440*2003"},   
       ],
 
       "Shoe Rack": [
