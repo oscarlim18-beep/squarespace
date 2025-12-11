@@ -132,7 +132,7 @@ document.addEventListener("DOMContentLoaded", () => {
       { name: "Kitchen Sliding Door per sq ft", price: 70},
       { name: "Customize Shoe Cabinet 900mm height per ft ", price: 400},  
       { name: "Customize Shoe Cabinet Full height per ft ", price: 920}, 
-      { name: "Kitchen Island per ft ", price: 750}, 
+      { name: "Kitchen Island per ft ", price: 980}, 
       { name: "TV console per ft ", price: 415},
       { name: "TV Background per ft ", price: 45},
       { name: "Opened Wall Cupboard per ft 1200mm Height", price: 750},
